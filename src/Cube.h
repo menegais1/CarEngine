@@ -29,7 +29,7 @@ public:
 
     bool pointIntersectsObject(dvec3 point) override;
 
-    void translate(dvec3 dvec31) override;
+    void translate(dvec3 translationAmount) override;
 
     void rotate(float d, dvec3 dvec31) override;
 

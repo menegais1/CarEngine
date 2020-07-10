@@ -5,6 +5,7 @@
 #include <Camera/Camera.h>
 #include <Canvas/gl_canvas2d.h>
 #include "Cube.h"
+#include "Utilities.h"
 
 Cube::Cube(dvec3 center, dvec3 size) {
     vertices = std::vector<dvec3>(8);
@@ -43,14 +44,16 @@ void Cube::render() {
 void Cube::keyboard(int key) {
     dvec3 translation = dvec3(0, 0, 0);
     if (key == 'w') {
-        translation.z = 2;
+        translation.y = 0.1;
     } else if (key == 's') {
-        translation.z = -2;
+        translation.y = -0.1;
     } else if (key == 'd') {
-        translation.x = 2;
+        translation.x = 0.1;
     } else if (key == 'a') {
-        translation.x = -2;
+        translation.x = -0.1;
     }
+
+    translate(translation);
 }
 
 void Cube::keyboardUp(int key) {
@@ -73,8 +76,11 @@ bool Cube::pointIntersectsObject(dvec3 point) {
     return false;
 }
 
-void Cube::translate(dvec3 dvec31) {
-
+void Cube::translate(dvec3 translationAmount) {
+    dMatrix T = dMatrix::translate(translationAmount);
+    for (int i = 0; i < vertices.size(); ++i) {
+        vertices[i] = (T * vertices[i].toVector4(1)).toVector3();
+    }
 }
 
 void Cube::rotate(float d, dvec3 dvec31) {

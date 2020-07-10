@@ -37,12 +37,13 @@ void mouse(int button, int state, int wheel, int direction, int x, int y) {
 
 int main(void) {
     CV::init(GlobalManager::getInstance()->screenWidth, GlobalManager::getInstance()->screenHeight,
-               "ProjectionExercise");
-    dvec3 center(0,0,5);
-    dvec3 eye = dvec3(0,0,0) - center;
-    Camera::getInstance()->generateViewMatrix(center,eye,dvec3(0,1,0));
+             "ProjectionExercise");
+    dvec3 center(0, 0, 5);
+    dvec3 eye = dvec3(0, 0, 0) - center;
+    Camera::getInstance()->generateViewMatrix(center, eye, dvec3(0, 1, 0));
     Camera::getInstance()->generateProjectionMatrix(10);
-    Camera::getInstance()->generateViewPortMatrix(*GlobalManager::getInstance()->screenWidth /2,*GlobalManager::getInstance()->screenHeight / 2,10,10);
-    Cube* cube = new Cube(dvec3(0,0,0),dvec3(1,1,1));
+    Camera::getInstance()->generateViewPortMatrix(*GlobalManager::getInstance()->screenWidth / 2,
+                                                  *GlobalManager::getInstance()->screenHeight / 2, 10, 10);
+    Cube *cube = new Cube(dvec3(0, 0, 0), dvec3(1, 1, 1));
     CV::run();
 }

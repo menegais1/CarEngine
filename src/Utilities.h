@@ -71,14 +71,5 @@ dvec3 RandomColorGenerator(float saturation, float brightness);
 
 dvec3 HSVtoRGB(dvec3 hsv);
 
-dMatrix translate(dvec3 translationAmount);
-
-dMatrix rotateZ(float angle);
-
-dMatrix rotateY(float angle);
-
-dMatrix rotateX(float angle);
-
-dMatrix scale(float);
 
 #endif

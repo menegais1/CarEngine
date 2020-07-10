@@ -50,6 +50,16 @@ public:
     Matrix<T> invert();
 
     Vector3<T> toVector3();
+
+    static Matrix<T> translate(const Vector3<T> translationAmount);
+
+    static Matrix<T> rotateZ(float angle);
+
+    static Matrix<T> rotateY(float angle);
+
+    static Matrix<T> rotateX(float angle);
+
+    static Matrix<T> scale(const Vector3<T> scale);
 };
 
 template<class T>
@@ -208,7 +218,54 @@ void Matrix<T>::setRow(const Vector4<T> v, int row) {
 
 template<class T>
 Vector3<T> Matrix<T>::toVector3() {
-    return Vector3<T>(m[0][0] / m[0][3], m[0][1] / m[0][3], m[0][2] / m[0][3]);
+    return Vector3<T>(m[0][0] / m[3][0], m[1][0] / m[3][0], m[2][0] / m[3][0]);
+}
+
+template<class T>
+Matrix<T> Matrix<T>::translate(const Vector3<T> translationAmount) {
+    Matrix<T> TR = Matrix<T>::identity(4);
+    TR.setCol(translationAmount.toVector4(1), 3);
+    return TR;
+}
+
+template<class T>
+Matrix<T> Matrix<T>::rotateZ(float angle) {
+    Matrix<T> R(4, 4);
+    R.m = {{cos(angle), -sin(angle), 0, 0},
+           {sin(angle), cos(angle),  0, 0},
+           {0,          0,           1, 0},
+           {0,          0,           0, 1}};
+    return R;
+}
+
+template<class T>
+Matrix<T> Matrix<T>::rotateY(float angle) {
+    Matrix<T> R(4, 4);
+    R.m = {{cos(angle),  0, sin(angle), 0},
+           {0,           1, 0,          0},
+           {-sin(angle), 0, cos(angle), 0},
+           {0,           0, 0,          1}};
+    return R;
+}
+
+template<class T>
+Matrix<T> Matrix<T>::rotateX(float angle) {
+    Matrix<T> R(4, 4);
+    R.m = {{1, 0,          0,           0},
+           {0, cos(angle), -sin(angle), 0},
+           {0, sin(angle), cos(angle),  0},
+           {0, 0,          0,           1}};
+    return R;
+}
+
+template<class T>
+Matrix<T> Matrix<T>::scale(const Vector3<T> scale) {
+    Matrix<T> S(4, 4);
+    S.m = {{scale.x, 0,       0,       0},
+           {0,       scale.y, 0,       0},
+           {0,       0,       scale.z, 0},
+           {0,       0,       0,       1}};
+    return S;
 }
 
 
