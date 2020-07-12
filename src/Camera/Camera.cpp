@@ -3,6 +3,7 @@
 //
 
 #include "Camera.h"
+#include <cmath>
 
 dMatrix Camera::generateViewMatrix(dvec3 center, dvec3 eye, dvec3 up) {
     this->center = center;
@@ -26,22 +27,25 @@ dMatrix Camera::generateViewMatrix(dvec3 center, dvec3 eye, dvec3 up) {
     return View;
 }
 
-dMatrix Camera::generateProjectionMatrix(float planeDistance) {
+dMatrix Camera::generateProjectionMatrix(float fov,float aspectRatio, float near, float far) {
     dMatrix P = dMatrix::identity(4);
-    P.setRow(dvec4(0, 0, -(1 / planeDistance), 0), 3);
+    P.m = {{1.0 / (std::tan(fov / 2.0) * aspectRatio), 0,                     0,                           0},
+           {0,                     1.0 / std::tan(fov / 2.0), 0,                           0},
+           {0,                     0,                     (near + far) / (far - near), (2 * near * far) / (far - near)},
+           {0,                     0,                     -1,                          0}};
     Projection = P;
     return Projection;
 }
 
-dMatrix Camera::generateViewPortMatrix(int width, int height, int x, int y) {
-    dMatrix VP = dMatrix::identity(4);
-    VP.m = {{(width) / (double) x, 0,                     0, (double) width},
-            {0,                    (height) / (double) y, 0, (double) height},
-            {0,                    0,                     0, 0},
-            {0,                    0,                     0, 1}};
+void Camera::setViewport(int width, int height, int x, int y) {
+    this->Vx = x;
+    this->Vy = y;
+    this->Vheight = height;
+    this->Vwidth = width;
+}
 
-    Viewport = VP;
-    return Viewport;
+dvec3 Camera::convertNDCToViewport(dvec3 ndc) {
+    return dvec3(((ndc.x + 1) * Vwidth / 2.0) + Vx, ((ndc.y + 1) * Vheight / 2.0) + Vy, ndc.z);
 }
 
 dvec3 Camera::convertToProjectionSpace(dvec3 vertex) {
@@ -60,9 +64,4 @@ Camera::Camera() {
 
 }
 
-dvec3 Camera::projectionToViewport(dvec3 vertex) {
-    auto viewportPoint = Viewport * vertex.toVector4(1);
-    return dvec3(viewportPoint[0][0], viewportPoint[1][0],
-                 viewportPoint[2][0]);
-}
 

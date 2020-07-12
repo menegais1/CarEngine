@@ -30,8 +30,10 @@ public:
 
     void changeObjectOrder(CanvasObject *object);
 
-    int *screenWidth;
-    int *screenHeight;
+    void reshape(int width, int height);
+
+    int screenWidth;
+    int screenHeight;
     dvec2 mousePosition;
     float deltaTime;
     float time = 0;

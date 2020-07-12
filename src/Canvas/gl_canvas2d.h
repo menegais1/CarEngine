@@ -61,7 +61,7 @@ public:
     static void translate(dvec2 pos);
 
     //funcao de inicializacao da Canvas2D. Recebe a largura, altura, e um titulo para a janela
-    static void init(int *w, int *h, const char *title);
+    static void init(int w, int h, const char *title);
 
     //funcao para executar a Canvas2D
     static void run();

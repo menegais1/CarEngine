@@ -5,15 +5,14 @@
 #include <iostream>
 #include <algorithm>
 #include <chrono>
+#include "../Camera/Camera.h"
 #include "../Vectors/Vector2.h"
 
 using namespace std::chrono;
 
 GlobalManager::GlobalManager() {
-    screenWidth = new int();
-    screenHeight = new int();
-    *screenWidth = 800;
-    *screenHeight = 600;
+    screenWidth = 800;
+    screenHeight = 800;
 }
 
 GlobalManager *GlobalManager::getInstance() {
@@ -126,4 +125,15 @@ CanvasObject *GlobalManager::cleanUpObjects() {
             i--;
         }
     }
+}
+
+void GlobalManager::reshape(int width, int height) {
+    this->screenWidth = width;
+    this->screenHeight = height;
+
+    float aspectRatio = width / (float) height;
+    Camera::getInstance()->setViewport(width, height, 0, 0);
+    Camera::getInstance()->generateProjectionMatrix((60 * PI / 180.0), aspectRatio,
+                                                    0.1,
+                                                    100);
 }

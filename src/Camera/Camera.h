@@ -15,13 +15,13 @@ public:
 
     dMatrix generateViewMatrix(dvec3 center, dvec3 eye, dvec3 up);
 
-    dMatrix generateProjectionMatrix(float planeDistance);
-
-    dMatrix generateViewPortMatrix(int width, int height, int x, int y);
+    dMatrix generateProjectionMatrix(float fov, float aspectRatio, float near, float far);
 
     dvec3 convertToProjectionSpace(dvec3 vertex);
 
-    dvec3 projectionToViewport(dvec3 vertex);
+    dvec3 convertNDCToViewport(dvec3 ndc);
+
+    void setViewport(int width, int height, int x, int y);
 
     dMatrix translate(dvec3 translation);
 
@@ -32,13 +32,17 @@ public:
     dMatrix rotateZ(float angle);
 
     dMatrix scale(dvec3 scale);
+
 private:
     dvec3 center;
     dvec3 up;
     dvec3 eye;
     dMatrix View;
     dMatrix Projection;
-    dMatrix Viewport;
+    int Vx;
+    int Vy;
+    int Vheight;
+    int Vwidth;
 
     Camera();
 

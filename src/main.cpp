@@ -41,9 +41,12 @@ int main(void) {
     dvec3 center(0, 0, 5);
     dvec3 eye = dvec3(0, 0, 0) - center;
     Camera::getInstance()->generateViewMatrix(center, eye, dvec3(0, 1, 0));
-    Camera::getInstance()->generateProjectionMatrix(10);
-    Camera::getInstance()->generateViewPortMatrix(*GlobalManager::getInstance()->screenWidth / 2,
-                                                  *GlobalManager::getInstance()->screenHeight / 2, 10, 10);
+    Camera::getInstance()->generateProjectionMatrix(60 * PI / 180.0, GlobalManager::getInstance()->screenWidth /
+                                                                     (float) GlobalManager::getInstance()->screenHeight,
+                                                    0.1,
+                                                    100);
+    Camera::getInstance()->setViewport(GlobalManager::getInstance()->screenWidth,
+                                       GlobalManager::getInstance()->screenHeight, 0, 0);
     Cube *cube = new Cube(dvec3(0, 0, 0), dvec3(1, 1, 1));
     CV::run();
 }

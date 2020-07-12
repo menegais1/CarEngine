@@ -15,6 +15,7 @@
 
 #include "gl_canvas2d.h"
 #include <GL/glut.h>
+#include "../Managers/GlobalManager.h"
 
 int *scrWidth, *scrHeight; //guarda referencia para as variaveis de altura e largura da main()
 
@@ -232,8 +233,6 @@ void ConvertMouseCoord(int button, int state, int wheel, int direction, int x, i
 
 //funcao chamada sempre que a tela for redimensionada.
 void reshape(int w, int h) {
-    *scrHeight = h; //atualiza as variaveis da main() com a nova dimensao da tela.
-    *scrWidth = w;
 
     glViewport(0, 0, (GLsizei) w, (GLsizei) h);
     glMatrixMode(GL_PROJECTION);
@@ -250,6 +249,7 @@ void reshape(int w, int h) {
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
+    GlobalManager::getInstance()->reshape(w,h);
 }
 
 //definicao de valores para limpar buffers
@@ -273,19 +273,17 @@ void display(void) {
 ////////////////////////////////////////////////////////////////////////////////////////
 //  inicializa o OpenGL
 ////////////////////////////////////////////////////////////////////////////////////////
-void CV::init(int *w, int *h, const char *title) {
+void CV::init(int w, int h, const char *title) {
     int argc = 0;
     glutInit(&argc, NULL);
 
-    scrHeight = h;
-    scrWidth = w;
 
     //habilita MSAA
     glutSetOption(GLUT_MULTISAMPLE, 8);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_MULTISAMPLE);
     //glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB);
 
-    glutInitWindowSize(*w, *h);
+    glutInitWindowSize(w, h);
     glutInitWindowPosition(50, 50);
     glutCreateWindow(title);
 

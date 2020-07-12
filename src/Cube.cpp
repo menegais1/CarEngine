@@ -26,18 +26,24 @@ void Cube::mouse(int button, int state, int wheel, int direction, int x, int y) 
 void Cube::render() {
     std::vector<dvec3> projVertices = vertices;
     for (int i = 0; i < projVertices.size(); ++i) {
-        projVertices[i] = Camera::getInstance()->projectionToViewport(
+        projVertices[i] = Camera::getInstance()->convertNDCToViewport(
                 Camera::getInstance()->convertToProjectionSpace(projVertices[i]));
         //projVertices[i].print();
     }
     CV::color(0, 0, 0, 1);
     for (int j = 0; j < projVertices.size() / 2 - 1; ++j) {
+        CV::color(1, 0, 0, 1);
         CV::line(projVertices[j], projVertices[j + 1]);
+        CV::color(0, 0, 0, 1);
         CV::line(projVertices[j], projVertices[j + 4]);
+        CV::color(0, 1, 0, 1);
         CV::line(projVertices[j + 4], projVertices[j + 5]);
     }
+    CV::color(1, 0, 0, 1);
     CV::line(projVertices[3], projVertices[0]);
+    CV::color(0, 0, 0, 1);
     CV::line(projVertices[3], projVertices[7]);
+    CV::color(0, 1, 0, 1);
     CV::line(projVertices[7], projVertices[4]);
 }
 
@@ -51,6 +57,11 @@ void Cube::keyboard(int key) {
         translation.x = 0.1;
     } else if (key == 'a') {
         translation.x = -0.1;
+    } else if (key == 'q') {
+        translation.z = -0.1;
+    } else if (key == 'r') {
+
+        translation.z = 0.1;
     }
 
     translate(translation);
