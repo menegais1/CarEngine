@@ -11,7 +11,7 @@
 
 class CameraMovement : public CanvasObject {
 private:
-    Camera* camera;
+    Camera *camera;
     dvec2 lastMousePosition;
     bool isDragging = false;
     dvec2 angle;
@@ -23,13 +23,6 @@ public:
 
     void mouse(int button, int state, int wheel, int direction, int x, int y) override;
 
-    void translate(dvec3 dvec31) override;
-
-    void rotate(float d, dvec3 dvec31) override;
-
-    void rescale(dvec3 dvec31, dvec3 dvec32) override;
-
-    bool pointIntersectsObject(dvec3 point) override;
 };
 
 

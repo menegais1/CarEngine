@@ -16,6 +16,7 @@
 #include "Utilities.h"
 #include "Managers/GlobalManager.h"
 #include "Cube.h"
+#include "Cylinder.h"
 
 using namespace std;
 
@@ -49,6 +50,7 @@ int main(void) {
     Camera::getInstance()->setViewport(GlobalManager::getInstance()->screenWidth,
                                        GlobalManager::getInstance()->screenHeight, 0, 0);
     Cube *cube = new Cube(dvec3(0, 0, 0), dvec3(1, 1, 1));
-    CameraMovement* cameraMovement = new CameraMovement(Camera::getInstance());
+    Cylinder *cylinder = new Cylinder(dvec3(2, 0, 0), 0.2, 2);
+    CameraMovement *cameraMovement = new CameraMovement(Camera::getInstance());
     CV::run();
 }

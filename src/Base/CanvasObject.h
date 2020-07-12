@@ -8,10 +8,11 @@
 #include "IRender.h"
 #include "../Vectors/Vector3.h"
 
-class CanvasObject : public IRender, public IKeyboard, public IMouse, public ITransformable {
+class CanvasObject : public IRender, public IKeyboard, public IMouse {
 public:
 
     bool isValid;
+
     void keyboard(int key) override;
 
     void keyboardUp(int key) override;
@@ -33,9 +34,6 @@ public:
     bool getActive();
 
     bool checkIfCanExecuteCallback();
-
-    virtual bool pointIntersectsObject(dvec3 point) = 0;
-
 
 protected:
     bool isActive;

@@ -45,7 +45,7 @@ void CameraMovement::mouse(int button, int state, int wheel, int direction, int 
             yDelta = 0;
         }
         auto RY = dMatrix::rotateY(-xDelta * PI / 180.0);
-        auto RX = dMatrix::rotateX((camera->forward.z < 0 ? yDelta : -yDelta )* PI / 180.0);
+        auto RX = dMatrix::rotateX((camera->forward.z < 0 ? yDelta : -yDelta) * PI / 180.0);
         auto R = RX * RY;
         dvec3 rotatedEye = (R * (camera->at - camera->center).toVector4(1)).toVector3() + camera->center;
         dvec3 rotatedUp = (R * camera->up.toVector4(1)).toVector3();
@@ -56,18 +56,4 @@ void CameraMovement::mouse(int button, int state, int wheel, int direction, int 
 
 CameraMovement::CameraMovement(Camera *camera) : camera(camera), angle(0, 0) {}
 
-void CameraMovement::translate(dvec3 dvec31) {
 
-}
-
-void CameraMovement::rotate(float d, dvec3 dvec31) {
-
-}
-
-void CameraMovement::rescale(dvec3 dvec31, dvec3 dvec32) {
-
-}
-
-bool CameraMovement::pointIntersectsObject(dvec3 point) {
-    return false;
-}

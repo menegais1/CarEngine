@@ -249,7 +249,7 @@ void reshape(int w, int h) {
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    GlobalManager::getInstance()->reshape(w,h);
+    GlobalManager::getInstance()->reshape(w, h);
 }
 
 //definicao de valores para limpar buffers

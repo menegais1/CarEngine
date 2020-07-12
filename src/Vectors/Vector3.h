@@ -26,7 +26,7 @@ public:
 
     Vector3(t x, t y, t z);
 
-    Vector3(Vector2 <t> v, t z);
+    Vector3(Vector2<t> v, t z);
 
     Vector3();
 
@@ -203,7 +203,7 @@ Matrix<t> Vector3<t>::toMatrix() const {
 }
 
 template<class t>
-Vector3<t>::Vector3(Vector2 <t> v, t z) : x(v.x), y(v.y), z(z) {
+Vector3<t>::Vector3(Vector2<t> v, t z) : x(v.x), y(v.y), z(z) {
 
 }
 

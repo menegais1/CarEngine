@@ -5,11 +5,15 @@
 
 class ITransformable {
 public:
-    virtual void translate(dvec3) = 0;
+    virtual void translate(dvec3 translationAmount) = 0;
 
-    virtual void rotate(float, dvec3) = 0;
+    virtual void rotateX(float angle) = 0;
 
-    virtual void rescale(dvec3, dvec3) = 0;
+    virtual void rotateZ(float angle) = 0;
+
+    virtual void rotateY(float angle) = 0;
+
+    virtual void rescale(dvec3 scale) = 0;
 };
 
 #endif

@@ -58,13 +58,11 @@ dvec3 Camera::convertNDCToViewport(dvec3 ndc) {
 }
 
 dvec3 Camera::clipCoordinates(dvec3 vertex) {
-    if (vertex.z < -1.2 || vertex.z > 1.2 || vertex.x > 1 || vertex.x < -1 || vertex.y > 1 || vertex.y < -1)
-        return dvec3(100000, 10000, 10000);
     return vertex;
 }
 
-dvec3 Camera::removeBackCameraVertex(dvec3 vertex){
-    if(vertex.z > 0) return dvec3(10000,10000,10000);
+dvec3 Camera::removeBackCameraVertex(dvec3 vertex) {
+    if (vertex.z > 0) return dvec3(10000, 10000, 10000);
     return vertex;
 }
 

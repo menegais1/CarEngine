@@ -50,24 +50,6 @@ void Cube::render() {
 }
 
 void Cube::keyboard(int key) {
-    return;
-    dvec3 translation = dvec3(0, 0, 0);
-    if (key == 'w') {
-        translation.y = 0.1;
-    } else if (key == 's') {
-        translation.y = -0.1;
-    } else if (key == 'd') {
-        translation.x = 0.1;
-    } else if (key == 'a') {
-        translation.x = -0.1;
-    } else if (key == 'q') {
-        translation.z = -0.1;
-    } else if (key == 'r') {
-
-        translation.z = 0.1;
-    }
-
-    translate(translation);
 }
 
 void Cube::keyboardUp(int key) {
@@ -86,22 +68,4 @@ void Cube::setActive(bool isActive) {
     CanvasObject::setActive(isActive);
 }
 
-bool Cube::pointIntersectsObject(dvec3 point) {
-    return false;
-}
-
-void Cube::translate(dvec3 translationAmount) {
-    dMatrix T = dMatrix::translate(translationAmount);
-    for (int i = 0; i < vertices.size(); ++i) {
-        vertices[i] = (T * vertices[i].toVector4(1)).toVector3();
-    }
-}
-
-void Cube::rotate(float d, dvec3 dvec31) {
-
-}
-
-void Cube::rescale(dvec3 dvec31, dvec3 dvec32) {
-
-}
 
