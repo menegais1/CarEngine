@@ -10,7 +10,8 @@
 
 
 #include <iostream>
-#include <Camera/Camera.h>
+#include "Camera/Camera.h"
+#include "Camera/CameraMovement.h"
 #include "Canvas/gl_canvas2d.h"
 #include "Utilities.h"
 #include "Managers/GlobalManager.h"
@@ -38,15 +39,16 @@ void mouse(int button, int state, int wheel, int direction, int x, int y) {
 int main(void) {
     CV::init(GlobalManager::getInstance()->screenWidth, GlobalManager::getInstance()->screenHeight,
              "ProjectionExercise");
-    dvec3 center(0, 0, 5);
-    dvec3 eye = dvec3(0, 0, 0) - center;
-    Camera::getInstance()->generateViewMatrix(center, eye, dvec3(0, 1, 0));
+    dvec3 center(0, 0, 0);
+    dvec3 eye = dvec3(0, 0, 5);
+    Camera::getInstance()->generateViewMatrix(eye, center, dvec3(0, 1, 0));
     Camera::getInstance()->generateProjectionMatrix(60 * PI / 180.0, GlobalManager::getInstance()->screenWidth /
                                                                      (float) GlobalManager::getInstance()->screenHeight,
                                                     0.1,
-                                                    100);
+                                                    10);
     Camera::getInstance()->setViewport(GlobalManager::getInstance()->screenWidth,
                                        GlobalManager::getInstance()->screenHeight, 0, 0);
     Cube *cube = new Cube(dvec3(0, 0, 0), dvec3(1, 1, 1));
+    CameraMovement* cameraMovement = new CameraMovement(Camera::getInstance());
     CV::run();
 }

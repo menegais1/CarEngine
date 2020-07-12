@@ -134,6 +134,6 @@ void GlobalManager::reshape(int width, int height) {
     float aspectRatio = width / (float) height;
     Camera::getInstance()->setViewport(width, height, 0, 0);
     Camera::getInstance()->generateProjectionMatrix((60 * PI / 180.0), aspectRatio,
-                                                    0.1,
-                                                    100);
+                                                    0.01,
+                                                    10);
 }

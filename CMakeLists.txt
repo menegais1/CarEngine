@@ -34,7 +34,7 @@ add_executable(CarEngine
         src/Vectors/Matrix.h
         src/main.cpp
         src/Utilities.cpp
-        src/Utilities.h src/Camera/Camera.cpp src/Camera/Camera.h src/Cube.cpp src/Cube.h)
+        src/Utilities.h src/Camera/Camera.cpp src/Camera/Camera.h src/Cube.cpp src/Cube.h src/Camera/CameraMovement.cpp src/Camera/CameraMovement.h)
 
 find_package(OpenGL REQUIRED)
 find_package(GLUT REQUIRED)

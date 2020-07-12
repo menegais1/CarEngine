@@ -27,7 +27,9 @@ void Cube::render() {
     std::vector<dvec3> projVertices = vertices;
     for (int i = 0; i < projVertices.size(); ++i) {
         projVertices[i] = Camera::getInstance()->convertNDCToViewport(
-                Camera::getInstance()->convertToProjectionSpace(projVertices[i]));
+                Camera::getInstance()->clipCoordinates(
+                        Camera::getInstance()->convertViewToProjection(Camera::getInstance()->removeBackCameraVertex(
+                                Camera::getInstance()->convertWorldToView(projVertices[i])))));
         //projVertices[i].print();
     }
     CV::color(0, 0, 0, 1);
@@ -48,6 +50,7 @@ void Cube::render() {
 }
 
 void Cube::keyboard(int key) {
+    return;
     dvec3 translation = dvec3(0, 0, 0);
     if (key == 'w') {
         translation.y = 0.1;

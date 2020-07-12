@@ -13,30 +13,28 @@ public:
 
     static Camera *getInstance();
 
-    dMatrix generateViewMatrix(dvec3 center, dvec3 eye, dvec3 up);
+    dMatrix generateViewMatrix(dvec3 eye, dvec3 at, dvec3 up);
 
     dMatrix generateProjectionMatrix(float fov, float aspectRatio, float near, float far);
-
-    dvec3 convertToProjectionSpace(dvec3 vertex);
 
     dvec3 convertNDCToViewport(dvec3 ndc);
 
     void setViewport(int width, int height, int x, int y);
 
-    dMatrix translate(dvec3 translation);
+    dvec3 clipCoordinates(dvec3 vertex);
 
-    dMatrix rotateX(float angle);
+    dvec3 convertViewToProjection(dvec3 vertex);
 
-    dMatrix rotateY(float angle);
+    dvec3 convertWorldToView(dvec3 vertex);
 
-    dMatrix rotateZ(float angle);
+    dvec3 removeBackCameraVertex(dvec3 vertex);
 
-    dMatrix scale(dvec3 scale);
-
-private:
     dvec3 center;
     dvec3 up;
-    dvec3 eye;
+    dvec3 forward;
+    dvec3 right;
+    dvec3 at;
+private:
     dMatrix View;
     dMatrix Projection;
     int Vx;
@@ -45,6 +43,7 @@ private:
     int Vwidth;
 
     Camera();
+
 
 };
 
