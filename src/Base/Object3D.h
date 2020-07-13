@@ -7,32 +7,26 @@
 
 
 #include "CanvasObject.h"
+#include "Transform.h"
 
-class Object3D : public CanvasObject, ITransformable {
+class Object3D : public CanvasObject {
 protected:
+    Object3D(Transform transform);
+
     dMatrix Model;
-    dvec3 center;
     std::vector<dvec3> vertices;
     std::vector<int> triangles;
-
-public:
-    Object3D();
-
-protected:
-
-    void translate(dvec3 translationAmount) override;
-
-    void rotateX(float angle) override;
-
-    void rotateZ(float angle) override;
-
-    void rotateY(float angle) override;
-
-    void rescale(dvec3 scale) override;
 
     void computeCenter();
 
     void setCenter(dvec3 center);
+
+    void render() override;
+
+public:
+    Transform transform;
+
+
 };
 
 

@@ -11,12 +11,7 @@
 
 class Cylinder : public Object3D {
 public:
-    float radius;
-    float height;
-
-    Cylinder(dvec3 center, float radius, float height);
-
-    void render() override;
+    Cylinder(Transform transform);
 
 };
 

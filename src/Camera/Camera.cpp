@@ -8,7 +8,7 @@
 dMatrix Camera::generateViewMatrix(dvec3 eye, dvec3 at, dvec3 up) {
     dvec3 forward = (eye - at).unit();
     dvec3 right = up.cross(forward).unit();
-    up = forward.cross(right).unit();
+    up = right.cross(forward).unit();
 
     dMatrix T(4, 4);
     T.m = {{1, 0, 0, -eye.x},
@@ -23,7 +23,7 @@ dMatrix Camera::generateViewMatrix(dvec3 eye, dvec3 at, dvec3 up) {
     View = R * T;
     this->right = right;
     this->forward = -forward;
-    this->up = up;
+    this->up = -up;
     this->center = eye;
     this->at = at;
     return View;
@@ -69,6 +69,11 @@ dvec3 Camera::removeBackCameraVertex(dvec3 vertex) {
 dvec3 Camera::convertWorldToView(dvec3 vertex) {
     auto projectedPoint = View * vertex.toVector4(1);
     return projectedPoint.toVector3();
+}
+
+dvec3 Camera::convertModelToViewport(dvec3 vertex, dMatrix Model) {
+    return convertNDCToViewport(convertViewToProjection(
+            removeBackCameraVertex(convertWorldToView((Model * vertex.toVector4(1)).toVector3()))));
 }
 
 dvec3 Camera::convertViewToProjection(dvec3 vertex) {

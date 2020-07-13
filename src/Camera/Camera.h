@@ -29,6 +29,8 @@ public:
 
     dvec3 removeBackCameraVertex(dvec3 vertex);
 
+    dvec3 convertModelToViewport(dvec3 vertex, dMatrix Model);
+
     dvec3 center;
     dvec3 up;
     dvec3 forward;

@@ -23,6 +23,8 @@ public:
 
     void mouse(int button, int state, int wheel, int direction, int x, int y) override;
 
+    void render() override;
+
 };
 
 

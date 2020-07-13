@@ -15,8 +15,10 @@
 #include "Canvas/gl_canvas2d.h"
 #include "Utilities.h"
 #include "Managers/GlobalManager.h"
-#include "Cube.h"
-#include "Cylinder.h"
+#include "Base3DObjects/Cube.h"
+#include "Base3DObjects/Cylinder.h"
+#include "Crank.h"
+#include "PistonBottom.h"
 
 using namespace std;
 
@@ -49,8 +51,10 @@ int main(void) {
                                                     10);
     Camera::getInstance()->setViewport(GlobalManager::getInstance()->screenWidth,
                                        GlobalManager::getInstance()->screenHeight, 0, 0);
-    Cube *cube = new Cube(dvec3(0, 0, 0), dvec3(1, 1, 1));
-    Cylinder *cylinder = new Cylinder(dvec3(2, 0, 0), 0.2, 2);
+    Cube *cube = new Cube(dvec3(0, 2, 0), dvec3(1, 1, 1));
+    Crank *crank = new Crank(Transform(dvec3(4, 2, 0), dvec3(0, 0, 0), dvec3(0.2, 0.2, 2)));
+    PistonBottom *pistonBottom = new PistonBottom(Transform(crank->transform.position + dvec3(0,crank->transform.scale.y + 1,crank->transform.scale.z / 2), dvec3(90, 0, 0), dvec3(0.1, 0.1, 2)));
+    pistonBottom->crank = crank;
     CameraMovement *cameraMovement = new CameraMovement(Camera::getInstance());
     CV::run();
 }

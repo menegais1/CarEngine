@@ -7,7 +7,7 @@
 #include "Cube.h"
 #include "Utilities.h"
 
-Cube::Cube(dvec3 center, dvec3 size) {
+Cube::Cube(dvec3 center, dvec3 size) : Object3D(Transform()) {
     vertices = std::vector<dvec3>(8);
     vertices[0] = center + dvec3(-size.x, -size.y, size.z) / 2.0;
     vertices[1] = center + dvec3(size.x, -size.y, size.z) / 2.0;
