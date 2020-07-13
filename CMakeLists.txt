@@ -24,7 +24,7 @@ add_executable(CarEngine
         src/Vectors/Matrix.h
         src/main.cpp
         src/Utilities.cpp
-        src/Utilities.h src/Camera/Camera.cpp src/Camera/Camera.h src/Base3DObjects/Cube.cpp src/Base3DObjects/Cube.h src/Camera/CameraMovement.cpp src/Camera/CameraMovement.h src/Base3DObjects/Cylinder.cpp src/Base3DObjects/Cylinder.h src/Base/Object3D.cpp src/Base/Object3D.h src/Crank.cpp src/Crank.h src/PistonBottom.cpp src/PistonBottom.h src/Base/Transform.cpp src/Base/Transform.h)
+        src/Utilities.h src/Camera/Camera.cpp src/Camera/Camera.h src/Base3DObjects/Cube.cpp src/Base3DObjects/Cube.h src/Camera/CameraMovement.cpp src/Camera/CameraMovement.h src/Base3DObjects/Cylinder.cpp src/Base3DObjects/Cylinder.h src/Base/Object3D.cpp src/Base/Object3D.h src/Crank.cpp src/Crank.h src/Piston.cpp src/Piston.h src/Base/Transform.cpp src/Base/Transform.h)
 
 if (WIN32)
     find_package(OpenGL REQUIRED)

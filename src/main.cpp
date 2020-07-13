@@ -18,7 +18,7 @@
 #include "Base3DObjects/Cube.h"
 #include "Base3DObjects/Cylinder.h"
 #include "Crank.h"
-#include "PistonBottom.h"
+#include "Piston.h"
 
 using namespace std;
 
@@ -53,8 +53,14 @@ int main(void) {
                                        GlobalManager::getInstance()->screenHeight, 0, 0);
     Cube *cube = new Cube(dvec3(0, 2, 0), dvec3(1, 1, 1));
     Crank *crank = new Crank(Transform(dvec3(4, 2, 0), dvec3(0, 0, 0), dvec3(0.2, 0.2, 2)));
-    PistonBottom *pistonBottom = new PistonBottom(Transform(crank->transform.position + dvec3(0,crank->transform.scale.y + 1,crank->transform.scale.z / 2), dvec3(90, 0, 0), dvec3(0.1, 0.1, 2)));
-    pistonBottom->crank = crank;
+    Piston *piston = new Piston(
+            Transform(crank->transform.position + dvec3(0, crank->transform.scale.y + 1, crank->transform.scale.z / 2),
+                      dvec3(90, 0, 0), dvec3(0.1, 0.1, 2)));
+    Cylinder *pistonPin = new Cylinder(
+            Transform(crank->transform.position + dvec3(0, crank->transform.scale.y + 1, crank->transform.scale.z / 2),
+                      dvec3(90, 0, 0), dvec3(0.3, 0.3, 0.5)));
+    piston->crank = crank;
+    piston->pin = pistonPin;
     CameraMovement *cameraMovement = new CameraMovement(Camera::getInstance());
     CV::run();
 }
