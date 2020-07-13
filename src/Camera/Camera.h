@@ -6,7 +6,7 @@
 #define PROJECTIONEXERCISE_CAMERA_H
 
 
-#include <Vectors/Vector3.h>
+#include "../Vectors/Vector3.h"
 
 class Camera {
 public:

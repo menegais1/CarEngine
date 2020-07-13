@@ -6,7 +6,7 @@
 #define PROJECTIONEXERCISE_CUBE_H
 
 
-#include "Base/Object3D.h"
+#include "../Base/Object3D.h"
 
 class Cube : public Object3D {
 public:

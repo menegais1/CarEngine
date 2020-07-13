@@ -2,8 +2,8 @@
 // Created by menegais1 on 12/07/2020.
 //
 
-#include <Camera/Camera.h>
-#include <Canvas/gl_canvas2d.h>
+#include "../Camera/Camera.h"
+#include "../Canvas/gl_canvas2d.h"
 #include "Object3D.h"
 #include "../Utilities.h"
 
@@ -30,6 +30,12 @@ void Object3D::computeCenter() {
 }
 
 void Object3D::render() {
+
+    if (std::abs(transform.rotation.x) >= 360) transform.rotation.x = (int) transform.rotation.x % 360;
+    if (std::abs(transform.rotation.y) >= 360) transform.rotation.y = (int) transform.rotation.y % 360;
+    if (std::abs(transform.rotation.z) >= 360) transform.rotation.z = (int) transform.rotation.z % 360;
+
+
     auto S = dMatrix::scale(transform.scale);
     auto T = dMatrix::translate(transform.position);
     auto Rx = dMatrix::rotateX(transform.rotation.x * PI / 180.0);

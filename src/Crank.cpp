@@ -8,7 +8,7 @@
 
 void Crank::render() {
     Object3D::render();
-    this->transform.rotation.z += 1;
+    this->transform.rotation.z -= 1;
 
 }
 

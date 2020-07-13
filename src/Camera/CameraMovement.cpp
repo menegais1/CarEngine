@@ -2,7 +2,7 @@
 // Created by menegais1 on 12/07/2020.
 //
 
-#include <Canvas/gl_canvas2d.h>
+#include "../Canvas/gl_canvas2d.h"
 #include "CameraMovement.h"
 #include "../Utilities.h"
 
@@ -51,7 +51,7 @@ void CameraMovement::mouse(int button, int state, int wheel, int direction, int 
             yDelta = 0;
         }
         auto RY = dMatrix::rotateY(-xDelta * PI / 180.0);
-        auto RX = dMatrix::rotateX((camera->forward.z < 0 ? -yDelta : yDelta) * PI / 180.0);
+        auto RX = dMatrix::rotateX((camera->forward.z < 0 ? yDelta : -yDelta) * PI / 180.0);
         auto R = RX * RY;
         dvec3 rotatedEye = (R * (camera->at - camera->center).toVector4(1)).toVector3() + camera->center;
         dvec3 rotatedUp = (R * camera->up.toVector4(1)).toVector3();

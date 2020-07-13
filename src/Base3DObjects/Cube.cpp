@@ -2,10 +2,10 @@
 // Created by menegais1 on 01/07/2020.
 //
 
-#include <Camera/Camera.h>
-#include <Canvas/gl_canvas2d.h>
+#include "../Camera/Camera.h"
+#include "../Canvas/gl_canvas2d.h"
 #include "Cube.h"
-#include "Utilities.h"
+#include "../Utilities.h"
 
 Cube::Cube(dvec3 center, dvec3 size) : Object3D(Transform()) {
     vertices = std::vector<dvec3>(8);

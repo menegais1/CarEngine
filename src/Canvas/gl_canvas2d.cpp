@@ -17,7 +17,7 @@
 #include <GL/glut.h>
 #include "../Managers/GlobalManager.h"
 
-int *scrWidth, *scrHeight; //guarda referencia para as variaveis de altura e largura da main()
+int scrWidth, scrHeight; //guarda referencia para as variaveis de altura e largura da main()
 
 //conjunto de cores predefinidas. Pode-se adicionar mais cores.
 float Colors[14][3] =
@@ -224,7 +224,7 @@ void motion(int x, int y) {
 
 void ConvertMouseCoord(int button, int state, int wheel, int direction, int x, int y) {
 #if Y_CANVAS_CRESCE_PARA_CIMA == TRUE
-    y = *scrHeight - y; //deve-se inverter a coordenada y do mouse se o y da canvas crescer para cima. O y do mouse sempre cresce para baixo.
+    y = scrHeight - y; //deve-se inverter a coordenada y do mouse se o y da canvas crescer para cima. O y do mouse sempre cresce para baixo.
 #else
     //nao faz nada.
 #endif
@@ -234,6 +234,8 @@ void ConvertMouseCoord(int button, int state, int wheel, int direction, int x, i
 //funcao chamada sempre que a tela for redimensionada.
 void reshape(int w, int h) {
 
+    scrWidth = w;
+    scrHeight = h;
     glViewport(0, 0, (GLsizei) w, (GLsizei) h);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
@@ -275,6 +277,8 @@ void display(void) {
 ////////////////////////////////////////////////////////////////////////////////////////
 void CV::init(int w, int h, const char *title) {
     int argc = 0;
+    scrWidth = w;
+    scrHeight = h;
     glutInit(&argc, NULL);
 
 

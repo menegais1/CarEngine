@@ -8,7 +8,7 @@
 dMatrix Camera::generateViewMatrix(dvec3 eye, dvec3 at, dvec3 up) {
     dvec3 forward = (eye - at).unit();
     dvec3 right = up.cross(forward).unit();
-    up = right.cross(forward).unit();
+    up = forward.cross(right).unit();
 
     dMatrix T(4, 4);
     T.m = {{1, 0, 0, -eye.x},
@@ -23,7 +23,7 @@ dMatrix Camera::generateViewMatrix(dvec3 eye, dvec3 at, dvec3 up) {
     View = R * T;
     this->right = right;
     this->forward = -forward;
-    this->up = -up;
+    this->up = up;
     this->center = eye;
     this->at = at;
     return View;

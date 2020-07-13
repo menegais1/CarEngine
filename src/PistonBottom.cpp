@@ -11,14 +11,20 @@
 
 void PistonBottom::render() {
     Object3D::render();
-    dvec3 position = transform.position;
-    position.y = transform.position.y - transform.scale.z / 2;
-    auto T = dMatrix::translate(-crank->transform.position);
-    auto rotation = dMatrix::rotateZ(0.01);
-    auto Tinv = dMatrix::translate(crank->transform.position);
-    position = (Tinv * rotation * T * position.toVector4(1)).toVector3();
-    position.y = position.y + transform.scale.z / 2;
-    transform.position = position;
+
+    //UPPER PISTON CODE
+    float radius = crank->transform.scale.y;
+    float l = transform.scale.z;
+    float angle = crank->transform.rotation.z * PI / 180.0;
+    transform.position.y =
+            radius * std::cos(angle) + std::sqrt(std::pow(l, 2) - (radius * radius * std::pow(sin(angle), 2) * angle));
+    //LOWER PISTON CODE
+    dvec2 vec = crank->transform.position - transform.position;
+    transform.position.x = crank->transform.position.x + radius * cos(angle);
+    transform.position.y = crank->transform.position.y + radius * sin(angle);
+
+    angle = -std::atan2(vec.y, vec.x);
+    transform.rotation.z = angle * 180.0 / PI;
 }
 
 PistonBottom::PistonBottom(Transform transform) : Cylinder(transform) {

@@ -2,10 +2,10 @@
 // Created by menegais1 on 12/07/2020.
 //
 
-#include <Canvas/gl_canvas2d.h>
-#include <Camera/Camera.h>
+#include "../Canvas/gl_canvas2d.h"
+#include "../Camera/Camera.h"
 #include "Cylinder.h"
-#include "Utilities.h"
+#include "../Utilities.h"
 
 Cylinder::Cylinder(Transform transform) : Object3D(transform) {
     float step = 2 * PI / 30.0;
