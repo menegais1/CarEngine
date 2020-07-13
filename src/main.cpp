@@ -17,8 +17,8 @@
 #include "Managers/GlobalManager.h"
 #include "Base3DObjects/Cube.h"
 #include "Base3DObjects/Cylinder.h"
-#include "Crank.h"
-#include "Piston.h"
+#include "Engine.h"
+#include "Slider/HorizontalSlider.h"
 
 using namespace std;
 
@@ -52,8 +52,8 @@ int main(void) {
     Camera::getInstance()->setViewport(GlobalManager::getInstance()->screenWidth,
                                        GlobalManager::getInstance()->screenHeight, 0, 0);
     Cube *cube = new Cube(dvec3(0, 2, 0), dvec3(1, 1, 1));
-    Crank *crank = new Crank(Transform(dvec3(4, 2, 0), dvec3(0, 0, 0), dvec3(0.2, 0.2, 2)));
-    Piston *piston = new Piston(
+    Cylinder *crank = new Cylinder(Transform(dvec3(4, 2, 0), dvec3(0, 0, 0), dvec3(0.2, 0.2, 2)));
+    Engine *piston = new Engine(
             Transform(crank->transform.position + dvec3(0, crank->transform.scale.y + 1, crank->transform.scale.z / 2),
                       dvec3(90, 0, 0), dvec3(0.1, 0.1, 2)));
     Cylinder *pistonPin = new Cylinder(
@@ -61,6 +61,15 @@ int main(void) {
                       dvec3(90, 0, 0), dvec3(0.3, 0.3, 0.5)));
     piston->crank = crank;
     piston->pin = pistonPin;
+    piston->rpm = 10000;
+
+    HorizontalSlider *slider = new HorizontalSlider(dvec2(100, 30), dvec2(120, 10), dvec4(0, 0, 0, 0.2),
+                                                    dvec4(0, 0, 0, 1));
+    slider->setValues(1, 10000, 20);
+    slider->addOnValueChangedListener([piston](float value) -> void {
+        piston->rpm = value;
+    });
+    slider->setCurValue(piston->rpm);
     CameraMovement *cameraMovement = new CameraMovement(Camera::getInstance());
     CV::run();
 }

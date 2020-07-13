@@ -70,6 +70,8 @@ public:
 
     //funcao para executar a Canvas2D
     static void run();
+
+    static void color(dvec4 color);
 };
 
 #endif

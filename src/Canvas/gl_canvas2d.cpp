@@ -194,6 +194,10 @@ void CV::color(float r, float g, float b, float alpha) {
     glColor4d(r, g, b, alpha);
 }
 
+void CV::color(dvec4 color) {
+    glColor4d(color.x, color.y, color.z, color.w);
+}
+
 void special(int key, int, int) {
     keyboard(key + 100);
 }
@@ -305,7 +309,8 @@ void CV::init(int w, int h, const char *title) {
     glutPassiveMotionFunc(motion);
     glutMotionFunc(motion);
     glutMouseWheelFunc(mouseWheelCB);
-
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     printf("GL Version: %s", glGetString(GL_VERSION));
 }
 
