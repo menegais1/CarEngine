@@ -33,7 +33,7 @@ if (WIN32)
     target_link_libraries(CarEngine ${OPENGL_LIBRARIES} D:/Documents-HD/Repositories/Libraries/freeglut.lib)
 endif ()
 
-if (unix)
+if (UNIX)
     find_package(OpenGL REQUIRED)
     find_package(GLUT REQUIRED)
     include_directories(${OPENGL_INCLUDE_DIRS} ${GLUT_INCLUDE_DIRS})
