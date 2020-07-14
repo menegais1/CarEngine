@@ -53,23 +53,17 @@ int main(void) {
                                        GlobalManager::getInstance()->screenHeight, 0, 0);
     Cube *cube = new Cube(dvec3(0, 2, 0), dvec3(1, 1, 1));
     Cylinder *crank = new Cylinder(Transform(dvec3(4, 2, 0), dvec3(0, 0, 0), dvec3(0.2, 0.2, 2)), 8);
-    Engine *piston = new Engine(
-            Transform(crank->transform.position + dvec3(0, crank->transform.scale.y + 1, crank->transform.scale.z / 2),
-                      dvec3(90, 0, 0), dvec3(0.1, 0.1, 2)));
-    Cylinder *pistonPin = new Cylinder(
-            Transform(crank->transform.position + dvec3(0, crank->transform.scale.y + 1, crank->transform.scale.z / 2),
-                      dvec3(90, 0, 0), dvec3(0.3, 0.3, 0.5)), 30);
-    piston->crank = crank;
-    piston->pin = pistonPin;
-    piston->rpm = 10000;
+    Engine *engine = new Engine(
+            Transform(dvec3(2, 0, 0), dvec3(0, 0, 0), dvec3(1, 1, 1)), crank);
+    engine->rpm = 10000;
 
     HorizontalSlider *slider = new HorizontalSlider(dvec2(100, 30), dvec2(120, 10), dvec4(0, 0, 0, 0.2),
                                                     dvec4(0, 0, 0, 1));
     slider->setValues(1, 10000, 20);
-    slider->addOnValueChangedListener([piston](float value) -> void {
-        piston->rpm = value;
+    slider->addOnValueChangedListener([engine](float value) -> void {
+        engine->rpm = value;
     });
-    slider->setCurValue(piston->rpm);
+    slider->setCurValue(engine->rpm);
     CameraMovement *cameraMovement = new CameraMovement(Camera::getInstance());
     CV::run();
 }

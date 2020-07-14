@@ -8,14 +8,14 @@
 
 #include "Base3DObjects/Cylinder.h"
 
-class Engine : public Cylinder {
+class Engine : public Object3D {
 public:
 
-    Engine(Transform transform);
+    Engine(Transform transform, Cylinder *crank);
 
     Object3D *crank;
-    Object3D *pin;
-
+    std::vector<Object3D *> pistonPins;
+    std::vector<Object3D *> pistons;
     float rpm;
 private:
     float angularVelocity;
@@ -23,6 +23,12 @@ private:
     void render() override;
 
     float calculateAngularVelocity(float rpm);
+
+    dvec3 calculatePistonPinPosition(Object3D *pin, Object3D *piston, float radius, float angle, float l);
+
+    dvec3 calculatePistonPosition(Object3D *piston, float radius, float angle) const;
+
+    dvec3 calculatePistonRotation(Object3D *piston, dvec3 pinPosition, dvec3 pinOnCrankPosition);
 };
 
 
