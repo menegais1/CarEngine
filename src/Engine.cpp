@@ -38,7 +38,7 @@ void Engine::render() {
     pin->transform.position = pinPosition;
 }
 
-Engine::Engine(Transform transform) : Cylinder(transform) {
+Engine::Engine(Transform transform) : Cylinder(transform,30) {
     rpm = 100;
 }
 

@@ -52,7 +52,7 @@ void GlobalManager::changeObjectOrder(CanvasObject *object) {
 
 void GlobalManager::mouse(int button, int state, int wheel, int direction, int x, int y) {
     std::vector<CanvasObject *> callbackCaller = objects;
-    mousePosition = {x, y};
+    mousePosition = dvec2(x, y);
     for (int i = callbackCaller.size() - 1; i >= 0; i--) {
         if (!callbackCaller[i]->checkIfCanExecuteCallback())
             continue;
@@ -133,7 +133,9 @@ void GlobalManager::reshape(int width, int height) {
 
     float aspectRatio = width / (float) height;
     Camera::getInstance()->setViewport(width, height, 0, 0);
-    Camera::getInstance()->generateProjectionMatrix((60 * PI / 180.0), aspectRatio,
-                                                    0.01,
-                                                    10);
+    if (Camera::getInstance()->cameraType == CameraType::Orthographic) {
+        Camera::getInstance()->generateOrtographicProjectionMatrix(Camera::getInstance()->getWidth(), Camera::getInstance()->getHeight(), aspectRatio);
+    } else {
+        Camera::getInstance()->generateProjectionMatrix(Camera::getInstance()->getFov(), aspectRatio, Camera::getInstance()->getNear(), Camera::getInstance()->getFar());
+    }
 }

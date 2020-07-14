@@ -7,8 +7,8 @@
 #include "Cylinder.h"
 #include "../Utilities.h"
 
-Cylinder::Cylinder(Transform transform) : Object3D(transform) {
-    float step = 2 * PI / 30.0;
+Cylinder::Cylinder(Transform transform, int sides) : Object3D(transform) {
+    float step = 2 * PI / sides;
 
     double z = -1 / 2.0;
     vertices.push_back(dvec3(0, 0, z));

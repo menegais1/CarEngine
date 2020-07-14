@@ -8,8 +8,15 @@
 
 #include "../Vectors/Vector3.h"
 
+enum class CameraType {
+    Orthographic,
+    Perspective
+};
+
 class Camera {
 public:
+
+    CameraType cameraType;
 
     static Camera *getInstance();
 
@@ -31,6 +38,20 @@ public:
 
     dvec3 convertModelToViewport(dvec3 vertex, dMatrix Model);
 
+    dMatrix generateOrtographicProjectionMatrix(float width, float height, float aspectRatio);
+
+    float getNear() const;
+
+    float getFar() const;
+
+    float getFov() const;
+
+    float getAspectRatio() const;
+
+    float getWidth() const;
+
+    float getHeight() const;
+
     dvec3 center;
     dvec3 up;
     dvec3 forward;
@@ -43,6 +64,12 @@ private:
     int Vy;
     int Vheight;
     int Vwidth;
+    float _near;
+    float _far;
+    float _fov;
+    float _aspectRatio;
+    float _width;
+    float _height;
 
     Camera();
 

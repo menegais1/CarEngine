@@ -52,13 +52,13 @@ int main(void) {
     Camera::getInstance()->setViewport(GlobalManager::getInstance()->screenWidth,
                                        GlobalManager::getInstance()->screenHeight, 0, 0);
     Cube *cube = new Cube(dvec3(0, 2, 0), dvec3(1, 1, 1));
-    Cylinder *crank = new Cylinder(Transform(dvec3(4, 2, 0), dvec3(0, 0, 0), dvec3(0.2, 0.2, 2)));
+    Cylinder *crank = new Cylinder(Transform(dvec3(4, 2, 0), dvec3(0, 0, 0), dvec3(0.2, 0.2, 2)), 8);
     Engine *piston = new Engine(
             Transform(crank->transform.position + dvec3(0, crank->transform.scale.y + 1, crank->transform.scale.z / 2),
                       dvec3(90, 0, 0), dvec3(0.1, 0.1, 2)));
     Cylinder *pistonPin = new Cylinder(
             Transform(crank->transform.position + dvec3(0, crank->transform.scale.y + 1, crank->transform.scale.z / 2),
-                      dvec3(90, 0, 0), dvec3(0.3, 0.3, 0.5)));
+                      dvec3(90, 0, 0), dvec3(0.3, 0.3, 0.5)), 30);
     piston->crank = crank;
     piston->pin = pistonPin;
     piston->rpm = 10000;

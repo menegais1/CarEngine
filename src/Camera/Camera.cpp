@@ -31,18 +31,31 @@ dMatrix Camera::generateViewMatrix(dvec3 eye, dvec3 at, dvec3 up) {
 
 dMatrix Camera::generateProjectionMatrix(float fov, float aspectRatio, float near, float far) {
     dMatrix P = dMatrix::identity(4);
-    P.m = {{1.0 / (std::tan(fov / 2.0) * aspectRatio), 0,                   0,                             0},
-           {0,                                         1.0 / std::tan(fov /
-                                                                      2.0), 0,                             0},
-           {0,                                         0,                   (near + far) / (float) (far -
-                                                                                                    near), (2 *
-                                                                                                            near *
-                                                                                                            far) /
-                                                                                                           (float) (
-                                                                                                                   far -
-                                                                                                                   near)},
-           {0,                                         0,                   -1,                            0}};
+    P.m = {{1.0 / (std::tan(fov / 2.0) * aspectRatio), 0,                         0,                                   0},
+           {0,                                         1.0 / std::tan(fov / 2.0), 0,                                   0},
+           {0,                                         0,                         (near + far) / (float) (far - near), (2 * near * far) / (float) (far - near)},
+           {0,                                         0,                         -1,                                  0}};
     Projection = P;
+
+    this->_fov = fov;
+    this->_aspectRatio = aspectRatio;
+    this->_near = near;
+    this->_far = far;
+    this->_height = std::tan(fov / 2.0) * (far + near) / 2;;
+    this->_width =_height * aspectRatio;
+    return Projection;
+}
+
+dMatrix Camera::generateOrtographicProjectionMatrix(float width, float height, float aspectRatio) {
+    dMatrix P = dMatrix::identity(4);
+    P.m = {{1.0 / width * aspectRatio, 0,            0, 0},
+           {0,                         1.0 / height, 0, 0},
+           {0,                         0,            0, 0},
+           {0,                         0,            0, 1}};
+    Projection = P;
+    this->_aspectRatio = aspectRatio;
+    this->_width = width;
+    this->_height = height;
     return Projection;
 }
 
@@ -62,7 +75,7 @@ dvec3 Camera::clipCoordinates(dvec3 vertex) {
 }
 
 dvec3 Camera::removeBackCameraVertex(dvec3 vertex) {
-    if (vertex.z > 0) return dvec3(10000, 10000, 10000);
+    if (vertex.z > 0) return dvec3(NAN, NAN, NAN);
     return vertex;
 }
 
@@ -90,6 +103,30 @@ Camera *Camera::getInstance() {
 
 Camera::Camera() {
 
+}
+
+float Camera::getNear() const {
+    return _near;
+}
+
+float Camera::getFar() const {
+    return _far;
+}
+
+float Camera::getFov() const {
+    return _fov;
+}
+
+float Camera::getAspectRatio() const {
+    return _aspectRatio;
+}
+
+float Camera::getWidth() const {
+    return _width;
+}
+
+float Camera::getHeight() const {
+    return _height;
 }
 
 

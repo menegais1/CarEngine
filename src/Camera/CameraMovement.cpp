@@ -9,24 +9,35 @@
 void CameraMovement::keyboard(int key) {
     double moveSpeed = 0.1;
 
-    if (key == 'w') {
+    if (key == 'o') {
+        camera->cameraType = CameraType::Orthographic;
+        camera->generateOrtographicProjectionMatrix(camera->getWidth(), camera->getHeight(), camera->getAspectRatio());
+    }
+
+    if (key == 'p') {
+        camera->cameraType = CameraType::Perspective;
+        Camera::getInstance()->generateProjectionMatrix(camera->getFov(), camera->getAspectRatio(), camera->getNear(), camera->getFar());
+    }
+
+
+    if (key == 'w' && camera->cameraType == CameraType::Perspective) {
         camera->generateViewMatrix(camera->center + camera->forward * moveSpeed,
-                                   camera->at + camera->forward * moveSpeed, dvec3(0,1,0));
-    } else if (key == 's') {
+                                   camera->at + camera->forward * moveSpeed, dvec3(0, 1, 0));
+    } else if (key == 's' && camera->cameraType == CameraType::Perspective) {
         camera->generateViewMatrix(camera->center + camera->forward * -moveSpeed,
-                                   camera->at + camera->forward * -moveSpeed, dvec3(0,1,0));
+                                   camera->at + camera->forward * -moveSpeed, dvec3(0, 1, 0));
     } else if (key == 'd') {
         camera->generateViewMatrix(camera->center + camera->right * moveSpeed, camera->at + camera->right * moveSpeed,
-                                   dvec3(0,1,0));
+                                   dvec3(0, 1, 0));
     } else if (key == 'a') {
         camera->generateViewMatrix(camera->center + camera->right * -moveSpeed, camera->at + camera->right * -moveSpeed,
-                                   dvec3(0,1,0));
+                                   dvec3(0, 1, 0));
     } else if (key == 'q') {
-        camera->generateViewMatrix(camera->center + dvec3(0,1,0) * moveSpeed, camera->at + dvec3(0,1,0) * moveSpeed,
-                                   dvec3(0,1,0));
+        camera->generateViewMatrix(camera->center + dvec3(0, 1, 0) * moveSpeed, camera->at + dvec3(0, 1, 0) * moveSpeed,
+                                   dvec3(0, 1, 0));
     } else if (key == 'e') {
-        camera->generateViewMatrix(camera->center + dvec3(0,1,0) * -moveSpeed, camera->at + dvec3(0,1,0)* -moveSpeed,
-                                   dvec3(0,1,0));
+        camera->generateViewMatrix(camera->center + dvec3(0, 1, 0) * -moveSpeed, camera->at + dvec3(0, 1, 0) * -moveSpeed,
+                                   dvec3(0, 1, 0));
     }
 }
 
@@ -36,7 +47,7 @@ void CameraMovement::mouse(int button, int state, int wheel, int direction, int 
     } else if (leftMouseUp(button, state)) {
         isDragging = false;
     }
-    if (isDragging) {
+    if (isDragging && camera->cameraType == CameraType::Perspective) {
 
         int xDelta = x - lastMousePosition.x;
         int yDelta = y - lastMousePosition.y;
@@ -73,10 +84,10 @@ void CameraMovement::render() {
     right = camera->convertModelToViewport(right, dMatrix::identity(4));
     forward = camera->convertModelToViewport(forward, dMatrix::identity(4));
     zero = camera->convertModelToViewport(zero, dMatrix::identity(4));
-    CV::color(1,0,0,1);
+    CV::color(1, 0, 0, 1);
     CV::line(zero, up);
-    CV::color(0,1,0,1);
+    CV::color(0, 1, 0, 1);
     CV::line(zero, right);
-    CV::color(0,0,1,1);
+    CV::color(0, 0, 1, 1);
     CV::line(zero, forward);
 }
