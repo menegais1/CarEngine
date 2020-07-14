@@ -39,7 +39,7 @@ dvec3 Engine::calculatePistonRotation(Object3D *piston, dvec3 pinPosition, dvec3
 };
 
 void Engine::render() {
-
+    Object3D::render();
     angularVelocity = calculateAngularVelocity(rpm);
     crank->transform.rotation.z += angularVelocity * GlobalManager::getInstance()->deltaTime;
     float radius = crank->transform.scale.y;

@@ -30,7 +30,7 @@ void Object3D::computeCenter() {
 }
 
 void Object3D::render() {
-
+    if(triangles.size() == 0) return;
     if (std::abs(transform.rotation.x) >= 360) transform.rotation.x = (int) transform.rotation.x % 360;
     if (std::abs(transform.rotation.y) >= 360) transform.rotation.y = (int) transform.rotation.y % 360;
     if (std::abs(transform.rotation.z) >= 360) transform.rotation.z = (int) transform.rotation.z % 360;
