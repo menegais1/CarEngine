@@ -228,7 +228,8 @@ void motion(int x, int y) {
 
 void ConvertMouseCoord(int button, int state, int wheel, int direction, int x, int y) {
 #if Y_CANVAS_CRESCE_PARA_CIMA == 1
-    y = scrHeight - y; //deve-se inverter a coordenada y do mouse se o y da canvas crescer para cima. O y do mouse sempre cresce para baixo.
+    y = scrHeight -
+        y; //deve-se inverter a coordenada y do mouse se o y da canvas crescer para cima. O y do mouse sempre cresce para baixo.
 #else
     //nao faz nada.
 #endif
@@ -247,7 +248,7 @@ void reshape(int w, int h) {
     //cria uma projecao ortografica com z entre (-1, 1).
 #if Y_CANVAS_CRESCE_PARA_CIMA == 1
     //parametros: left, right, bottom, top
-    gluOrtho2D (0.0, w, 0.0, h); //o eixo y cresce para cima.
+    gluOrtho2D(0.0, w, 0.0, h); //o eixo y cresce para cima.
 #else
     //parametros: left, right, bottom, top
     gluOrtho2D(0.0, w, h, 0.0); //o eixo y cresce para baixo
@@ -323,5 +324,9 @@ void CV::line(dvec2 p1, dvec2 p2) {
     glVertex2d(p1.x, p1.y);
     glVertex2d(p2.x, p2.y);
     glEnd();
+}
+
+void CV::color(dvec3 color) {
+    glColor4d(color.x, color.y, color.z, 1);
 }
 

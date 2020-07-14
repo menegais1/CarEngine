@@ -40,7 +40,7 @@ add_executable(CarEngine
         src/Base/Transform.cpp
         src/Base/Transform.h
         src/Slider/HorizontalSlider.h
-        src/Slider/HorizontalSlider.cpp src/Base/ObjectUI.cpp src/Base/ObjectUI.h)
+        src/Slider/HorizontalSlider.cpp src/Base/ObjectUI.cpp src/Base/ObjectUI.h src/Renderer.cpp src/Renderer.h)
 
 if (WIN32)
     find_package(OpenGL REQUIRED)

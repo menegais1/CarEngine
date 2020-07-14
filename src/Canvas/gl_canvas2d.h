@@ -72,6 +72,7 @@ public:
     static void run();
 
     static void color(dvec4 color);
+    static void color(dvec3 color);
 };
 
 #endif

@@ -65,13 +65,13 @@ Engine::Engine(Transform transform, Cylinder *crank) : Object3D(transform) {
                                              dvec3(90, 0, 0), dvec3(0.1, 0.1, 2)), 30));
     pistonPins.push_back(new Cylinder(Transform(crank->transform.position + dvec3(0, crank->transform.scale.y + 1, crank->transform.position.z + crank->transform.scale.z / 2),
                                                 dvec3(90, 0, 0), dvec3(0.3, 0.3, 0.5)), 30));
-    pistons.push_back(new Cylinder(Transform(crank->transform.position + dvec3(0, crank->transform.scale.y + 1, crank->transform.position.z),
-                                             dvec3(90, 0, 0), dvec3(0.1, 0.1, 2)), 30));
-    pistonPins.push_back(new Cylinder(Transform(crank->transform.position + dvec3(0, crank->transform.scale.y + 1, crank->transform.position.z),
-                                                dvec3(90, 0, 0), dvec3(0.3, 0.3, 0.5)), 30));
-    pistons.push_back(new Cylinder(Transform(crank->transform.position + dvec3(0, crank->transform.scale.y + 1, crank->transform.position.z - crank->transform.scale.z / 2),
-                                             dvec3(90, 0, 0), dvec3(0.1, 0.1, 2)), 30));
-    pistonPins.push_back(new Cylinder(Transform(crank->transform.position + dvec3(0, crank->transform.scale.y + 1, crank->transform.position.z - crank->transform.scale.z / 2),
-                                                dvec3(90, 0, 0), dvec3(0.3, 0.3, 0.5)), 30));
+//    pistons.push_back(new Cylinder(Transform(crank->transform.position + dvec3(0, crank->transform.scale.y + 1, crank->transform.position.z),
+//                                             dvec3(90, 0, 0), dvec3(0.1, 0.1, 2)), 30));
+//    pistonPins.push_back(new Cylinder(Transform(crank->transform.position + dvec3(0, crank->transform.scale.y + 1, crank->transform.position.z),
+//                                                dvec3(90, 0, 0), dvec3(0.3, 0.3, 0.5)), 30));
+//    pistons.push_back(new Cylinder(Transform(crank->transform.position + dvec3(0, crank->transform.scale.y + 1, crank->transform.position.z - crank->transform.scale.z / 2),
+//                                             dvec3(90, 0, 0), dvec3(0.1, 0.1, 2)), 30));
+//    pistonPins.push_back(new Cylinder(Transform(crank->transform.position + dvec3(0, crank->transform.scale.y + 1, crank->transform.position.z - crank->transform.scale.z / 2),
+//                                                dvec3(90, 0, 0), dvec3(0.3, 0.3, 0.5)), 30));
 }
 
