@@ -73,6 +73,8 @@ public:
 
     static void color(dvec4 color);
     static void color(dvec3 color);
+
+    static void setClearColor(dvec4 color);
 };
 
 #endif

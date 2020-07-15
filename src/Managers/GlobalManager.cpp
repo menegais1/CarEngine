@@ -134,7 +134,7 @@ void GlobalManager::reshape(int width, int height) {
     float aspectRatio = width / (float) height;
     Camera::getInstance()->setViewport(width, height, 0, 0);
     if (Camera::getInstance()->cameraType == CameraType::Orthographic) {
-        Camera::getInstance()->generateOrtographicProjectionMatrix(Camera::getInstance()->getWidth(), Camera::getInstance()->getHeight(), aspectRatio);
+        Camera::getInstance()->generateOrtographicProjectionMatrix(Camera::getInstance()->getWidth(), Camera::getInstance()->getHeight(), aspectRatio, Camera::getInstance()->getNear(), Camera::getInstance()->getFar());
     } else {
         Camera::getInstance()->generateProjectionMatrix(Camera::getInstance()->getFov(), aspectRatio, Camera::getInstance()->getNear(), Camera::getInstance()->getFar());
     }

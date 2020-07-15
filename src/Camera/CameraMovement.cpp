@@ -5,13 +5,14 @@
 #include "../Rendering/Canvas/gl_canvas2d.h"
 #include "CameraMovement.h"
 #include "../Utilities.h"
+#include "../Rendering/Renderer.h"
 
 void CameraMovement::keyboard(int key) {
     double moveSpeed = 0.1;
 
     if (key == 'o') {
         camera->cameraType = CameraType::Orthographic;
-        camera->generateOrtographicProjectionMatrix(camera->getWidth(), camera->getHeight(), camera->getAspectRatio());
+        camera->generateOrtographicProjectionMatrix(camera->getWidth(), camera->getHeight(), camera->getAspectRatio(), camera->getNear(), camera->getFar());
     }
 
     if (key == 'p') {
@@ -19,6 +20,14 @@ void CameraMovement::keyboard(int key) {
         Camera::getInstance()->generateProjectionMatrix(camera->getFov(), camera->getAspectRatio(), camera->getNear(), camera->getFar());
     }
 
+    if (key == 'm') {
+        if (Renderer::getInstance()->isActive) {
+            CV::setClearColor(dvec4(1, 1, 1, 1));
+        } else {
+            CV::setClearColor(dvec4(0, 0, 0, 0));
+        }
+        Renderer::getInstance()->isActive = !Renderer::getInstance()->isActive;
+    }
 
     if (key == 'w' && camera->cameraType == CameraType::Perspective) {
         camera->generateViewMatrix(camera->center + camera->forward * moveSpeed,

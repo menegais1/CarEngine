@@ -38,7 +38,7 @@ public:
 
     dvec3 convertModelToViewport(dvec3 vertex, dMatrix Model);
 
-    dMatrix generateOrtographicProjectionMatrix(float width, float height, float aspectRatio);
+    dMatrix generateOrtographicProjectionMatrix(float width, float height, float aspectRatio, float near, float far);
 
     float getNear() const;
 

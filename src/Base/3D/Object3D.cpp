@@ -58,31 +58,23 @@ void Object3D::render() {
         dvec3 v1 = vertices[triangles[i + 1]];
         dvec3 v2 = vertices[triangles[i + 2]];
         dvec3 normal = (v1 - v0).cross(v2 - v0);
-        dvec3 center = (v0 + v1 + v2) / 3.0;
+        dvec3 modelCenter = (v0 + v1 + v2) / 3.0;
         flatShader->IN_Normal = normal;
         v0 = flatShader->vertexShader(v0);
         v1 = flatShader->vertexShader(v1);
         v2 = flatShader->vertexShader(v2);
-        Renderer::getInstance()->triangle(v0, v1, v2, flatShader);
-//        center = (v0 + v1 + v2) / 3.0;
-//        normal = Camera::getInstance()->convertModelToViewport(center + normal.unit() * 1, Model);
-
-//        if (cont < 10) {
-//            CV::color(0, 1, 0, 1);
-//            CV::line(center, normal);
-//            CV::color(0, 0, 1, 1);
-//            CV::line(v0, v1);
-//            CV::line(v1, v2);
-//            CV::line(v2, v0);
-//        } else{
-//            CV::color(1, 0, 0, 1);
-//            CV::line(center, normal);
-//            CV::color(1, 1, 1, 1);
-//            CV::line(v0, v1);
-//            CV::line(v1, v2);
-//            CV::line(v2, v0);
-//        }
-
+        if (Renderer::getInstance()->isActive) {
+            Renderer::getInstance()->triangle(v0, v1, v2, flatShader);
+        } else {
+            dvec3 screenCenter = (v0 + v1 + v2) / 3.0;
+            dvec3 screenNormal = Camera::getInstance()->convertModelToViewport(modelCenter + normal.unit() * 1, Model);
+            CV::color(1, 0, 0, 1);
+            CV::line(screenCenter, screenNormal);
+            CV::color(0, 0, 0, 1);
+            CV::line(v0, v1);
+            CV::line(v1, v2);
+            CV::line(v2, v0);
+        }
 
     }
 }

@@ -14,7 +14,7 @@ class Renderer : CanvasObject {
 public:
     dvec3 *frameBuffer;
     float *depthBuffer;
-
+    bool isActive;
     int *width;
     int *height;
 

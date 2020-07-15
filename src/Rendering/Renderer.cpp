@@ -67,6 +67,7 @@ void Renderer::triangle(dvec3 v1, dvec3 v2, dvec3 v3, IShader *shader) {
 }
 
 void Renderer::render() {
+    if(!isActive) return;
     for (int x = 0; x < *width; x++) {
         for (int y = 0; y < *height; ++y) {
             int idx = y * (*height) + x;
@@ -95,4 +96,5 @@ Renderer::Renderer(int *width, int *height) : width(width), height(height) {
     }
 
     setObjectOrder(1000);
+    isActive = false;
 }

@@ -46,16 +46,18 @@ dMatrix Camera::generateProjectionMatrix(float fov, float aspectRatio, float nea
     return Projection;
 }
 
-dMatrix Camera::generateOrtographicProjectionMatrix(float width, float height, float aspectRatio) {
+dMatrix Camera::generateOrtographicProjectionMatrix(float width, float height, float aspectRatio, float near, float far) {
     dMatrix P = dMatrix::identity(4);
     P.m = {{1.0 / width * aspectRatio, 0,            0, 0},
            {0,                         1.0 / height, 0, 0},
-           {0,                         0,            0, 0},
+           {0,                         0,            (near + far) / (float) (far - near), (2 * near * far) / (float) (far - near)},
            {0,                         0,            0, 1}};
     Projection = P;
     this->_aspectRatio = aspectRatio;
     this->_width = width;
     this->_height = height;
+    this->_near = near;
+    this->_far = far;
     return Projection;
 }
 
@@ -103,7 +105,7 @@ Camera *Camera::getInstance() {
 }
 
 Camera::Camera() {
-
+    cameraType = CameraType::Perspective;
 }
 
 float Camera::getNear() const {

@@ -259,9 +259,13 @@ void reshape(int w, int h) {
     GlobalManager::getInstance()->reshape(w, h);
 }
 
+void CV::setClearColor(dvec4 color) {
+    glClearColor(color.x, color.y, color.z, color.w);
+}
+
 //definicao de valores para limpar buffers
 void inicializa() {
-    glClearColor(0, 0, 0, 0);
+    glClearColor(1, 1, 1, 1);
     glPolygonMode(GL_FRONT, GL_FILL);
 }
 
