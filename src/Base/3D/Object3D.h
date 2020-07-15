@@ -6,7 +6,7 @@
 #define CARENGINE_OBJECT3D_H
 
 
-#include "CanvasObject.h"
+#include "../CanvasObject.h"
 #include "Transform.h"
 
 class Object3D : public CanvasObject {

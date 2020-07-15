@@ -2,7 +2,7 @@
 #include <vector>
 #include <iostream>
 #include <cmath>
-#include "Canvas/gl_canvas2d.h"
+#include "Rendering/Canvas/gl_canvas2d.h"
 #include "Vectors/Vector2.h"
 #include "Vectors/Vector3.h"
 

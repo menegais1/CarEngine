@@ -5,7 +5,7 @@
 #define COLORSLIDER_H
 
 #include "../Vectors/Vector3.h"
-#include "../Base/ObjectUI.h"
+#include "../Base/UI/ObjectUI.h"
 #include <vector>
 #include <functional>
 

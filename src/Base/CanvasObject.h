@@ -2,10 +2,10 @@
 #define CANVAS_OBJECT_H
 
 #include "../Utilities.h"
-#include "IMouse.h"
-#include "ITransformable.h"
-#include "IKeyboard.h"
-#include "IRender.h"
+#include "Interfaces/IMouse.h"
+#include "Interfaces/ITransformable.h"
+#include "Interfaces/IKeyboard.h"
+#include "Interfaces/IRender.h"
 #include "../Vectors/Vector3.h"
 
 class CanvasObject : public IRender, public IKeyboard, public IMouse {

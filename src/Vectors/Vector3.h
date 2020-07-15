@@ -28,6 +28,8 @@ public:
 
     Vector3(Vector2<t> v, t z);
 
+    Vector3(Vector4<t> v);
+
     Vector3();
 
     Vector3<t> operator+(Vector3<t> v2) const;
@@ -204,6 +206,11 @@ Matrix<t> Vector3<t>::toMatrix() const {
 
 template<class t>
 Vector3<t>::Vector3(Vector2<t> v, t z) : x(v.x), y(v.y), z(z) {
+
+}
+
+template<class t>
+Vector3<t>::Vector3(Vector4<t> v) : x(v.x), y(v.y), z(v.z) {
 
 }
 

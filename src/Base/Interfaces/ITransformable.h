@@ -1,7 +1,7 @@
 #ifndef ITRANSFORMABLE_H
 #define ITRANSFORMABLE_H
 
-#include "../Vectors/Vector3.h"
+#include "../../Vectors/Vector3.h"
 
 class ITransformable {
 public:

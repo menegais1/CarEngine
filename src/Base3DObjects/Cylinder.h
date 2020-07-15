@@ -6,7 +6,7 @@
 #define CARENGINE_CYLINDER_H
 
 
-#include "../Base/Object3D.h"
+#include "../Base/3D/Object3D.h"
 #include "../Vectors/Vector3.h"
 
 class Cylinder : public Object3D {

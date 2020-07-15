@@ -10,12 +10,12 @@ add_executable(CarEngine
         include/GL/glut.h
         src/Base/CanvasObject.cpp
         src/Base/CanvasObject.h
-        src/Base/IKeyboard.h
-        src/Base/IMouse.h
-        src/Base/IRender.h
-        src/Base/ITransformable.h
-        src/Canvas/gl_canvas2d.cpp
-        src/Canvas/gl_canvas2d.h
+        src/Base/Interfaces/IKeyboard.h
+        src/Base/Interfaces/IMouse.h
+        src/Base/Interfaces/IRender.h
+        src/Base/Interfaces/ITransformable.h
+        src/Rendering/Canvas/gl_canvas2d.cpp
+        src/Rendering/Canvas/gl_canvas2d.h
         src/Managers/GlobalManager.cpp
         src/Managers/GlobalManager.h
         src/Vectors/Vector2.h
@@ -33,14 +33,14 @@ add_executable(CarEngine
         src/Camera/CameraMovement.h
         src/Base3DObjects/Cylinder.cpp
         src/Base3DObjects/Cylinder.h
-        src/Base/Object3D.cpp
-        src/Base/Object3D.h
+        src/Base/3D/Object3D.cpp
+        src/Base/3D/Object3D.h
         src/Engine.cpp
         src/Engine.h
-        src/Base/Transform.cpp
-        src/Base/Transform.h
+        src/Base/3D/Transform.cpp
+        src/Base/3D/Transform.h
         src/Slider/HorizontalSlider.h
-        src/Slider/HorizontalSlider.cpp src/Base/ObjectUI.cpp src/Base/ObjectUI.h src/Renderer.cpp src/Renderer.h)
+        src/Slider/HorizontalSlider.cpp src/Base/UI/ObjectUI.cpp src/Base/UI/ObjectUI.h src/Rendering/Renderer.cpp src/Rendering/Renderer.h src/Rendering/IShader.cpp src/Rendering/IShader.h src/Rendering/FlatShader.cpp src/Rendering/FlatShader.h)
 
 if (WIN32)
     find_package(OpenGL REQUIRED)

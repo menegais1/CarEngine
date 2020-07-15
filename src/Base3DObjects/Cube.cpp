@@ -3,7 +3,7 @@
 //
 
 #include "../Camera/Camera.h"
-#include "../Canvas/gl_canvas2d.h"
+#include "../Rendering/Canvas/gl_canvas2d.h"
 #include "Cube.h"
 #include "../Utilities.h"
 

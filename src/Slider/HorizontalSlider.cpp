@@ -1,6 +1,6 @@
 
 #include "HorizontalSlider.h"
-#include "../Canvas/gl_canvas2d.h"
+#include "../Rendering/Canvas/gl_canvas2d.h"
 #include "../Utilities.h"
 #include <iostream>
 #include <sstream>

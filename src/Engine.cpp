@@ -6,7 +6,7 @@
 
 
 #include "Camera/Camera.h"
-#include "Canvas/gl_canvas2d.h"
+#include "Rendering/Canvas/gl_canvas2d.h"
 #include "Managers/GlobalManager.h"
 #include "Engine.h"
 

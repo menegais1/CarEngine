@@ -2,7 +2,7 @@
 // Created by menegais1 on 12/07/2020.
 //
 
-#include "../Canvas/gl_canvas2d.h"
+#include "../Rendering/Canvas/gl_canvas2d.h"
 #include "CameraMovement.h"
 #include "../Utilities.h"
 

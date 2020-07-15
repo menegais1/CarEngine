@@ -2,7 +2,7 @@
 // Created by menegais1 on 12/07/2020.
 //
 
-#include "../Canvas/gl_canvas2d.h"
+#include "../Rendering/Canvas/gl_canvas2d.h"
 #include "../Camera/Camera.h"
 #include "Cylinder.h"
 #include "../Utilities.h"
@@ -19,8 +19,8 @@ Cylinder::Cylinder(Transform transform, int sides) : Object3D(transform) {
     }
     for (int i = 1; i < vertices.size() - 1; ++i) {
         triangles.push_back(0);
-        triangles.push_back(i);
         triangles.push_back(i + 1);
+        triangles.push_back(i);
     }
 
     z = 1 / 2.0;
@@ -39,11 +39,11 @@ Cylinder::Cylinder(Transform transform, int sides) : Object3D(transform) {
 
     for (int i = 1; i < (vertices.size() / 2) - 1; i++) {
         triangles.push_back(i);
+        triangles.push_back(i + centerUp + 1);
         triangles.push_back(i + centerUp);
-        triangles.push_back(i + centerUp + 1);
         triangles.push_back(i + 1);
-        triangles.push_back(i);
         triangles.push_back(i + centerUp + 1);
+        triangles.push_back(i);
     }
 }
 

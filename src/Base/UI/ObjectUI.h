@@ -6,8 +6,8 @@
 #define CARENGINE_OBJECTUI_H
 
 
-#include "../Vectors/Vector2.h"
-#include "CanvasObject.h"
+#include "../../Vectors/Vector2.h"
+#include "../CanvasObject.h"
 
 class ObjectUI : CanvasObject{
 public:

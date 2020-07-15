@@ -6,8 +6,9 @@
 #define CARENGINE_RENDERER_H
 
 
-#include "Vectors/Vector3.h"
-#include "Base/CanvasObject.h"
+#include "../Vectors/Vector3.h"
+#include "../Base/CanvasObject.h"
+#include "IShader.h"
 
 class Renderer : CanvasObject {
 public:
@@ -17,7 +18,7 @@ public:
     int *width;
     int *height;
 
-    void triangle(Vector3<double> v1, Vector3<double> v2, Vector3<double> v3);
+    void triangle(Vector3<double> v1, Vector3<double> v2, Vector3<double> v3,IShader* shader);
 
     dvec3 barycentricCoordinates(dvec3 v1, dvec3 v2, dvec3 v3, dvec3 p);
 

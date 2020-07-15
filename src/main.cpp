@@ -12,7 +12,7 @@
 #include <iostream>
 #include "Camera/Camera.h"
 #include "Camera/CameraMovement.h"
-#include "Canvas/gl_canvas2d.h"
+#include "Rendering/Canvas/gl_canvas2d.h"
 #include "Utilities.h"
 #include "Managers/GlobalManager.h"
 #include "Base3DObjects/Cube.h"
@@ -47,7 +47,7 @@ int main(void) {
     Camera::getInstance()->generateViewMatrix(eye, center, dvec3(0, 1, 0));
     Camera::getInstance()->generateProjectionMatrix(60 * PI / 180.0, GlobalManager::getInstance()->screenWidth /
                                                                      (float) GlobalManager::getInstance()->screenHeight,
-                                                    0.1,
+                                                    0.01,
                                                     10);
     Camera::getInstance()->setViewport(GlobalManager::getInstance()->screenWidth,
                                        GlobalManager::getInstance()->screenHeight, 0, 0);
@@ -55,7 +55,7 @@ int main(void) {
     Cylinder *crank = new Cylinder(Transform(dvec3(4, 2, 0), dvec3(0, 0, 0), dvec3(0.2, 0.2, 2)), 8);
     Engine *engine = new Engine(
             Transform(dvec3(2, 0, 0), dvec3(0, 0, 0), dvec3(1, 1, 1)), crank);
-    engine->rpm = 10000;
+    engine->rpm = 1;
 
     HorizontalSlider *slider = new HorizontalSlider(dvec2(100, 30), dvec2(120, 10), dvec4(0, 0, 0, 0.2),
                                                     dvec4(0, 0, 0, 1));
