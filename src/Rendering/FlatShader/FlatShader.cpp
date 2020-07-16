@@ -3,9 +3,9 @@
 //
 
 #include "FlatShader.h"
-#include "../Camera/Camera.h"
+#include "../../Camera/Camera.h"
 
-dvec3 FlatShader::vertexShader(dvec3 vertex) {
+dvec3 FlatShader::vertexShader(dvec3 vertex, int vertexIndex) {
     dvec3 v = Camera::getInstance()->convertModelToViewport(vertex, IN_Model);
     dvec3 lightPosition = (IN_ModelInverse * IN_LightPosition.toVector4(1)).toVector3();
     float lightIntensity = std::max(0.0, (lightPosition - vertex).unit().dot(IN_Normal.unit()));

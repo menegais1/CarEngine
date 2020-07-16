@@ -62,6 +62,8 @@ public:
 
     void print();
 
+    bool equalZero();
+
     t length();
 
     Vector3<t> unit();
@@ -178,6 +180,11 @@ Vector3<t> Vector3<t>::operator-() const {
 template<class t>
 void Vector3<t>::print() {
     std::cout << "x: " << x << " y: " << y << " z: " << z << std::endl;
+}
+
+template<class t>
+bool Vector3<t>::equalZero() {
+    return x == 0 && y == 0 && z == 0;
 }
 
 template<class t>

@@ -8,6 +8,7 @@
 
 #include "../CanvasObject.h"
 #include "Transform.h"
+#include "../../Rendering/IShader.h"
 
 class Object3D : public CanvasObject {
 protected:
@@ -16,6 +17,8 @@ protected:
     dMatrix Model;
     std::vector<dvec3> vertices;
     std::vector<int> triangles;
+    std::vector<dvec3> normals;
+    IShader* shader;
 
     void computeCenter();
 
@@ -27,6 +30,13 @@ public:
     Transform transform;
 
 
+    dvec3 calculateNormal(int i0, int i1, int i2);
+
+    void setNormal(int i, dvec3 normal);
+
+    void setRenderingShaderInfo(ShaderType shaderType, int i);
+
+    void createRenderingShader(ShaderType shaderType);
 };
 
 

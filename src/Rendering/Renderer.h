@@ -17,8 +17,9 @@ public:
     bool isActive;
     int *width;
     int *height;
+    ShaderType shaderType;
 
-    void triangle(Vector3<double> v1, Vector3<double> v2, Vector3<double> v3,IShader* shader);
+    void triangle(Vector3<double> v1, Vector3<double> v2, Vector3<double> v3, IShader *shader);
 
     dvec3 barycentricCoordinates(dvec3 v1, dvec3 v2, dvec3 v3, dvec3 p);
 

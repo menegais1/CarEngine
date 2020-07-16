@@ -29,6 +29,18 @@ void CameraMovement::keyboard(int key) {
         Renderer::getInstance()->isActive = !Renderer::getInstance()->isActive;
     }
 
+    if(Renderer::getInstance()->isActive){
+        if(key == 'j'){
+            Renderer::getInstance()->shaderType = ShaderType::Flat;
+        }
+        if(key == 'k'){
+            Renderer::getInstance()->shaderType = ShaderType::Goraud;
+        }
+        if(key == 'l'){
+            Renderer::getInstance()->shaderType = ShaderType::Phong;
+        }
+    }
+
     if (key == 'w' && camera->cameraType == CameraType::Perspective) {
         camera->generateViewMatrix(camera->center + camera->forward * moveSpeed,
                                    camera->at + camera->forward * moveSpeed, dvec3(0, 1, 0));

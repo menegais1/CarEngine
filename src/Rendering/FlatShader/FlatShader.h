@@ -6,7 +6,7 @@
 #define CARENGINE_FLATSHADER_H
 
 
-#include "IShader.h"
+#include "../IShader.h"
 
 class FlatShader : public IShader {
 public:
@@ -17,7 +17,7 @@ public:
     dMatrix IN_Model;
     dMatrix IN_ModelInverse;
 
-    dvec3 vertexShader(dvec3 vertex) override;
+    dvec3 vertexShader(dvec3 vertex,int vertexIndex) override;
 
     dvec4 fragmentShader(dvec3 barycentric, bool &discard) override;
 
