@@ -12,7 +12,8 @@ Cylinder::Cylinder(Transform transform, int sides) : Object3D(transform) {
 
     double z = -1 / 2.0;
     vertices.push_back(dvec3(0, 0, z));
-    for (float t = 0; t < PI * 2; t += step) {
+    normals.push_back(dvec3(0, 0, -1));
+    for (float t = 0; t <= PI * 2 - step; t += step) {
         double x = cos(t);
         double y = sin(t);
         vertices.push_back(dvec3(x, y, z));
@@ -29,11 +30,20 @@ Cylinder::Cylinder(Transform transform, int sides) : Object3D(transform) {
         setNormal(i, normal);
     }
 
+    triangles.push_back(0);
+    triangles.push_back(1);
+    triangles.push_back(vertices.size() - 1);
+
+    dvec3 normal = calculateNormal(0, 1, vertices.size() - 1);
+    setNormal(0, normal);
+    setNormal(1, normal);
+    setNormal(vertices.size() - 1, normal);
+
     z = 1 / 2.0;
     vertices.push_back(dvec3(0, 0, z));
     normals.push_back(dvec3(0, 0, 0));
     int centerUp = vertices.size() - 1;
-    for (float t = 0; t < PI * 2; t += step) {
+    for (float t = 0; t <= PI * 2 - step; t += step) {
         double x = cos(t);
         double y = sin(t);
         vertices.push_back(dvec3(x, y, z));
@@ -48,6 +58,15 @@ Cylinder::Cylinder(Transform transform, int sides) : Object3D(transform) {
         setNormal(i, normal);
         setNormal(i + 1, normal);
     }
+
+    triangles.push_back(centerUp);
+    triangles.push_back(vertices.size() - 1);
+    triangles.push_back(centerUp + 1);
+
+    normal = calculateNormal(centerUp, vertices.size() - 1, centerUp + 1);
+    setNormal(centerUp, normal);
+    setNormal(vertices.size() - 1, normal);
+    setNormal(centerUp + 1, normal);
 
     for (int i = 1; i < (vertices.size() / 2) - 1; i++) {
         triangles.push_back(i);
@@ -64,8 +83,24 @@ Cylinder::Cylinder(Transform transform, int sides) : Object3D(transform) {
         setNormal(i + 1, normal);
         setNormal(i + centerUp + 1, normal);
         setNormal(i, normal);
-
     }
+
+    triangles.push_back(vertices.size() - 1);
+    triangles.push_back(1);
+    triangles.push_back(centerUp + 1);
+    normal = calculateNormal(vertices.size() - 1, 1,centerUp + 1);
+    setNormal(vertices.size() - 1, normal);
+    setNormal(1, normal);
+    setNormal(centerUp + 1, normal);
+
+    triangles.push_back(vertices.size() - 1);
+    triangles.push_back(vertices.size() /2 - 1);
+    triangles.push_back(1);
+
+    normal = calculateNormal(vertices.size() - 1,  vertices.size() / 2 - 1,1);
+    setNormal(vertices.size()- 1, normal);
+    setNormal(vertices.size() / 2 - 1, normal);
+    setNormal(1, normal);
 }
 
 
