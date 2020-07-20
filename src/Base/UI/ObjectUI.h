@@ -8,12 +8,12 @@
 
 #include "../../Vectors/Vector2.h"
 #include "../CanvasObject.h"
+#include "Transform2D.h"
 
-class ObjectUI : CanvasObject{
+class ObjectUI : CanvasObject {
 public:
-    dvec2 position;
-    dvec2 scale;
-
+    Transform2D transform;
+    ObjectUI(Transform2D transform);
 
 };
 

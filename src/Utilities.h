@@ -71,5 +71,6 @@ dvec3 RandomColorGenerator(float saturation, float brightness);
 
 dvec3 HSVtoRGB(dvec3 hsv);
 
+dvec2 rotatePoint2D(dvec2 point, float angle);
 
 #endif

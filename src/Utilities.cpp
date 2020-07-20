@@ -186,3 +186,11 @@ dvec2 getMinimumValue(std::vector<dvec2> values) {
     }
     return min;
 }
+
+dvec2 rotatePoint2D(dvec2 point, float angle) {
+    dvec2 rotatedPoint;
+    rotatedPoint.x = std::cos(angle) * point.x - std::sin(angle) * point.y;
+    rotatedPoint.y = std::sin(angle) * point.x + std::cos(angle) * point.y;
+    return rotatedPoint;
+
+}

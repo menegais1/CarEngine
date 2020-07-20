@@ -40,7 +40,23 @@ add_executable(CarEngine
         src/Base/3D/Transform.cpp
         src/Base/3D/Transform.h
         src/Slider/HorizontalSlider.h
-        src/Slider/HorizontalSlider.cpp src/Base/UI/ObjectUI.cpp src/Base/UI/ObjectUI.h src/Rendering/Renderer.cpp src/Rendering/Renderer.h src/Rendering/IShader.cpp src/Rendering/IShader.h src/Rendering/FlatShader/FlatShader.cpp src/Rendering/FlatShader/FlatShader.h src/Rendering/GoraudShader/GoraudShader.cpp src/Rendering/GoraudShader/GoraudShader.h src/Rendering/PhongShader/PhongShader.cpp src/Rendering/PhongShader/PhongShader.h)
+        src/Slider/HorizontalSlider.cpp
+        src/Base/UI/ObjectUI.cpp
+        src/Base/UI/ObjectUI.h
+        src/Rendering/Renderer.cpp
+        src/Rendering/Renderer.h
+        src/Rendering/IShader.cpp
+        src/Rendering/IShader.h
+        src/Rendering/FlatShader/FlatShader.cpp
+        src/Rendering/FlatShader/FlatShader.h
+        src/Rendering/GoraudShader/GoraudShader.cpp
+        src/Rendering/GoraudShader/GoraudShader.h
+        src/Rendering/PhongShader/PhongShader.cpp
+        src/Rendering/PhongShader/PhongShader.h
+        src/Engine2D.cpp
+        src/Engine2D.h
+        src/Base/UI/Transform2D.cpp
+        src/Base/UI/Transform2D.h src/BaseUIObjects/Rect.cpp src/BaseUIObjects/Rect.h)
 
 if (WIN32)
     find_package(OpenGL REQUIRED)

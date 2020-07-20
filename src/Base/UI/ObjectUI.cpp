@@ -3,3 +3,7 @@
 //
 
 #include "ObjectUI.h"
+
+ObjectUI::ObjectUI(Transform2D transform) : transform(transform) {
+
+}

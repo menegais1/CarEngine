@@ -19,7 +19,7 @@ public:
     dvec4 handleColor;
     dvec4 lineColor;
 
-    HorizontalSlider(dvec2 position, dvec2 scale, dvec4 backgroundColor, dvec4 handleColor);
+    HorizontalSlider(Transform2D transform, dvec4 backgroundColor, dvec4 handleColor);
 
     void mouse(int button, int state, int wheel, int direction, int x, int y) override;
 

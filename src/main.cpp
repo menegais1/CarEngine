@@ -19,6 +19,7 @@
 #include "Base3DObjects/Cylinder.h"
 #include "Engine.h"
 #include "Slider/HorizontalSlider.h"
+#include "Engine2D.h"
 
 using namespace std;
 
@@ -56,12 +57,14 @@ int main(void) {
     Engine *engine = new Engine(
             Transform(dvec3(2, 0, 0), dvec3(0, 0, 0), dvec3(1, 1, 1)), crank);
     engine->rpm = 1;
-
-    HorizontalSlider *slider = new HorizontalSlider(dvec2(100, 30), dvec2(120, 10), dvec4(0, 0, 0, 0.2),
+    Engine2D *engine2D = new Engine2D(Transform2D(dvec2(100, 100), 0, dvec2(100, 100)));
+    engine2D->rpm = 1;
+    HorizontalSlider *slider = new HorizontalSlider(Transform2D(dvec2(100, 30), 0, dvec2(120, 10)), dvec4(0, 0, 0, 0.2),
                                                     dvec4(0, 0, 0, 1));
     slider->setValues(1, 10000, 20);
-    slider->addOnValueChangedListener([engine](float value) -> void {
+    slider->addOnValueChangedListener([engine, engine2D](float value) -> void {
         engine->rpm = value;
+        engine2D->rpm = value;
     });
     slider->setCurValue(engine->rpm);
     CameraMovement *cameraMovement = new CameraMovement(Camera::getInstance());

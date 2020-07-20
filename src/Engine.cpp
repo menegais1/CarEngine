@@ -17,8 +17,7 @@ float Engine::calculateAngularVelocity(float rpm) {
 dvec3 Engine::calculatePistonPinPosition(Object3D *pin, Object3D *piston, float radius, float angle, float l) {
     dvec3 pinPosition = pin->transform.position;
     pinPosition.y =
-            radius * std::cos(angle) + std::sqrt(std::pow(l, 2) - (radius * radius * std::pow(sin(angle), 2) * angle)) +
-            l + pin->transform.scale.z / 2 - (pin->transform.scale.z / 2 * 0.1);
+            radius * std::cos(angle) + std::sqrt((l * l) - ((radius * radius) * (std::sin(angle) * std::sin(angle))));
     return pinPosition;
 }
 
@@ -48,11 +47,10 @@ void Engine::render() {
         float angle = crank->transform.rotation.z * PI / 180.0;
         if (i % 2 != 0) angle = angle + 180 * PI / 180.0;
         float l = pistons[i]->transform.scale.z;
-        dvec3 pinPosition = calculatePistonPinPosition(pistonPins[i], pistons[i], radius, angle, l);
+        dvec3 pinPosition = calculatePistonPinPosition(pistonPins[i], pistons[i], radius, angle, l) + dvec3(0, crank->transform.position.y, 0);
         dvec3 pistonPosition = calculatePistonPosition(pistons[i], radius, angle);
         dvec3 pistonRotation = calculatePistonRotation(pistons[i], pinPosition, pistonPosition);
         pistons[i]->transform.position = ((pinPosition + pistonPosition) / 2);
-        pistons[i]->transform.position.y -= pistonPins[i]->transform.scale.z / 4;
         pistons[i]->transform.rotation = pistonRotation;
         pistonPins[i]->transform.position = pinPosition;
     }
