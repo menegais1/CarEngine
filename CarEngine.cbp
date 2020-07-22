@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="CarEngine" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="../__bin/Debug/CarEngine" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="../" />
+				<Option object_output="../__obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-std=c++11" />
+					<Add option="-g" />
+					<Add directory="include" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="../__bin/Release/CarEngine" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="../" />
+				<Option object_output="../__obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-std=c++11" />
+					<Add option="-O2 -Wall" />
+					<Add directory="include" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-fexceptions" />
+		</Compiler>
+		<Linker>
+			<!--LINUX
+			<Add option="-lGL" />
+			<Add option="-lGLU" />
+			<Add option="-lglut" />-->
+			<!--WINDOWS			-->
+			<Add library="../lib/libglu32.a" />
+			<Add library="../lib/libopengl32.a" />
+			<Add library="../lib/freeglut.lib" />
+
+		</Linker>
+	            <Unit filename="include/GL/freeglut.h">
+                		</Unit>
+                		<Unit filename="include/GL/freeglut_ext.h">
+                		</Unit>
+                		<Unit filename="include/GL/freeglut_std.h">
+                		</Unit>
+                		<Unit filename="include/GL/glut.h">
+                		</Unit>
+                		<Unit filename="src/Base/3D/Object3D.cpp">
+                		</Unit>
+                		<Unit filename="src/Base/3D/Object3D.h">
+                		</Unit>
+                		<Unit filename="src/Base/3D/Transform.cpp">
+                		</Unit>
+                		<Unit filename="src/Base/3D/Transform.h">
+                		</Unit>
+                		<Unit filename="src/Base/CanvasObject.cpp">
+                		</Unit>
+                		<Unit filename="src/Base/CanvasObject.h">
+                		</Unit>
+                		<Unit filename="src/Base/Interfaces/IKeyboard.h">
+                		</Unit>
+                		<Unit filename="src/Base/Interfaces/IMouse.h">
+                		</Unit>
+                		<Unit filename="src/Base/Interfaces/IRender.h">
+                		</Unit>
+                		<Unit filename="src/Base/Interfaces/ITransformable.h">
+                		</Unit>
+                		<Unit filename="src/Base/UI/ObjectUI.cpp">
+                			
+                		</Unit>
+                		<Unit filename="src/Base/UI/ObjectUI.h">
+                			
+                		</Unit>
+                		<Unit filename="src/Base/UI/Transform2D.cpp">
+                			
+                		</Unit>
+                		<Unit filename="src/Base/UI/Transform2D.h">
+                			
+                		</Unit>
+                		<Unit filename="src/Base3DObjects/Cube.cpp">
+                			
+                		</Unit>
+                		<Unit filename="src/Base3DObjects/Cube.h">
+                			
+                		</Unit>
+                		<Unit filename="src/Base3DObjects/Cylinder.cpp">
+                			
+                		</Unit>
+                		<Unit filename="src/Base3DObjects/Cylinder.h">
+                			
+                		</Unit>
+                		<Unit filename="src/BaseUIObjects/Rect.cpp">
+                			
+                		</Unit>
+                		<Unit filename="src/BaseUIObjects/Rect.h">
+                			
+                		</Unit>
+                		<Unit filename="src/Camera/Camera.cpp">
+                			
+                		</Unit>
+                		<Unit filename="src/Camera/Camera.h">
+                			
+                		</Unit>
+                		<Unit filename="src/Camera/CameraMovement.cpp">
+                			
+                		</Unit>
+                		<Unit filename="src/Camera/CameraMovement.h">
+                			
+                		</Unit>
+                		<Unit filename="src/Engine.cpp">
+                			
+                		</Unit>
+                		<Unit filename="src/Engine.h">
+                			
+                		</Unit>
+                		<Unit filename="src/Engine2D.cpp">
+                			
+                		</Unit>
+                		<Unit filename="src/Engine2D.h">
+                			
+                		</Unit>
+                		<Unit filename="src/Managers/GlobalManager.cpp">
+                			
+                		</Unit>
+                		<Unit filename="src/Managers/GlobalManager.h">
+                			
+                		</Unit>
+                		<Unit filename="src/Rendering/Canvas/gl_canvas2d.cpp">
+                			
+                		</Unit>
+                		<Unit filename="src/Rendering/Canvas/gl_canvas2d.h">
+                			
+                		</Unit>
+                		<Unit filename="src/Rendering/FlatShader/FlatShader.cpp">
+                			
+                		</Unit>
+                		<Unit filename="src/Rendering/FlatShader/FlatShader.h">
+                			
+                		</Unit>
+                		<Unit filename="src/Rendering/GoraudShader/GoraudShader.cpp">
+                			
+                		</Unit>
+                		<Unit filename="src/Rendering/GoraudShader/GoraudShader.h">
+                			
+                		</Unit>
+                		<Unit filename="src/Rendering/IShader.cpp">
+                			
+                		</Unit>
+                		<Unit filename="src/Rendering/IShader.h">
+                			
+                		</Unit>
+                		<Unit filename="src/Rendering/PhongShader/PhongShader.cpp">
+                			
+                		</Unit>
+                		<Unit filename="src/Rendering/PhongShader/PhongShader.h">
+                			
+                		</Unit>
+                		<Unit filename="src/Rendering/Renderer.cpp">
+                			
+                		</Unit>
+                		<Unit filename="src/Rendering/Renderer.h">
+                			
+                		</Unit>
+                		<Unit filename="src/Slider/HorizontalSlider.cpp">
+                			
+                		</Unit>
+                		<Unit filename="src/Slider/HorizontalSlider.h">
+                			
+                		</Unit>
+                		<Unit filename="src/Utilities.cpp">
+                			
+                		</Unit>
+                		<Unit filename="src/Utilities.h">
+                			
+                		</Unit>
+                		<Unit filename="src/Vectors/Matrix.h">
+                			
+                		</Unit>
+                		<Unit filename="src/Vectors/Vector2.h">
+                			
+                		</Unit>
+                		<Unit filename="src/Vectors/Vector3.h">
+                			
+                		</Unit>
+                		<Unit filename="src/Vectors/Vector4.h">
+                			
+                		</Unit>
+                		<Unit filename="src/main.cpp">
+                			
+                		</Unit>
+		<Extensions>
+			<code_completion />
+			<debugger />
+			<envvars />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

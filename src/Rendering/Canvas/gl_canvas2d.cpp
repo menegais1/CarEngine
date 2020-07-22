@@ -334,3 +334,11 @@ void CV::color(dvec3 color) {
     glColor4d(color.x, color.y, color.z, 1);
 }
 
+void CV::text(dvec2 pos, const char *t) {
+    int tam = (int) strlen(t);
+    for (int c = 0; c < tam; c++) {
+        glRasterPos2i(pos.x + c * 10, pos.y);
+        glutBitmapCharacter(GLUT_BITMAP_8_BY_13, t[c]);
+    }
+}
+

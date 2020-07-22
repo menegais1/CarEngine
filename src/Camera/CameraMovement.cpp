@@ -2,10 +2,12 @@
 // Created by menegais1 on 12/07/2020.
 //
 
+#include <sstream>
 #include "../Rendering/Canvas/gl_canvas2d.h"
 #include "CameraMovement.h"
 #include "../Utilities.h"
 #include "../Rendering/Renderer.h"
+#include "../Managers/GlobalManager.h"
 
 void CameraMovement::keyboard(int key) {
     double moveSpeed = 0.1;
@@ -29,14 +31,14 @@ void CameraMovement::keyboard(int key) {
         Renderer::getInstance()->isActive = !Renderer::getInstance()->isActive;
     }
 
-    if(Renderer::getInstance()->isActive){
-        if(key == 'j'){
+    if (Renderer::getInstance()->isActive) {
+        if (key == 'j') {
             Renderer::getInstance()->shaderType = ShaderType::Flat;
         }
-        if(key == 'k'){
+        if (key == 'k') {
             Renderer::getInstance()->shaderType = ShaderType::Goraud;
         }
-        if(key == 'l'){
+        if (key == 'l') {
             Renderer::getInstance()->shaderType = ShaderType::Phong;
         }
     }
@@ -92,7 +94,9 @@ void CameraMovement::mouse(int button, int state, int wheel, int direction, int 
     lastMousePosition = dvec2(x, y);
 }
 
-CameraMovement::CameraMovement(Camera *camera) : camera(camera), angle(0, 0) {}
+CameraMovement::CameraMovement(Camera *camera) : camera(camera), angle(0, 0) {
+    setObjectOrder(10000);
+}
 
 
 void CameraMovement::render() {
@@ -111,4 +115,14 @@ void CameraMovement::render() {
     CV::line(zero, right);
     CV::color(0, 0, 1, 1);
     CV::line(zero, forward);
+
+    CV::color(0, 0, 0, 1);
+    std::stringstream stream;
+    stream << GlobalManager::getInstance()->fps;
+    CV::text(dvec2(GlobalManager::getInstance()->screenWidth - 60, GlobalManager::getInstance()->screenHeight - 20), stream.str().c_str());
+    stream.str("");
+    stream << GlobalManager::getInstance()->deltaTime;
+    CV::text(dvec2(GlobalManager::getInstance()->screenWidth - 60, GlobalManager::getInstance()->screenHeight - 40), stream.str().c_str());
+
+
 }
