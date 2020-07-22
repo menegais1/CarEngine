@@ -69,7 +69,7 @@ void Camera::setViewport(int width, int height, int x, int y) {
 }
 
 dvec3 Camera::convertNDCToViewport(dvec3 ndc) {
-    if(ndc.x > 1 || ndc.x < -1 || ndc.y < -1 || ndc.y > 1) return dvec3(NAN,NAN,NAN);
+//    if(ndc.x > 1 || ndc.x < -1 || ndc.y < -1 || ndc.y > 1) return dvec3(NAN,NAN,NAN);
     return dvec3(((ndc.x + 1) * Vwidth / 2.0) + Vx, ((ndc.y + 1) * Vheight / 2.0) + Vy, ndc.z);
 }
 

@@ -44,10 +44,13 @@ void Renderer::triangle(dvec3 v1, dvec3 v2, dvec3 v3, IShader *shader) {
     if (v1.x == NAN || v1.y == NAN || v2.x == NAN || v2.y == NAN || v3.x == NAN || v3.y == NAN) return;
     dvec2 min = getMin(v1, v2, v3);
     dvec2 max = getMax(v1, v2, v3);
-    if (min.x >= *width || min.x < 0 || max.y >= *height || max.y < 0) return;
-    dvec3 color = RandomColorGenerator(0.5, 0.5);
+//    if (max.x >= *width || max.x < 0 || min.x >= *width || min.x < 0 || max.y >= *height || max.y < 0 ||
+//        min.y >= *height || min.y < 0)
+//        return;
+
     for (int x = min.x; x <= max.x; x++) {
         for (int y = min.y; y < max.y; ++y) {
+            if (x < 0 || x >= *width || y < 0 || y >= *height)continue;
             dvec3 p = dvec3(x, y, 0);
             dvec3 barycentric = barycentricCoordinates(v1, v2, v3, p);
             if (barycentric.x > 1 || barycentric.x < 0 || barycentric.y > 1 ||
