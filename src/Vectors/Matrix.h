@@ -156,7 +156,7 @@ Matrix<T> Matrix<T>::invert() {
 
 template<class T>
 Matrix<T> Matrix<T>::operator*(Vector3<T> v) {
-    Matrix<T> V = v.toMatrix();
+    Matrix<T> V = v.toVector4(1).toMatrix();
     return *this * V;
 }
 

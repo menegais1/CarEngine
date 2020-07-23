@@ -74,12 +74,13 @@ dvec3 Camera::convertNDCToViewport(dvec3 ndc) {
     return dvec3(((ndc.x + 1) * Vwidth / 2.0) + Vx, ((ndc.y + 1) * Vheight / 2.0) + Vy, ndc.z);
 }
 
+//https://dl.acm.org/doi/pdf/10.1145/965139.807398 implemented from http://medialab.di.unipi.it/web/IUM/Waterloo/node51.html
 float Camera::clipLineSegmentOnNear(dvec4 p0, dvec4 p1, bool &p0Out, bool &p1Out) {
     if (-p0.z + p0.w > 0 && -p1.z + p1.w > 0) {
         p0Out = p1Out = false;
         return 0;
     }
-    if (-p0.z + p0.w < 0 && -p1.z + p1.w < 0) {
+    if (-p0.z + p0.w <= 0 && -p1.z + p1.w <= 0) {
         p0Out = p1Out = true;
         return 0;
     } else if (-p0.z + p0.w < 0) {

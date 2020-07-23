@@ -18,9 +18,9 @@ public:
     dMatrix IN_Model;
     dMatrix IN_ModelInverse;
 
-    dvec3 vertexShader(dvec3 vertex, int vertexIndex) override;
+    virtual Vertex vertexShader(dvec3 vertex, int vertexIndex) override;
 
-    dvec4 fragmentShader(dvec3 barycentric, bool &discard) override;
+    dvec4 fragmentShader(Vertex interpVertex, dvec3 barycentric, bool &discard) override;
 
 private:
     dvec3 UNIFORM_Color[3];

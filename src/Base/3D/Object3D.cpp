@@ -128,11 +128,11 @@ void Object3D::render() {
         dvec3 normal = (v1 - v0).cross(v2 - v0);
         dvec3 modelCenter = (v0 + v1 + v2) / 3.0;
         setRenderingShaderInfo(Renderer::getInstance()->shaderType, i);
-        v0 = shader->vertexShader(v0, 0);
-        v1 = shader->vertexShader(v1, 1);
-        v2 = shader->vertexShader(v2, 2);
+        Vertex vs0 = shader->vertexShader(v0, 0);
+        Vertex vs1 = shader->vertexShader(v1, 1);
+        Vertex vs2 = shader->vertexShader(v2, 2);
         if (Renderer::getInstance()->isActive) {
-            Renderer::getInstance()->triangle(v0, v1, v2, shader);
+            Renderer::getInstance()->triangle(vs0, vs1, vs2, shader);
         } else {
 //            dvec3 screenCenter = (v0 + v1 + v2) / 3.0;
 //            dvec3 screenNormal = Camera::getInstance()->convertModelToViewport(modelCenter + normal.unit() * 1, Model);

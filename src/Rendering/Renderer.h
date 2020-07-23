@@ -19,7 +19,7 @@ public:
     int *height;
     ShaderType shaderType;
 
-    void triangle(Vector3<double> v1, Vector3<double> v2, Vector3<double> v3, IShader *shader);
+    void triangle(Vertex v1, Vertex v2, Vertex v3, IShader *shader);
 
     dvec3 barycentricCoordinates(dvec3 v1, dvec3 v2, dvec3 v3, dvec3 p);
 
@@ -29,11 +29,18 @@ public:
 
     static Renderer *getInstance();
 
-public:
     Renderer(int *width, int *height);
 
 private:
+    void _triangle(Vertex v1, Vertex v2, Vertex v3, IShader *shader);
+
     void render() override;
+
+    Vertex interpolateVertex(Vertex v0, Vertex v1, Vertex v2, dvec3 barycentric);
+
+    Vertex vertexLerp(Vertex x0, Vertex x1, float t);
+
+    Vertex convertVertexFromClipToViewport(Vertex v);
 };
 
 

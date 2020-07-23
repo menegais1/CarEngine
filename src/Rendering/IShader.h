@@ -15,11 +15,22 @@ enum class ShaderType {
     Phong
 };
 
+class Vertex {
+public:
+    dvec4 pos;
+    dvec3 normal;
+    dvec3 color;
+
+    Vertex(const dvec4 &pos, const dvec3 &normal, const dvec3 &color);
+
+    Vertex();
+};
+
 class IShader {
 public:
-    virtual dvec3 vertexShader(dvec3 vertex, int vertexIndex) = 0;
+    virtual Vertex vertexShader(dvec3 vertex, int vertexIndex) = 0;
 
-    virtual dvec4 fragmentShader(dvec3 barycentric, bool &discard) = 0;
+    virtual dvec4 fragmentShader(Vertex interpVertex, dvec3 barycentric, bool &discard) = 0;
 
 };
 

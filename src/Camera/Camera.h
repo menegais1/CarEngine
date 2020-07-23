@@ -16,6 +16,9 @@ enum class CameraType {
 class Camera {
 public:
 
+    dMatrix View;
+    dMatrix Projection;
+
     CameraType cameraType;
 
     static Camera *getInstance();
@@ -58,8 +61,6 @@ public:
     dvec3 right;
     dvec3 at;
 private:
-    dMatrix View;
-    dMatrix Projection;
     int Vx;
     int Vy;
     int Vheight;

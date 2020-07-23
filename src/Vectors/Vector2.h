@@ -18,6 +18,8 @@ public:
 
     Vector2(Vector3<t> v);
 
+    Vector2(Vector4<t> v);
+
     Vector2();
 
     Vector2<t> operator+(Vector2<t> v2);
@@ -147,6 +149,11 @@ Vector3<t> Vector2<t>::toVector3() {
 
 template<class t>
 Vector2<t>::Vector2(Vector3<t> v) : x(v.x), y(v.y) {
+
+}
+
+template<class t>
+Vector2<t>::Vector2(Vector4<t> v) :x(v.x), y(v.y) {
 
 }
 

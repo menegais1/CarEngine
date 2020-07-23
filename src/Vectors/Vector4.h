@@ -19,6 +19,8 @@ public:
 
     Vector4();
 
+    Vector4(Matrix<t> v);
+
     Vector4<t> operator+(Vector4<t> v2) const;
 
     Vector4<t> operator-(const Vector4<t> v2) const;
@@ -165,6 +167,11 @@ Matrix<t> Vector4<t>::toMatrix() const {
     Matrix<t> M(4, 1);
     M.setCol(*this, 0);
     return M;
+}
+
+template<class t>
+Vector4<t>::Vector4(Matrix<t> matrix) : x(matrix.m[0][0]), y(matrix.m[1][0]), z(matrix.m[2][0]), w(matrix.m[3][0]) {
+
 }
 
 
