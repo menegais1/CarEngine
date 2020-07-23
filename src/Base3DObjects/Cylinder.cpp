@@ -8,12 +8,12 @@
 #include "../Utilities.h"
 
 Cylinder::Cylinder(Transform transform, int sides) : Object3D(transform) {
-    float step = 2 * PI / sides;
+    float step = (2 * PI) / sides;
 
     double z = -1 / 2.0;
     vertices.push_back(dvec3(0, 0, z));
     normals.push_back(dvec3(0, 0, -1));
-    for (float t = 0; t <= PI * 2 - step; t += step) {
+    for (float t = 0; t <= PI * 2 - 0.1; t += step) {
         double x = cos(t);
         double y = sin(t);
         vertices.push_back(dvec3(x, y, z));
@@ -43,7 +43,7 @@ Cylinder::Cylinder(Transform transform, int sides) : Object3D(transform) {
     vertices.push_back(dvec3(0, 0, z));
     normals.push_back(dvec3(0, 0, 0));
     int centerUp = vertices.size() - 1;
-    for (float t = 0; t <= PI * 2 - step; t += step) {
+    for (float t = 0; t <= PI * 2 - 0.1; t += step) {
         double x = cos(t);
         double y = sin(t);
         vertices.push_back(dvec3(x, y, z));
