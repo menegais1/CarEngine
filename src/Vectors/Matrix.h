@@ -51,6 +51,8 @@ public:
 
     Vector3<T> toVector3();
 
+    Vector4<T> toVector4();
+
     static Matrix<T> translate(const Vector3<T> translationAmount);
 
     static Matrix<T> rotateZ(float angle);
@@ -218,7 +220,7 @@ void Matrix<T>::setRow(const Vector4<T> v, int row) {
 
 template<class T>
 Vector3<T> Matrix<T>::toVector3() {
-    return Vector3<T>(m[0][0] / m[3][0], m[1][0] / m[3][0], m[2][0] / m[3][0]);
+    return Vector3<T>(m[0][0], m[1][0], m[2][0]);
 }
 
 template<class T>
@@ -266,6 +268,11 @@ Matrix<T> Matrix<T>::scale(const Vector3<T> scale) {
            {0,       0,       scale.z, 0},
            {0,       0,       0,       1}};
     return S;
+}
+
+template<class T>
+Vector4<T> Matrix<T>::toVector4() {
+    return Vector4<T>(m[0][0], m[1][0], m[2][0], m[3][0]);
 }
 
 

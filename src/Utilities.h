@@ -61,6 +61,8 @@ bool leftMouseUp(int button, int state);
 
 dvec3 lerp(dvec3 x0, dvec3 x1, float t);
 
+dvec4 lerp(dvec4 x0, dvec4 x1, float t);
+
 float lerp(float v0, float v1, float t);
 
 float clamp(float v0, float v1, float v);

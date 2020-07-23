@@ -24,14 +24,15 @@ void Cube::mouse(int button, int state, int wheel, int direction, int x, int y) 
 }
 
 void Cube::render() {
+    return;
     std::vector<dvec3> projVertices = vertices;
-    for (int i = 0; i < projVertices.size(); ++i) {
-        projVertices[i] = Camera::getInstance()->convertNDCToViewport(
-                Camera::getInstance()->clipCoordinates(
-                        Camera::getInstance()->convertViewToProjection(Camera::getInstance()->removeBackCameraVertex(
-                                Camera::getInstance()->convertWorldToView(projVertices[i])))));
-        //projVertices[i].print();
-    }
+//    for (int i = 0; i < projVertices.size(); ++i) {
+//        projVertices[i] = Camera::getInstance()->convertNDCToViewport(
+//                Camera::getInstance()->clipCoordinates(
+//                        Camera::getInstance()->convertViewToProjection(Camera::getInstance()->removeBackCameraVertex(
+//                                Camera::getInstance()->convertWorldToView(projVertices[i])))));
+//        //projVertices[i].print();
+//    }
     CV::color(0, 0, 0, 1);
     for (int j = 0; j < projVertices.size() / 2 - 1; ++j) {
         CV::color(1, 0, 0, 1);

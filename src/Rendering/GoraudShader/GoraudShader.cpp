@@ -6,7 +6,8 @@
 #include "../../Camera/Camera.h"
 
 dvec3 GoraudShader::vertexShader(dvec3 vertex, int vertexIndex) {
-    dvec3 v = Camera::getInstance()->convertModelToViewport(vertex, IN_Model);
+//    dvec3 v = Camera::getInstance()->convertModelToViewport(vertex, IN_Model);
+    dvec3 v = dvec3(0,0,0);
     dvec3 lightPosition = (IN_ModelInverse * IN_LightPosition.toVector4(1)).toVector3();
     float lightIntensity = std::max(0.0, (lightPosition - vertex).unit().dot(IN_Normal[vertexIndex].unit()));
     UNIFORM_Color[vertexIndex] = IN_Color[vertexIndex] * lightIntensity;

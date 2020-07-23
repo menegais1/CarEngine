@@ -48,7 +48,7 @@ int main(void) {
     Camera::getInstance()->generateViewMatrix(eye, center, dvec3(0, 1, 0));
     Camera::getInstance()->generateProjectionMatrix(60 * PI / 180.0, GlobalManager::getInstance()->screenWidth /
                                                                      (float) GlobalManager::getInstance()->screenHeight,
-                                                    0.01,
+                                                    0.1,
                                                     10);
     Camera::getInstance()->setViewport(GlobalManager::getInstance()->screenWidth,
                                        GlobalManager::getInstance()->screenHeight, 0, 0);

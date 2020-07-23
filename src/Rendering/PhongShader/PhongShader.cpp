@@ -6,7 +6,8 @@
 #include "../../Camera/Camera.h"
 
 dvec3 PhongShader::vertexShader(dvec3 vertex, int vertexIndex) {
-    dvec3 v = Camera::getInstance()->convertModelToViewport(vertex, IN_Model);
+//    dvec3 v = Camera::getInstance()->convertModelToViewport(vertex, IN_Model);
+    dvec3 v = dvec3(0,0,0);
     return v;
 }
 

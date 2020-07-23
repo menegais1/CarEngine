@@ -28,17 +28,17 @@ public:
 
     void setViewport(int width, int height, int x, int y);
 
-    dvec3 clipCoordinates(dvec3 vertex);
-
-    dvec3 convertViewToProjection(dvec3 vertex);
-
     dvec3 convertWorldToView(dvec3 vertex);
 
-    dvec3 removeBackCameraVertex(dvec3 vertex);
-
-    dvec3 convertModelToViewport(dvec3 vertex, dMatrix Model);
-
     dMatrix generateOrtographicProjectionMatrix(float width, float height, float aspectRatio, float near, float far);
+
+    dvec4 convertViewToClipSpace(dvec3 vertex);
+
+    dvec3 convertClipSpaceToNDC(dvec4 vertex);
+
+    float clipLineSegmentOnNear(dvec4 p0, dvec4 p1, bool &p0Out, bool &p1Out);
+
+    void line(dvec3 p0, dvec3 p1);
 
     float getNear() const;
 

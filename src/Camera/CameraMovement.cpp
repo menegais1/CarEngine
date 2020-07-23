@@ -105,16 +105,12 @@ void CameraMovement::render() {
     dvec3 forward = dvec3(0, 0, 10);
     dvec3 zero = dvec3(0, 0, 0);
 
-    up = camera->convertModelToViewport(up, dMatrix::identity(4));
-    right = camera->convertModelToViewport(right, dMatrix::identity(4));
-    forward = camera->convertModelToViewport(forward, dMatrix::identity(4));
-    zero = camera->convertModelToViewport(zero, dMatrix::identity(4));
     CV::color(1, 0, 0, 1);
-    CV::line(zero, up);
+    Camera::getInstance()->line(zero, up);
     CV::color(0, 1, 0, 1);
-    CV::line(zero, right);
+    Camera::getInstance()->line(zero, right);
     CV::color(0, 0, 1, 1);
-    CV::line(zero, forward);
+    Camera::getInstance()->line(zero, forward);
 
     CV::color(0, 0, 0, 1);
     std::stringstream stream;

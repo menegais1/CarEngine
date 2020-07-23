@@ -134,14 +134,17 @@ void Object3D::render() {
         if (Renderer::getInstance()->isActive) {
             Renderer::getInstance()->triangle(v0, v1, v2, shader);
         } else {
-            dvec3 screenCenter = (v0 + v1 + v2) / 3.0;
-            dvec3 screenNormal = Camera::getInstance()->convertModelToViewport(modelCenter + normal.unit() * 1, Model);
+//            dvec3 screenCenter = (v0 + v1 + v2) / 3.0;
+//            dvec3 screenNormal = Camera::getInstance()->convertModelToViewport(modelCenter + normal.unit() * 1, Model);
             CV::color(1, 0, 0, 1);
-            CV::line(screenCenter, screenNormal);
+//            CV::line(screenCenter, screenNormal);
             CV::color(0, 0, 0, 1);
-            CV::line(v0, v1);
-            CV::line(v1, v2);
-            CV::line(v2, v0);
+            dvec3 v0 = vertices[triangles[i]];
+            dvec3 v1 = vertices[triangles[i + 1]];
+            dvec3 v2 = vertices[triangles[i + 2]];
+            Camera::getInstance()->line((Model * v0.toVector4(1)).toVector3(), (Model * v1.toVector4(1)).toVector3());
+            Camera::getInstance()->line((Model * v1.toVector4(1)).toVector3(), (Model * v2.toVector4(1)).toVector3());
+            Camera::getInstance()->line((Model * v2.toVector4(1)).toVector3(), (Model * v0.toVector4(1)).toVector3());
         }
 
     }
