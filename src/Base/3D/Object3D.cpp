@@ -52,21 +52,21 @@ void Object3D::createRenderingShader(ShaderType shaderType) {
         flatShader->IN_Color = dvec3(0.8, 0.8, 0.8);
         flatShader->IN_LightPosition = dvec3(0, 3, 0);
         flatShader->IN_Model = Model;
-        flatShader->IN_ModelInverse = Model.invert();
+        flatShader->IN_ModelInverse = InvModel;
         shader = flatShader;
     }
     if (shaderType == ShaderType::Goraud) {
         GoraudShader *goraudShader = new GoraudShader();
         goraudShader->IN_LightPosition = dvec3(0, 3, 0);
         goraudShader->IN_Model = Model;
-        goraudShader->IN_ModelInverse = Model.invert();
+        goraudShader->IN_ModelInverse = InvModel;
         shader = goraudShader;
     }
     if (shaderType == ShaderType::Phong) {
         PhongShader *phongShader = new PhongShader();
         phongShader->IN_LightPosition = dvec3(0, 3, 0);
         phongShader->IN_Model = Model;
-        phongShader->IN_ModelInverse = Model.invert();
+        phongShader->IN_ModelInverse = InvModel;
         shader = phongShader;
     }
 }
@@ -116,7 +116,8 @@ void Object3D::render() {
     auto Ry = dMatrix::rotateY(transform.rotation.y * PI / 180.0);
     auto Rz = dMatrix::rotateZ(transform.rotation.z * PI / 180.0);
     Model = T * Rz * Ry * Rx * S;
-
+    InvModel = Model.invert();
+    dvec3 cameraPos = (InvModel * Camera::getInstance()->center).toVector3();
     CV::color(1, 1, 1, 1);
     createRenderingShader(Renderer::getInstance()->shaderType);
     int cont = 0;
@@ -127,21 +128,18 @@ void Object3D::render() {
         dvec3 v2 = vertices[triangles[i + 2]];
         dvec3 normal = (v1 - v0).cross(v2 - v0);
         dvec3 modelCenter = (v0 + v1 + v2) / 3.0;
-        setRenderingShaderInfo(Renderer::getInstance()->shaderType, i);
-        Vertex vs0 = shader->vertexShader(v0, 0);
-        Vertex vs1 = shader->vertexShader(v1, 1);
-        Vertex vs2 = shader->vertexShader(v2, 2);
         if (Renderer::getInstance()->isActive) {
+            if (normal.dot((cameraPos - v0).unit()) < 0) continue;
+            setRenderingShaderInfo(Renderer::getInstance()->shaderType, i);
+            Vertex vs0 = shader->vertexShader(v0, 0);
+            Vertex vs1 = shader->vertexShader(v1, 1);
+            Vertex vs2 = shader->vertexShader(v2, 2);
             Renderer::getInstance()->triangle(vs0, vs1, vs2, shader);
         } else {
-//            dvec3 screenCenter = (v0 + v1 + v2) / 3.0;
-//            dvec3 screenNormal = Camera::getInstance()->convertModelToViewport(modelCenter + normal.unit() * 1, Model);
+
             CV::color(1, 0, 0, 1);
-//            CV::line(screenCenter, screenNormal);
+            Camera::getInstance()->line((Model * modelCenter).toVector3(), (Model * (modelCenter + normal )).toVector3());
             CV::color(0, 0, 0, 1);
-            dvec3 v0 = vertices[triangles[i]];
-            dvec3 v1 = vertices[triangles[i + 1]];
-            dvec3 v2 = vertices[triangles[i + 2]];
             Camera::getInstance()->line((Model * v0.toVector4(1)).toVector3(), (Model * v1.toVector4(1)).toVector3());
             Camera::getInstance()->line((Model * v1.toVector4(1)).toVector3(), (Model * v2.toVector4(1)).toVector3());
             Camera::getInstance()->line((Model * v2.toVector4(1)).toVector3(), (Model * v0.toVector4(1)).toVector3());

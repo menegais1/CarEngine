@@ -15,10 +15,12 @@ protected:
     Object3D(Transform transform);
 
     dMatrix Model;
+    dMatrix InvModel;
     std::vector<dvec3> vertices;
     std::vector<int> triangles;
     std::vector<dvec3> normals;
-    IShader* shader;
+    std::vector<dvec3> faceNormals;
+    IShader *shader;
 
     void computeCenter();
 
