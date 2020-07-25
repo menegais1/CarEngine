@@ -16,5 +16,5 @@ dvec4 PhongShader::fragmentShader(Vertex interpVertex, dvec3 barycentric, bool &
     dvec3 normal =interpVertex.normal;
     float lightIntensity = std::max(0.0, (lightPosition - vertexPos).unit().dot(normal.unit()));
     dvec3 color = interpVertex.color;
-    return (color * lightIntensity).toVector4(1);
+    return (color * (lightIntensity + 0.2)).toVector4(1);
 }

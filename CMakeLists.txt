@@ -56,7 +56,7 @@ add_executable(CarEngine
         src/Engine2D.cpp
         src/Engine2D.h
         src/Base/UI/Transform2D.cpp
-        src/Base/UI/Transform2D.h src/BaseUIObjects/Rect.cpp src/BaseUIObjects/Rect.h)
+        src/Base/UI/Transform2D.h src/BaseUIObjects/Rect.cpp src/BaseUIObjects/Rect.h src/Base3DObjects/OpenEndedCylinder.cpp src/Base3DObjects/OpenEndedCylinder.h src/Base3DObjects/ModelLoader.cpp src/Base3DObjects/ModelLoader.h)
 
 if (WIN32)
     find_package(OpenGL REQUIRED)
