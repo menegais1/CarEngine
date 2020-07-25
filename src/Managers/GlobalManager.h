@@ -41,6 +41,8 @@ public:
     float lastFpsUpdate = 0;
     int fps;
 private:
+
+    float lastReshapeTime = 0;
     std::chrono::time_point<std::chrono::_V2::system_clock, std::chrono::duration<long, std::ratio<1, 1000000000>>> lastTime = std::chrono::high_resolution_clock::now();
     std::chrono::time_point<std::chrono::_V2::system_clock, std::chrono::duration<long, std::ratio<1, 1000000000>>> currentTime = std::chrono::high_resolution_clock::now();
 

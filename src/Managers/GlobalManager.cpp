@@ -7,12 +7,13 @@
 #include <chrono>
 #include "../Camera/Camera.h"
 #include "../Vectors/Vector2.h"
+#include "../Rendering/Renderer.h"
 
 using namespace std::chrono;
 
 GlobalManager::GlobalManager() {
-    screenWidth = 800;
-    screenHeight = 800;
+    screenWidth = 1200;
+    screenHeight = 1200;
 }
 
 GlobalManager *GlobalManager::getInstance() {
@@ -78,6 +79,14 @@ void GlobalManager::render() {
     }
     cleanUpObjects();
 
+    if(time - lastReshapeTime >= deltaTime){
+        bool lastRendererState = Renderer::getInstance()->isActive;
+        Renderer::getInstance()->isActive = false;
+        lastReshapeTime = 10000000;
+        Renderer::getInstance()->setScreenProportions(this->screenWidth, this->screenHeight);
+        Renderer::getInstance()->isActive = lastRendererState;
+    }
+
     lastTime = currentTime;
 }
 
@@ -134,8 +143,14 @@ void GlobalManager::reshape(int width, int height) {
     float aspectRatio = width / (float) height;
     Camera::getInstance()->setViewport(width, height, 0, 0);
     if (Camera::getInstance()->cameraType == CameraType::Orthographic) {
-        Camera::getInstance()->generateOrtographicProjectionMatrix(Camera::getInstance()->getWidth(), Camera::getInstance()->getHeight(), aspectRatio, Camera::getInstance()->getNear(), Camera::getInstance()->getFar());
+        Camera::getInstance()->generateOrtographicProjectionMatrix(Camera::getInstance()->getWidth(),
+                                                                   Camera::getInstance()->getHeight(), aspectRatio,
+                                                                   Camera::getInstance()->getNear(),
+                                                                   Camera::getInstance()->getFar());
     } else {
-        Camera::getInstance()->generateProjectionMatrix(Camera::getInstance()->getFov(), aspectRatio, Camera::getInstance()->getNear(), Camera::getInstance()->getFar());
+        Camera::getInstance()->generateProjectionMatrix(Camera::getInstance()->getFov(), aspectRatio,
+                                                        Camera::getInstance()->getNear(),
+                                                        Camera::getInstance()->getFar());
     }
+    lastReshapeTime = time;
 }

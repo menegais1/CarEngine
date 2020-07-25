@@ -49,7 +49,9 @@ Vertex Renderer::interpolateVertex(Vertex v0, Vertex v1, Vertex v2, dvec3 baryce
 }
 
 void Renderer::_triangle(Vertex v1, Vertex v2, Vertex v3, IShader *shader) {
-    if (v1.pos.x == NAN || v1.pos.y == NAN || v2.pos.x == NAN || v2.pos.y == NAN || v3.pos.x == NAN || v3.pos.y == NAN) return;
+    if (v1.pos.x == NAN || v1.pos.y == NAN || v2.pos.x == NAN || v2.pos.y == NAN || v3.pos.x == NAN ||
+        v3.pos.y == NAN)
+        return;
     dvec2 min = getMin(v1.pos, v2.pos, v3.pos);
     dvec2 max = getMax(v1.pos, v2.pos, v3.pos);
 //    if (max.x >= *width || max.x < 0 || min.x >= *width || min.x < 0 || max.y >= *height || max.y < 0 ||
@@ -57,15 +59,15 @@ void Renderer::_triangle(Vertex v1, Vertex v2, Vertex v3, IShader *shader) {
 //        return;
 
     for (int x = min.x; x <= max.x; x++) {
-        for (int y = min.y; y < max.y; ++y) {
-            if (x < 0 || x >= *width || y < 0 || y >= *height)continue;
+        for (int y = min.y; y <= max.y; ++y) {
+            if (x < 0 || x >= width || y < 0 || y >= height)continue;
             dvec3 p = dvec3(x, y, 0);
             dvec3 barycentric = barycentricCoordinates(v1.pos, v2.pos, v3.pos, p);
             if (barycentric.x > 1 || barycentric.x < 0 || barycentric.y > 1 ||
                 barycentric.y < 0 || barycentric.z > 1 || barycentric.z < 0)
                 continue;
             p.z = v1.pos.z * barycentric.x + v2.pos.z * barycentric.y + v3.pos.z * barycentric.z;
-            int idx = y * (*height) + x;
+            int idx = y * (width) + x;
             if (depthBuffer[idx] < p.z) {
                 bool discard = false;
                 Vertex v = interpolateVertex(v1, v2, v3, barycentric);
@@ -87,8 +89,8 @@ Vertex Renderer::vertexLerp(Vertex x0, Vertex x1, float t) {
 }
 
 Vertex Renderer::convertVertexFromClipToViewport(Vertex v) {
-    if(abs(v.pos.w) < 0.0001){
-        v.pos = dvec4(NAN,NAN,NAN,NAN);
+    if (abs(v.pos.w) < 0.0001) {
+        v.pos = dvec4(NAN, NAN, NAN, NAN);
         return v;
     }
     v.pos = Camera::getInstance()->convertClipSpaceToNDC(v.pos).toVector4(1);
@@ -103,13 +105,13 @@ void Renderer::triangle(Vertex v1, Vertex v2, Vertex v3, IShader *shader) {
     for (int i = 0; i < 3; ++i) {
         Vertex p0 = vertices[i];
         Vertex p1 = vertices[(i + 1) % 3];
-        bool p0Out, p1Out;
+        bool p0Out = false, p1Out = false;
         float t = Camera::getInstance()->clipLineSegmentOnNear(p0.pos, p1.pos, p0Out, p1Out);
         if (p0Out && p1Out) continue;
         if (!p1Out && !p0Out) {
             if (outVertices.size() > 0 && outVertices[outVertices.size() - 1].pos != p0.pos)
                 outVertices.push_back(p0);
-            else if(outVertices.size() == 0)
+            else if (outVertices.size() == 0)
                 outVertices.push_back(p0);
             outVertices.push_back(p1);
         } else if (p0Out && !p1Out) {
@@ -121,25 +123,28 @@ void Renderer::triangle(Vertex v1, Vertex v2, Vertex v3, IShader *shader) {
             Vertex v = vertexLerp(p0, p1, t);
             if (outVertices.size() > 0 && outVertices[outVertices.size() - 1].pos != p0.pos)
                 outVertices.push_back(p0);
-            else if(outVertices.size() == 0)
+            else if (outVertices.size() == 0)
                 outVertices.push_back(p0);
             outVertices.push_back(v);
         }
     }
     if (outVertices.size() == 0) return;
 
-    _triangle(convertVertexFromClipToViewport(outVertices[0]), convertVertexFromClipToViewport(outVertices[1]), convertVertexFromClipToViewport(outVertices[2]), shader);
+    _triangle(convertVertexFromClipToViewport(outVertices[0]), convertVertexFromClipToViewport(outVertices[1]),
+              convertVertexFromClipToViewport(outVertices[2]), shader);
 
     if (outVertices.size() > 3)
-        _triangle(convertVertexFromClipToViewport(outVertices[2]), convertVertexFromClipToViewport(outVertices[3]), convertVertexFromClipToViewport(outVertices[0]), shader);
+        _triangle(convertVertexFromClipToViewport(outVertices[2]), convertVertexFromClipToViewport(outVertices[3]),
+                  convertVertexFromClipToViewport(outVertices[0]), shader);
 
 }
 
 void Renderer::render() {
     if (!isActive) return;
-    for (int x = 0; x < *width; x++) {
-        for (int y = 0; y < *height; ++y) {
-            int idx = y * (*height) + x;
+    for (int x = 0; x < width; x++) {
+        for (int y = 0; y < height; ++y) {
+            if (!isActive) return;
+            int idx = y * (width) + x;
             CV::color(frameBuffer[idx]);
             CV::point(x, y);
             frameBuffer[idx] = {1, 1, 1};
@@ -149,13 +154,20 @@ void Renderer::render() {
 }
 
 Renderer *Renderer::getInstance() {
-    static Renderer *instance = new Renderer(&GlobalManager::getInstance()->screenWidth,
-                                             &GlobalManager::getInstance()->screenHeight);
+    static Renderer *instance = new Renderer(GlobalManager::getInstance()->screenWidth,
+                                             GlobalManager::getInstance()->screenHeight);
     return instance;
 }
 
-Renderer::Renderer(int *width, int *height) : width(width), height(height) {
-    int size = *width * *height;
+void Renderer::setScreenProportions(int width, int height) {
+    if (frameBuffer != nullptr) {
+        delete[] frameBuffer;
+        delete[] depthBuffer;
+    }
+
+    this->width = width;
+    this->height = height;
+    int size = width * height;
     frameBuffer = new dvec3[size];
     depthBuffer = new float[size];
 
@@ -164,6 +176,12 @@ Renderer::Renderer(int *width, int *height) : width(width), height(height) {
         depthBuffer[i] = -100000;
     }
 
+}
+
+Renderer::Renderer(int width, int height) : width(width), height(height) {
+    frameBuffer = nullptr;
+    depthBuffer = nullptr;
+    setScreenProportions(width, height);
     setObjectOrder(1000);
     isActive = false;
     shaderType = ShaderType::Flat;

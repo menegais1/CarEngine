@@ -15,8 +15,8 @@ public:
     dvec3 *frameBuffer;
     float *depthBuffer;
     bool isActive;
-    int *width;
-    int *height;
+    int width;
+    int height;
     ShaderType shaderType;
 
     void triangle(Vertex v1, Vertex v2, Vertex v3, IShader *shader);
@@ -29,7 +29,9 @@ public:
 
     static Renderer *getInstance();
 
-    Renderer(int *width, int *height);
+    void setScreenProportions(int width, int height);
+
+    Renderer(int width, int height);
 
 private:
     void _triangle(Vertex v1, Vertex v2, Vertex v3, IShader *shader);
@@ -41,6 +43,7 @@ private:
     Vertex vertexLerp(Vertex x0, Vertex x1, float t);
 
     Vertex convertVertexFromClipToViewport(Vertex v);
+
 };
 
 
