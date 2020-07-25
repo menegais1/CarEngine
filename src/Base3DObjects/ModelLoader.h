@@ -16,13 +16,19 @@ struct ObjectInfo {
     std::vector<int> triangles;
 };
 
+struct ObjectFace {
+    ivec3 vertices;
+    ivec3 normals;
+    ivec3 uv;
+};
 
 class ModelLoader {
 public:
     static ObjectInfo loadObj(std::string filename);
 
 private:
-    static std::vector<int> readFaces(std::ifstream &file);
+
+    static std::vector<ObjectFace> readFaces(std::ifstream &file);
 
     static std::vector<dvec3> readVerticesNormals(std::ifstream &file);
 
