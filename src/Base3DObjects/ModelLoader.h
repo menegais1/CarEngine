@@ -22,19 +22,38 @@ struct ObjectFace {
     ivec3 uv;
 };
 
+
+struct FileString{
+    std::string file;
+    int curPos;
+    int _eof;
+    void getLine(std::string& s, char delimiter ){
+        s = std::string();
+        while(file[curPos] != delimiter){
+            s.append(1,file[curPos]);
+            curPos++;
+        }
+        curPos++;
+    }
+
+    bool eof(){
+        return curPos == _eof;
+    }
+};
+
 class ModelLoader {
 public:
     static ObjectInfo loadObj(std::string filename);
 
 private:
 
-    static std::vector<ObjectFace> readFaces(std::ifstream &file);
+    static std::vector<ObjectFace> readFaces(FileString& file);
 
-    static std::vector<dvec3> readVerticesNormals(std::ifstream &file);
+    static std::vector<dvec3> readVerticesNormals(FileString& file);
 
-    static std::vector<dvec3> readVertices(std::ifstream &file);
+    static std::vector<dvec3> readVertices(FileString& file);
 
-    static std::vector<dvec3> readTextureCoordinates(std::ifstream &file);
+    static std::vector<dvec3> readTextureCoordinates(FileString& file);
 };
 
 

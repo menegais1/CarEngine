@@ -20,6 +20,7 @@
 #include "Engine.h"
 #include "Slider/HorizontalSlider.h"
 #include "Engine2D.h"
+#include "Bitmap/Bitmap.h"
 
 using namespace std;
 
@@ -68,5 +69,7 @@ int main(void) {
     });
     slider->setCurValue(engine->rpm);
     CameraMovement *cameraMovement = new CameraMovement(Camera::getInstance());
+
+    Bitmap* metallic = new Bitmap("..\\Metal_BMP\\RoughnessMap.bmp");
     CV::run();
 }
