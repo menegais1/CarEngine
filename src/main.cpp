@@ -54,7 +54,7 @@ int main(void) {
     Camera::getInstance()->setViewport(GlobalManager::getInstance()->screenWidth,
                                        GlobalManager::getInstance()->screenHeight, 0, 0);
     Cube *cube = new Cube(dvec3(0, 2, 0), dvec3(1, 1, 1));
-    Cylinder *crank = new Cylinder(Transform(dvec3(4, 2, 0), dvec3(0, 0, 0), dvec3(0.2, 0.2, 2)), 8);
+    Cylinder *crank = new Cylinder(Transform(dvec3(4, 2, 0), dvec3(90, 0, 0), dvec3(0.2, 2, 0.2)), 8);
     Engine *engine = new Engine(
             Transform(dvec3(2, 0, 0), dvec3(0, 0, 0), dvec3(1, 1, 1)), crank);
     engine->rpm = 1;
@@ -70,6 +70,5 @@ int main(void) {
     slider->setCurValue(engine->rpm);
     CameraMovement *cameraMovement = new CameraMovement(Camera::getInstance());
 
-    Bitmap* metallic = new Bitmap("..\\Metal_BMP\\RoughnessMap.bmp");
     CV::run();
 }

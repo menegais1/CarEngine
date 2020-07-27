@@ -7,9 +7,12 @@
 
 
 #include "../IShader.h"
+#include "../../Bitmap/Bitmap.h"
 
 class FlatShader : public IShader {
 public:
+    Bitmap* IN_Albedo;
+    dvec3 IN_UV[3];
     dvec3 IN_Normal;
     dvec3 IN_Color;
     dvec3 IN_LightIntesity;

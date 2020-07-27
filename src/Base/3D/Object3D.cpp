@@ -50,21 +50,21 @@ void Object3D::createRenderingShader(ShaderType shaderType) {
     if (shaderType == ShaderType::Flat) {
         FlatShader *flatShader = new FlatShader();
         flatShader->IN_Color = dvec3(0.8, 0.8, 0.8);
-        flatShader->IN_LightPosition = dvec3(0, 3, 0);
+        flatShader->IN_LightPosition = dvec3(0, 2, 0);
         flatShader->IN_Model = Model;
         flatShader->IN_ModelInverse = InvModel;
         shader = flatShader;
     }
     if (shaderType == ShaderType::Goraud) {
         GoraudShader *goraudShader = new GoraudShader();
-        goraudShader->IN_LightPosition = dvec3(0, 3, 0);
+        goraudShader->IN_LightPosition = dvec3(0, 2, 0);
         goraudShader->IN_Model = Model;
         goraudShader->IN_ModelInverse = InvModel;
         shader = goraudShader;
     }
     if (shaderType == ShaderType::Phong) {
         PhongShader *phongShader = new PhongShader();
-        phongShader->IN_LightPosition = dvec3(0, 3, 0);
+        phongShader->IN_LightPosition = dvec3(0, 2, 0);
         phongShader->IN_Model = Model;
         phongShader->IN_ModelInverse = InvModel;
         shader = phongShader;
@@ -79,6 +79,10 @@ void Object3D::setRenderingShaderInfo(ShaderType shaderType, int i) {
         dvec3 v2 = vertices[triangles[i + 2]];
         dvec3 normal = (v1 - v0).cross(v2 - v0);
         flatShader->IN_Normal = normal;
+        flatShader->IN_UV[0] = uvs[triangles[i]];
+        flatShader->IN_UV[1] = uvs[triangles[i + 1]];
+        flatShader->IN_UV[2] = uvs[triangles[i + 2]];
+        flatShader->IN_Albedo = albedo;
     }
     if (shaderType == ShaderType::Goraud) {
         GoraudShader *goraudShader = (GoraudShader *) shader;
@@ -88,6 +92,13 @@ void Object3D::setRenderingShaderInfo(ShaderType shaderType, int i) {
         goraudShader->IN_Color[0] = dvec3(0.8, 0.8, 0.8);
         goraudShader->IN_Color[1] = dvec3(0.8, 0.8, 0.8);
         goraudShader->IN_Color[2] = dvec3(0.8, 0.8, 0.8);
+        goraudShader->IN_UV[0] = uvs[triangles[i]];
+        goraudShader->IN_UV[1] = uvs[triangles[i + 1]];
+        goraudShader->IN_UV[2] = uvs[triangles[i + 2]];
+        goraudShader->IN_CameraPosition = Camera::getInstance()->center;
+        goraudShader->IN_Albedo = albedo;
+        goraudShader->IN_Specular = specular;
+        goraudShader->IN_SpecularModifier = 100;
     }
     if (shaderType == ShaderType::Phong) {
         PhongShader *phongShader = (PhongShader *) shader;
@@ -100,6 +111,14 @@ void Object3D::setRenderingShaderInfo(ShaderType shaderType, int i) {
         phongShader->IN_Color[0] = dvec3(0.8, 0.8, 0.8);
         phongShader->IN_Color[1] = dvec3(0.8, 0.8, 0.8);
         phongShader->IN_Color[2] = dvec3(0.8, 0.8, 0.8);
+        phongShader->IN_UV[0] = uvs[triangles[i]];
+        phongShader->IN_UV[1] = uvs[triangles[i + 1]];
+        phongShader->IN_UV[2] = uvs[triangles[i + 2]];
+        phongShader->IN_CameraPosition = Camera::getInstance()->center;
+        phongShader->IN_Albedo = albedo;
+        phongShader->IN_Specular = specular;
+        phongShader->IN_SpecularModifier = 100;
+
     }
 
 }

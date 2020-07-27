@@ -4,6 +4,7 @@
 
 #include "IShader.h"
 
-Vertex::Vertex(const dvec4 &pos, const dvec3 &normal, const dvec3 &color) : pos(pos), normal(normal), color(color) {}
+Vertex::Vertex(const dvec4 &pos, const dvec3 &normal, const dvec3 &color, const dvec3 &uv) : pos(pos), normal(normal),
+                                                                                             color(color), uv(uv) {}
 
 Vertex::Vertex() {}

@@ -9,6 +9,7 @@
 #include "../Vectors/Vector3.h"
 #include "../Base/CanvasObject.h"
 #include "IShader.h"
+#include "../Bitmap/Bitmap.h"
 
 class Renderer : CanvasObject {
 public:
@@ -18,6 +19,8 @@ public:
     int width;
     int height;
     ShaderType shaderType;
+    Bitmap *metal_albedo = nullptr;
+    Bitmap *metal_specular = nullptr;
 
     void triangle(Vertex v1, Vertex v2, Vertex v3, IShader *shader);
 

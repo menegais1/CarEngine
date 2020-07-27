@@ -9,6 +9,7 @@
 #include "../CanvasObject.h"
 #include "Transform.h"
 #include "../../Rendering/IShader.h"
+#include "../../Bitmap/Bitmap.h"
 
 class Object3D : public CanvasObject {
 protected:
@@ -19,8 +20,11 @@ protected:
     std::vector<dvec3> vertices;
     std::vector<int> triangles;
     std::vector<dvec3> normals;
+    std::vector<dvec3> uvs;
     std::vector<dvec3> faceNormals;
     IShader *shader;
+    Bitmap* albedo = nullptr;
+    Bitmap* specular = nullptr;
 
     void computeCenter();
 

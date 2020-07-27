@@ -20,8 +20,8 @@ public:
     dvec4 pos;
     dvec3 normal;
     dvec3 color;
-
-    Vertex(const dvec4 &pos, const dvec3 &normal, const dvec3 &color);
+    dvec3 uv;
+    Vertex(const dvec4 &pos, const dvec3 &normal, const dvec3 &color,const dvec3& uv);
 
     Vertex();
 };

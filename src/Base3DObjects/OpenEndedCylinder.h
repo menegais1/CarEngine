@@ -7,6 +7,7 @@
 
 
 #include "../Base/3D/Object3D.h"
+#include "../Bitmap/Bitmap.h"
 
 class OpenEndedCylinder : public Object3D {
 public:

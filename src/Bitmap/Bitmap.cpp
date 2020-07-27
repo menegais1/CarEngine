@@ -9,8 +9,7 @@
 
 using namespace std;
 
-Bitmap::Bitmap(const string fileName)
-{
+Bitmap::Bitmap(const string fileName) {
     this->fileName = fileName;
     this->imageRotation = 0;
     fstream file;
@@ -20,8 +19,7 @@ Bitmap::Bitmap(const string fileName)
     loadFileHeader(file);
     loadBitmapHeader(file);
     colorPalleteExists = checkColorPallete(file);
-    if (colorPalleteExists)
-    {
+    if (colorPalleteExists) {
         loadColorPallete(file);
     }
     loadImage(file);
@@ -34,18 +32,15 @@ Bitmap::Bitmap(const string fileName)
     bitmapHeader.print();
 }
 
-void Bitmap::openFile(const string filename, fstream &file)
-{
+void Bitmap::openFile(const string filename, fstream &file) {
     file.open(filename, fstream::in | fstream::binary);
 }
 
-void Bitmap::closeFile(fstream &file)
-{
+void Bitmap::closeFile(fstream &file) {
     file.close();
 }
 
-void Bitmap::loadFileHeader(fstream &file)
-{
+void Bitmap::loadFileHeader(fstream &file) {
     file.read(reinterpret_cast<char *>(&fileHeader.BfType), 2);
     file.read(reinterpret_cast<char *>(&fileHeader.BfSize), 4);
     file.read(reinterpret_cast<char *>(&fileHeader.BfReser1), 2);
@@ -53,8 +48,7 @@ void Bitmap::loadFileHeader(fstream &file)
     file.read(reinterpret_cast<char *>(&fileHeader.BfOffSetBits), 4);
 }
 
-void Bitmap::loadBitmapHeader(fstream &file)
-{
+void Bitmap::loadBitmapHeader(fstream &file) {
     file.read(reinterpret_cast<char *>(&bitmapHeader.BiSize), 4);
     file.read(reinterpret_cast<char *>(&bitmapHeader.BiWidth), 4);
     file.read(reinterpret_cast<char *>(&bitmapHeader.BiHeight), 4);
@@ -68,20 +62,17 @@ void Bitmap::loadBitmapHeader(fstream &file)
     file.read(reinterpret_cast<char *>(&bitmapHeader.BiClrImpor), 4);
 }
 
-bool Bitmap::checkColorPallete(fstream &file)
-{
+bool Bitmap::checkColorPallete(fstream &file) {
     if (bitmapHeader.BiBitCount < 24)
         return true;
     return false;
 }
 
-void Bitmap::loadColorPallete(fstream &file)
-{
+void Bitmap::loadColorPallete(fstream &file) {
     int palleteCount = pow(2, bitmapHeader.BiBitCount);
     colorPallete = new dvec3[palleteCount];
 
-    for (int i = 0; i < palleteCount; i++)
-    {
+    for (int i = 0; i < palleteCount; i++) {
         file.read(reinterpret_cast<char *>(&colorPallete[i][2]), 1);
         file.read(reinterpret_cast<char *>(&colorPallete[i][1]), 1);
         file.read(reinterpret_cast<char *>(&colorPallete[i][0]), 1);
@@ -89,8 +80,7 @@ void Bitmap::loadColorPallete(fstream &file)
     }
 }
 
-dvec3 Bitmap::getPixelFromPallete(const unsigned char pixelValue)
-{
+dvec3 Bitmap::getPixelFromPallete(const unsigned char pixelValue) {
     dvec3 p;
     p[0] = colorPallete[pixelValue][0];
     p[1] = colorPallete[pixelValue][1];
@@ -99,8 +89,7 @@ dvec3 Bitmap::getPixelFromPallete(const unsigned char pixelValue)
     return p;
 }
 
-void Bitmap::loadImage(fstream &file)
-{
+void Bitmap::loadImage(fstream &file) {
     file.clear();
     file.seekg(fileHeader.BfOffSetBits, ios::beg);
     int rowSize = ceil((bitmapHeader.BiBitCount * bitmapHeader.BiWidth) / 32) * 4;
@@ -114,60 +103,45 @@ void Bitmap::loadImage(fstream &file)
     cout << "Row Size:" << rowSize << endl;
     cout << "Padding:" << padding << endl;
 
-    if (colorPalleteExists)
-    {
-        for (int l = 0; l < bitmapHeader.BiHeight; l++)
-        {
+    if (colorPalleteExists) {
+        for (int l = 0; l < bitmapHeader.BiHeight; l++) {
             file.read(byteArray, rowSize);
 
-            for (int i = 0; i <= rowSize - padding; i++)
-            {
+            for (int i = 0; i <= rowSize - padding; i++) {
 
-                if (bitmapHeader.BiBitCount == 1)
-                {
-                    for (int j = 0; j < 8; j++)
-                    {
+                if (bitmapHeader.BiBitCount == 1) {
+                    for (int j = 0; j < 8; j++) {
 
                         unsigned char pixelValue = (byteArray[i] << j) >> 7;
 
                         bitmapArray[l * bitmapHeader.BiWidth + i + j] = getPixelFromPallete(pixelValue);
                     }
                 }
-                if (bitmapHeader.BiBitCount == 4)
-                {
-                    for (int j = 0; j < 2; j++)
-                    {
+                if (bitmapHeader.BiBitCount == 4) {
+                    for (int j = 0; j < 2; j++) {
 
                         unsigned char pixelValue = (byteArray[i] << j) >> 4;
                         bitmapArray[l * bitmapHeader.BiWidth + i + j] = getPixelFromPallete(pixelValue);
                     }
                 }
-                if (bitmapHeader.BiBitCount == 8)
-                {
+                if (bitmapHeader.BiBitCount == 8) {
 
                     unsigned char pixelValue = byteArray[i];
                     bitmapArray[l * bitmapHeader.BiWidth + i] = getPixelFromPallete(pixelValue);
                 }
             }
         }
-    }
-    else
-    {
+    } else {
 
-        for (int l = 0; l < bitmapHeader.BiHeight; l++)
-        {
+        for (int l = 0; l < bitmapHeader.BiHeight; l++) {
             file.read(byteArray, rowSize);
-            for (int i = 0, j = 0; i <= rowSize - padding - 3; i += (int)(bitmapHeader.BiBitCount / 8), j++)
-            {
+            for (int i = 0, j = 0; i <= rowSize - padding - 3; i += (int) (bitmapHeader.BiBitCount / 8), j++) {
                 dvec3 p;
-                if (bitmapHeader.BiBitCount == 24)
-                {
+                if (bitmapHeader.BiBitCount == 24) {
                     p[0] = byteArray[i + 2];
                     p[1] = byteArray[i + 1];
                     p[2] = byteArray[i + 0];
-                }
-                else
-                {
+                } else {
                     p[0] = byteArray[i + 2];
                     p[1] = byteArray[i + 1];
                     p[2] = byteArray[i + 0];
@@ -183,15 +157,13 @@ void Bitmap::loadImage(fstream &file)
     std::memcpy(originalBitmapArray, bitmapArray, bitmapSize * sizeof(dvec3));
 }
 
-dvec3 Bitmap::getPixelColorAtPosition(const int l, const int c) const
-{
+dvec3 Bitmap::getPixelColorAtPosition(const int l, const int c) const {
 
     int idx = l * width + c;
     return bitmapArray[idx];
 }
 
-dvec2 Bitmap::getPixelPositionOnScreen(const int l, const int c) const
-{
+dvec2 Bitmap::getPixelPositionOnScreen(const int l, const int c) const {
     float translatedC = c - width / 2;
     float translatedL = l - height / 2;
     float newC = (translatedC * cos(imageRotation) + translatedL * sin(imageRotation));
@@ -200,22 +172,18 @@ dvec2 Bitmap::getPixelPositionOnScreen(const int l, const int c) const
     return pos;
 }
 
-void Bitmap::scaleImage(const float scale)
-{
+void Bitmap::scaleImage(const float scale) {
     lastScale = scale;
 }
 
-void Bitmap::_scaleImage(const float scale)
-{
+void Bitmap::_scaleImage(const float scale) {
     int oldHeight = this->bitmapHeader.BiHeight;
     int oldWidth = this->bitmapHeader.BiWidth;
     this->height = oldHeight * scale;
     this->width = oldWidth * scale;
     dvec3 *newBitmapArray = new dvec3[height * width];
-    for (int l = 0; l < height; l++)
-    {
-        for (int c = 0; c < width; c++)
-        {
+    for (int l = 0; l < height; l++) {
+        for (int c = 0; c < width; c++) {
             int oldL = floor(l * (1 / scale));
             int oldC = floor(c * (1 / scale));
             int oldIdx = oldL * oldWidth + oldC;
@@ -225,8 +193,7 @@ void Bitmap::_scaleImage(const float scale)
             newBitmapArray[idx] = color;
         }
     }
-    if (bitmapArray != NULL)
-    {
+    if (bitmapArray != NULL) {
         delete[] bitmapArray;
         bitmapArray = NULL;
     }
@@ -235,16 +202,13 @@ void Bitmap::_scaleImage(const float scale)
     lastScale = scale;
 }
 
-void Bitmap::flipImageInX()
-{
+void Bitmap::flipImageInX() {
     filters.push_back(Filter::FlipX);
 }
-void Bitmap::_flipImageInX()
-{
-    for (int l = 0; l < height; l++)
-    {
-        for (int c = 0; c < width / 2; c++)
-        {
+
+void Bitmap::_flipImageInX() {
+    for (int l = 0; l < height; l++) {
+        for (int c = 0; c < width / 2; c++) {
             int newIdx = l * width + (width - 1 - c);
             int idx = l * width + c;
             dvec3 tmp = bitmapArray[idx];
@@ -254,17 +218,13 @@ void Bitmap::_flipImageInX()
     }
 }
 
-void Bitmap::flipImageInY()
-{
+void Bitmap::flipImageInY() {
     filters.push_back(Filter::FlipY);
 }
 
-void Bitmap::_flipImageInY()
-{
-    for (int l = 0; l < height / 2; l++)
-    {
-        for (int c = 0; c < width; c++)
-        {
+void Bitmap::_flipImageInY() {
+    for (int l = 0; l < height / 2; l++) {
+        for (int c = 0; c < width; c++) {
             int newIdx = (height - 1 - l) * width + c;
             int idx = l * width + c;
             dvec3 tmp = bitmapArray[idx];
@@ -274,24 +234,20 @@ void Bitmap::_flipImageInY()
     }
 }
 
-void Bitmap::rotateImage(const float angle)
-{
+void Bitmap::rotateImage(const float angle) {
     this->imageRotation = angle;
 }
-void Bitmap::nearestNeighbourRotation(const float angle)
-{
+
+void Bitmap::nearestNeighbourRotation(const float angle) {
     lastRotation = angle;
 }
 
-void Bitmap::_nearestNeighbourRotation(const float angle)
-{
+void Bitmap::_nearestNeighbourRotation(const float angle) {
 
     int diagonal = ceil(sqrt((width * width) + (height * height)));
     dvec3 *newBitmapArray = new dvec3[diagonal * diagonal];
-    for (int l = 0; l < diagonal; l++)
-    {
-        for (int c = 0; c < diagonal; c++)
-        {
+    for (int l = 0; l < diagonal; l++) {
+        for (int c = 0; c < diagonal; c++) {
             float translatedC = c - diagonal / 2;
             float translatedL = l - diagonal / 2;
             float newC = (translatedC * cos(-angle) + translatedL * sin(-angle));
@@ -300,8 +256,7 @@ void Bitmap::_nearestNeighbourRotation(const float angle)
 
             int idx = l * diagonal + c;
             dvec3 color;
-            if (pos.x < 0 || pos.x >= width || pos.y < 0 || pos.y >= height)
-            {
+            if (pos.x < 0 || pos.x >= width || pos.y < 0 || pos.y >= height) {
                 color[0] = 0;
                 color[1] = 0;
                 color[2] = 0;
@@ -319,20 +274,18 @@ void Bitmap::_nearestNeighbourRotation(const float angle)
     bitmapArray = newBitmapArray;
     lastRotation = angle;
 }
-void Bitmap::convertImageToGrayScale()
-{
+
+void Bitmap::convertImageToGrayScale() {
     filters.push_back(Filter::Greyscale);
 }
 
-void Bitmap::_convertImageToGrayScale()
-{
-    for (int l = 0; l < height; l++)
-    {
-        for (int c = 0; c < width; c++)
-        {
+void Bitmap::_convertImageToGrayScale() {
+    for (int l = 0; l < height; l++) {
+        for (int c = 0; c < width; c++) {
             int idx = l * width + c;
 
-            float grayScaleColor = bitmapArray[idx][0] * 0.299 + bitmapArray[idx][1] * 0.587 + bitmapArray[idx][2] * 0.114;
+            float grayScaleColor =
+                    bitmapArray[idx][0] * 0.299 + bitmapArray[idx][1] * 0.587 + bitmapArray[idx][2] * 0.114;
             dvec3 color;
             color[0] = grayScaleColor;
             color[1] = grayScaleColor;
@@ -342,21 +295,18 @@ void Bitmap::_convertImageToGrayScale()
     }
 }
 
-int *Bitmap::getHistogramForChannel(const Channel c) const
-{
+int *Bitmap::getHistogramForChannel(const Channel c) const {
     int *histogram = new int[256];
-    for (int i = 0; i < 256; i++)
-    {
+    for (int i = 0; i < 256; i++) {
         histogram[i] = 0;
     }
-    for (int i = 0; i < width * height; i++)
-    {
-        histogram[(int)bitmapArray[i][c]] += 1;
+    for (int i = 0; i < width * height; i++) {
+        histogram[(int) bitmapArray[i][c]] += 1;
     }
     return histogram;
 }
-void Bitmap::convertToSingleChannel(const Channel c)
-{
+
+void Bitmap::convertToSingleChannel(const Channel c) {
     if (c == Channel::Red)
         filters.push_back(Filter::RedC);
     if (c == Channel::Green)
@@ -365,12 +315,9 @@ void Bitmap::convertToSingleChannel(const Channel c)
         filters.push_back(Filter::BlueC);
 }
 
-void Bitmap::_convertToSingleChannel(const Channel c)
-{
-    for (int i = 0; i < width * height; i++)
-    {
-        for (int curC = 0; curC < 3; curC++)
-        {
+void Bitmap::_convertToSingleChannel(const Channel c) {
+    for (int i = 0; i < width * height; i++) {
+        for (int curC = 0; curC < 3; curC++) {
             if (c == curC)
                 continue;
             bitmapArray[i][curC] = 0;
@@ -378,19 +325,15 @@ void Bitmap::_convertToSingleChannel(const Channel c)
     }
 }
 
-void Bitmap::applyTransformations(bool applyScale, bool applyRotation, bool applyFilters)
-{
+void Bitmap::applyTransformations(bool applyScale, bool applyRotation, bool applyFilters) {
     resetImage();
     if (applyScale)
         _scaleImage(lastScale);
-    if (applyRotation)
-    {
+    if (applyRotation) {
         _nearestNeighbourRotation(lastRotation);
     }
-    if (applyFilters)
-    {
-        for (int i = 0; i < filters.size(); i++)
-        {
+    if (applyFilters) {
+        for (int i = 0; i < filters.size(); i++) {
             Filter f = filters[i];
 
             if (f == Filter::FlipX)
@@ -409,10 +352,8 @@ void Bitmap::applyTransformations(bool applyScale, bool applyRotation, bool appl
     }
 }
 
-void Bitmap::resetImage()
-{
-    if (bitmapArray != NULL)
-    {
+void Bitmap::resetImage() {
+    if (bitmapArray != NULL) {
         delete[] bitmapArray;
         bitmapArray = NULL;
     }
@@ -423,10 +364,8 @@ void Bitmap::resetImage()
     this->width = bitmapHeader.BiWidth;
 }
 
-void Bitmap::resetImageToDefault()
-{
-    if (bitmapArray != NULL)
-    {
+void Bitmap::resetImageToDefault() {
+    if (bitmapArray != NULL) {
         delete[] bitmapArray;
         bitmapArray = NULL;
     }
@@ -439,5 +378,9 @@ void Bitmap::resetImageToDefault()
     this->lastRotation = 0;
     this->lastScale = 1;
     this->filters.clear();
+}
+
+dvec3 Bitmap::sampleBitmao(const float u, const float v) const {
+    return getPixelColorAtPosition(((u + 1) / 2.0) * width, ((v + 1) / 2.0) * height);
 }
 

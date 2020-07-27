@@ -89,6 +89,7 @@ public:
     int width;
     int height;
     Bitmap(const std::string fileName);
+    dvec3 sampleBitmao(const float u, const float v)const;
     dvec3 getPixelColorAtPosition(const int l, const int c) const;
     dvec2 getPixelPositionOnScreen(const int l, const int c) const;
 

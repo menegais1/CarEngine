@@ -6,8 +6,19 @@
 #include "../Camera/Camera.h"
 #include "Cylinder.h"
 #include "../Utilities.h"
+#include "ModelLoader.h"
+#include "../Rendering/Renderer.h"
 
 Cylinder::Cylinder(Transform transform, int sides) : Object3D(transform) {
+
+    ObjectInfo info = ModelLoader::loadObj("../cylinder.obj");
+    vertices = info.vertices;
+    triangles = info.triangles;
+    normals = info.normals;
+    uvs = info.uv;
+    albedo = Renderer::getInstance()->metal_albedo;
+    specular = Renderer::getInstance()->metal_specular;
+    return;
     float step = (2 * PI) / sides;
 
     double z = -1 / 2.0;
@@ -88,19 +99,21 @@ Cylinder::Cylinder(Transform transform, int sides) : Object3D(transform) {
     triangles.push_back(vertices.size() - 1);
     triangles.push_back(1);
     triangles.push_back(centerUp + 1);
-    normal = calculateNormal(vertices.size() - 1, 1,centerUp + 1);
+    normal = calculateNormal(vertices.size() - 1, 1, centerUp + 1);
     setNormal(vertices.size() - 1, normal);
     setNormal(1, normal);
     setNormal(centerUp + 1, normal);
 
     triangles.push_back(vertices.size() - 1);
-    triangles.push_back(vertices.size() /2 - 1);
+    triangles.push_back(vertices.size() / 2 - 1);
     triangles.push_back(1);
 
-    normal = calculateNormal(vertices.size() - 1,  vertices.size() / 2 - 1,1);
-    setNormal(vertices.size()- 1, normal);
+    normal = calculateNormal(vertices.size() - 1, vertices.size() / 2 - 1, 1);
+    setNormal(vertices.size() - 1, normal);
     setNormal(vertices.size() / 2 - 1, normal);
     setNormal(1, normal);
+
+    uvs = std::vector<dvec3>(normals.size());
 }
 
 

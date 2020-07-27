@@ -7,13 +7,18 @@
 
 
 #include "../IShader.h"
+#include "../../Bitmap/Bitmap.h"
 
 class PhongShader : public IShader {
 public:
+    Bitmap* IN_Albedo;
+    Bitmap* IN_Specular;
+    float IN_SpecularModifier;
+    dvec3 IN_UV[3];
     dvec3 IN_Normal[3];
     dvec3 IN_Vertices[3];
     dvec3 IN_Color[3];
-    dvec3 IN_LightIntesity;
+    dvec3 IN_CameraPosition;
     dvec3 IN_LightPosition;
     dMatrix IN_Model;
     dMatrix IN_ModelInverse;

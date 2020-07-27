@@ -45,6 +45,7 @@ Vertex Renderer::interpolateVertex(Vertex v0, Vertex v1, Vertex v2, dvec3 baryce
     Vertex v;
     v.normal = v0.normal * barycentric.x + v1.normal * barycentric.y + v2.normal * barycentric.z;
     v.color = v0.color * barycentric.x + v1.color * barycentric.y + v2.color * barycentric.z;
+    v.uv = v0.uv * barycentric.x + v1.uv * barycentric.y + v2.uv * barycentric.z;
     return v;
 }
 
@@ -86,6 +87,8 @@ Vertex Renderer::vertexLerp(Vertex x0, Vertex x1, float t) {
     v.pos = lerp(x0.pos, x1.pos, t);
     v.normal = lerp(x0.normal, x1.normal, t);
     v.color = lerp(x0.color, x1.color, t);
+    v.uv = lerp(x0.uv, x1.uv, t);
+    return v;
 }
 
 Vertex Renderer::convertVertexFromClipToViewport(Vertex v) {
@@ -185,4 +188,6 @@ Renderer::Renderer(int width, int height) : width(width), height(height) {
     setObjectOrder(1000);
     isActive = false;
     shaderType = ShaderType::Flat;
+    metal_albedo = new Bitmap("../Metal_Painted/Albedo.bmp");
+    metal_specular = new Bitmap("../Metal_Painted/Specular.bmp");
 }
