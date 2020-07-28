@@ -9,6 +9,7 @@
 #include "../Utilities.h"
 #include "IShader.h"
 #include "../Camera/Camera.h"
+#include "../FileLoader.h"
 
 dvec2 Renderer::getMin(dvec2 v1, dvec2 v2, dvec2 v3) {
     dvec2 min = v1;
@@ -188,6 +189,6 @@ Renderer::Renderer(int width, int height) : width(width), height(height) {
     setObjectOrder(1000);
     isActive = false;
     shaderType = ShaderType::Flat;
-    metal_albedo = new Bitmap("./CarEngine/Metal_Rusty/Albedo.bmp");
-    metal_specular = new Bitmap("./CarEngine/Metal_Rusty/Specular.bmp");
+    metal_albedo = new Bitmap(FileLoader::getPath("Metal_Rusty/Albedo.bmp"));
+    metal_specular = new Bitmap(FileLoader::getPath("Metal_Rusty/Specular.bmp"));
 }

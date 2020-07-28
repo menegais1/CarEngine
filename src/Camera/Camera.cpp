@@ -44,15 +44,15 @@ dMatrix Camera::generateProjectionMatrix(float fov, float aspectRatio, float _ne
     this->_near = _near;
     this->_far = _far;
     this->_height = std::tan(fov / 2.0) * (_far + _near) / 2;;
-    this->_width = _height * aspectRatio;
+    this->_width = _height;
     return Projection;
 }
 
 dMatrix Camera::generateOrtographicProjectionMatrix(float width, float height, float aspectRatio, float _near, float _far) {
     dMatrix P = dMatrix::identity(4);
-    P.m = {{1.0 / width * aspectRatio, 0,            0,                                       0},
+    P.m = {{1.0 / width* aspectRatio , 0,            0,                                       0},
            {0,                         1.0 / height, 0,                                       0},
-           {0,                         0,            (_near + _far) / (float) (_far - _near), (2 * _near * _far) / (float) (_far - _near)},
+           {0,                         0,            2/(_far-_near),(_near+_far)/(_far-_near)},
            {0,                         0,            0,                                       1}};
     Projection = P;
     this->_aspectRatio = aspectRatio;

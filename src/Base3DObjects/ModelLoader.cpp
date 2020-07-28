@@ -10,8 +10,13 @@
 
 ObjectInfo ModelLoader::loadObj(std::string filename) {
     std::ifstream file(filename, std::ios::in);
-    if (file.is_open()) std::cout << "open" << std::endl;
-    else std::cout << "error" << std::endl;
+    if (file.is_open()){
+        std::cout << "open" << std::endl;
+    }
+    else {
+        std::cout << "error" << std::endl;
+        return ObjectInfo();
+    }
     std::string fileString;
 
     while (!file.eof()) {

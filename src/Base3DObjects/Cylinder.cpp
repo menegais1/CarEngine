@@ -8,10 +8,11 @@
 #include "../Utilities.h"
 #include "ModelLoader.h"
 #include "../Rendering/Renderer.h"
+#include "../FileLoader.h"
 
 Cylinder::Cylinder(Transform transform, int sides) : Object3D(transform) {
 
-    ObjectInfo info = ModelLoader::loadObj("./CarEngine/simplified_cylinder.obj");
+    ObjectInfo info = ModelLoader::loadObj(FileLoader::getPath("simplified_cylinder.obj"));
     vertices = info.vertices;
     faces = info.faces;
     normals = info.normals;
