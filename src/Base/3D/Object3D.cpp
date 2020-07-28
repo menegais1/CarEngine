@@ -147,24 +147,30 @@ void Object3D::render() {
         dvec3 v2 = vertices[faces[i].vertices[2]];
         dvec3 normal = (v1 - v0).cross(v2 - v0).unit();
         dvec3 modelCenter = (v0 + v1 + v2) / 3.0;
+
         if (Renderer::getInstance()->isActive) {
-            if (normal.dot((cameraPos - v0).unit()) < 0) continue;
-            setRenderingShaderInfo(Renderer::getInstance()->shaderType, i);
-            Vertex vs0 = shader->vertexShader(v0, 0);
-            Vertex vs1 = shader->vertexShader(v1, 1);
-            Vertex vs2 = shader->vertexShader(v2, 2);
-            Renderer::getInstance()->triangle(vs0, vs1, vs2, shader);
+            if (normal.dot((cameraPos - v0).unit()) >= 0) {
+                setRenderingShaderInfo(Renderer::getInstance()->shaderType, i);
+                Vertex vs0 = shader->vertexShader(v0, 0);
+                Vertex vs1 = shader->vertexShader(v1, 1);
+                Vertex vs2 = shader->vertexShader(v2, 2);
+                Renderer::getInstance()->triangle(vs0, vs1, vs2, shader);
+            }
         } else {
 
             if (showFaceNormals) {
                 CV::color(1, 0, 0, 1);
-                Camera::getInstance()->line((Model * modelCenter).toVector3(), (Model * (modelCenter + normal)).toVector3());
+                Camera::getInstance()->line((Model * modelCenter).toVector3(),
+                                            (Model * (modelCenter + normal)).toVector3());
             }
             if (showVertexNormals) {
                 CV::color(0, 1, 0, 1);
-                Camera::getInstance()->line((Model * v0).toVector3(), (Model * (v0 + normals[faces[i].normals[0]])).toVector3());
-                Camera::getInstance()->line((Model * v1).toVector3(), (Model * (v1 + normals[faces[i].normals[1]])).toVector3());
-                Camera::getInstance()->line((Model * v2).toVector3(), (Model * (v2 + normals[faces[i].normals[2]])).toVector3());
+                Camera::getInstance()->line((Model * v0).toVector3(),
+                                            (Model * (v0 + normals[faces[i].normals[0]])).toVector3());
+                Camera::getInstance()->line((Model * v1).toVector3(),
+                                            (Model * (v1 + normals[faces[i].normals[1]])).toVector3());
+                Camera::getInstance()->line((Model * v2).toVector3(),
+                                            (Model * (v2 + normals[faces[i].normals[2]])).toVector3());
             }
             CV::color(0, 0, 0, 1);
             Camera::getInstance()->line((Model * v0.toVector4(1)).toVector3(), (Model * v1.toVector4(1)).toVector3());
