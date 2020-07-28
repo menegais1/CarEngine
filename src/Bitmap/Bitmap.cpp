@@ -381,6 +381,6 @@ void Bitmap::resetImageToDefault() {
 }
 
 dvec3 Bitmap::sampleBitmao(const float u, const float v) const {
-    return getPixelColorAtPosition(((u + 1) / 2.0) * width, ((v + 1) / 2.0) * height);
+    return getPixelColorAtPosition(v * (height - 1),u * (width - 1));
 }
 
