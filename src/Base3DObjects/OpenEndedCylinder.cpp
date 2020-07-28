@@ -10,7 +10,7 @@
 
 
 OpenEndedCylinder::OpenEndedCylinder(Transform transform, int sides) : Object3D(transform) {
-    ObjectInfo info = ModelLoader::loadObj("../open_cylinder.obj");
+    ObjectInfo info = ModelLoader::loadObj("./CarEngine/simplified_open_cylinder.obj");
     vertices = info.vertices;
     faces = info.faces;
     normals = info.normals;

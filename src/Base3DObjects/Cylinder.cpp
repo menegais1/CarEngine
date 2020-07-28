@@ -11,7 +11,7 @@
 
 Cylinder::Cylinder(Transform transform, int sides) : Object3D(transform) {
 
-    ObjectInfo info = ModelLoader::loadObj("../cylinder.obj");
+    ObjectInfo info = ModelLoader::loadObj("./CarEngine/simplified_cylinder.obj");
     vertices = info.vertices;
     faces = info.faces;
     normals = info.normals;

@@ -197,6 +197,12 @@
                 		<Unit filename="src/Vectors/Vector4.h">
                 			
                 		</Unit>
+                		<Unit filename="src/Base3DObjects/ModelLoader.h">	</Unit>
+                		<Unit filename="src/Base3DObjects/ModelLoader.cpp">	</Unit>
+                		<Unit filename="src/Base3DObjects/OpenEndedCylinder.h">	</Unit>
+                		<Unit filename="src/Base3DObjects/OpenEndedCylinder.cpp">	</Unit>
+                		<Unit filename="src/Bitmap/Bitmap.h">	</Unit>
+                		<Unit filename="src/Bitmap/Bitmap.cpp">	</Unit>
                 		<Unit filename="src/main.cpp">
                 			
                 		</Unit>
