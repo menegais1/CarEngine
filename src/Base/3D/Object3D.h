@@ -13,10 +13,6 @@
 #include "../../Base3DObjects/ModelLoader.h"
 
 class Object3D : public CanvasObject {
-private:
-    bool showFaceNormals = false;
-    bool showVertexNormals = false;
-
 protected:
     Object3D(Transform transform);
 
@@ -38,9 +34,10 @@ protected:
 
 
 public:
-    Transform transform;
-    void keyboard(int key) override;
 
+    bool showFaceNormals = false;
+    bool showVertexNormals = false;
+    Transform transform;
 
     dvec3 calculateNormal(int i0, int i1, int i2);
 

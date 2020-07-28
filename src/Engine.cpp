@@ -48,7 +48,8 @@ void Engine::render() {
         float angle = crank->transform.rotation.z * PI / 180.0;
         if (i % 2 != 0) angle = angle + 180 * PI / 180.0;
         float l = pistons[i]->transform.scale.y;
-        dvec3 pinPosition = calculatePistonPinPosition(pistonPins[i], pistons[i], radius, angle, l) + dvec3(0, crank->transform.position.y, 0);
+        dvec3 pinPosition = calculatePistonPinPosition(pistonPins[i], pistons[i], radius, angle, l) +
+                            dvec3(0, crank->transform.position.y, 0);
         dvec3 pistonPosition = calculatePistonPosition(pistons[i], radius, angle);
         dvec3 pistonRotation = calculatePistonRotation(pistons[i], pinPosition, pistonPosition);
         pistons[i]->transform.position = ((pinPosition + pistonPosition) / 2);
@@ -60,9 +61,13 @@ void Engine::render() {
 Engine::Engine(Transform transform, Cylinder *crank) : Object3D(transform) {
     rpm = 100;
     this->crank = crank;
-    pistons.push_back(new Cylinder(Transform(crank->transform.position + dvec3(0, crank->transform.scale.z + 1, crank->transform.position.z + crank->transform.scale.y / 2),
+    pistons.push_back(new Cylinder(Transform(crank->transform.position + dvec3(0, crank->transform.scale.z + 1,
+                                                                               crank->transform.position.z +
+                                                                               crank->transform.scale.y / 2),
                                              dvec3(0, 0, 0), dvec3(0.1, 2, 0.1)), 30));
-    pistonPins.push_back(new Cylinder(Transform(crank->transform.position + dvec3(0, crank->transform.scale.z + 1, crank->transform.position.z + crank->transform.scale.y / 2),
+    pistonPins.push_back(new Cylinder(Transform(crank->transform.position + dvec3(0, crank->transform.scale.z + 1,
+                                                                                  crank->transform.position.z +
+                                                                                  crank->transform.scale.y / 2),
                                                 dvec3(0, 0, 0), dvec3(0.3, 0.5, 0.3)), 30));
 
     float radius = crank->transform.scale.z;
@@ -71,17 +76,23 @@ Engine::Engine(Transform transform, Cylinder *crank) : Object3D(transform) {
     shirts.push_back(new OpenEndedCylinder(Transform(pos + dvec3(0, crank->transform.position.y, 0),
                                                      dvec3(0, 0, 180), dvec3(0.32, 0.6, 0.32)), 30));
 
-    pistons.push_back(new Cylinder(Transform(crank->transform.position + dvec3(0, crank->transform.scale.z + 1, crank->transform.position.z),
-                                             dvec3(0, 0, 0), dvec3(0.1, 2, 0.1)), 30));
-    pistonPins.push_back(new Cylinder(Transform(crank->transform.position + dvec3(0, crank->transform.scale.z + 1, crank->transform.position.z),
-                                                dvec3(0, 0, 0), dvec3(0.3, 0.5, 0.3)), 30));
+    pistons.push_back(new Cylinder(
+            Transform(crank->transform.position + dvec3(0, crank->transform.scale.z + 1, crank->transform.position.z),
+                      dvec3(0, 0, 0), dvec3(0.1, 2, 0.1)), 30));
+    pistonPins.push_back(new Cylinder(
+            Transform(crank->transform.position + dvec3(0, crank->transform.scale.z + 1, crank->transform.position.z),
+                      dvec3(0, 0, 0), dvec3(0.3, 0.5, 0.3)), 30));
     pos = calculatePistonPinPosition(pistons[1], pistonPins[1], radius, 0, l);
     shirts.push_back(new OpenEndedCylinder(Transform(pos + dvec3(0, crank->transform.position.y, 0),
                                                      dvec3(0, 0, 180), dvec3(0.32, 0.6, 0.32)), 30));
 
-    pistons.push_back(new Cylinder(Transform(crank->transform.position + dvec3(0, crank->transform.scale.z + 1, crank->transform.position.z - crank->transform.scale.y / 2),
+    pistons.push_back(new Cylinder(Transform(crank->transform.position + dvec3(0, crank->transform.scale.z + 1,
+                                                                               crank->transform.position.z -
+                                                                               crank->transform.scale.y / 2),
                                              dvec3(0, 0, 0), dvec3(0.1, 2, 0.1)), 30));
-    pistonPins.push_back(new Cylinder(Transform(crank->transform.position + dvec3(0, crank->transform.scale.z + 1, crank->transform.position.z - crank->transform.scale.y / 2),
+    pistonPins.push_back(new Cylinder(Transform(crank->transform.position + dvec3(0, crank->transform.scale.z + 1,
+                                                                                  crank->transform.position.z -
+                                                                                  crank->transform.scale.y / 2),
                                                 dvec3(0, 0, 0), dvec3(0.3, 0.5, 0.3)), 30));
     pos = calculatePistonPinPosition(pistons[2], pistonPins[2], radius, 0, l);
     shirts.push_back(new OpenEndedCylinder(Transform(pos + dvec3(0, crank->transform.position.y, 0),
@@ -93,9 +104,9 @@ void Engine::keyboard(int key) {
     if (key == '1') {
         pistonQuantity = 1;
         for (int i = 0; i < 1; ++i) {
-            pistons[i]->setActive(true);
-            pistonPins[i]->setActive(true);
-            shirts[i]->setActive(true);
+            pistons[i]->setActive(showPistons);
+            pistonPins[i]->setActive(showPistonPins);
+            shirts[i]->setActive(showShirts);
         }
         for (int i = 1; i < pistons.size(); ++i) {
             pistons[i]->setActive(false);
@@ -106,9 +117,9 @@ void Engine::keyboard(int key) {
     if (key == '2') {
         pistonQuantity = 2;
         for (int i = 0; i < 2; ++i) {
-            pistons[i]->setActive(true);
-            pistonPins[i]->setActive(true);
-            shirts[i]->setActive(true);
+            pistons[i]->setActive(showPistons);
+            pistonPins[i]->setActive(showPistonPins);
+            shirts[i]->setActive(showShirts);
         }
         for (int i = 2; i < pistons.size(); ++i) {
             pistons[i]->setActive(false);
@@ -119,9 +130,9 @@ void Engine::keyboard(int key) {
     if (key == '3') {
         pistonQuantity = 3;
         for (int i = 0; i < 3; ++i) {
-            pistons[i]->setActive(true);
-            pistonPins[i]->setActive(true);
-            shirts[i]->setActive(true);
+            pistons[i]->setActive(showPistons);
+            pistonPins[i]->setActive(showPistonPins);
+            shirts[i]->setActive(showShirts);
         }
         for (int i = 3; i < pistons.size(); ++i) {
             pistons[i]->setActive(false);
@@ -131,23 +142,46 @@ void Engine::keyboard(int key) {
     }
 
     if (key == 'z') {
-        for (int i = 0; i < pistons.size(); ++i) {
-            pistons[i]->setActive(!pistons[i]->getActive());
+        showPistons = !showPistons;
+        for (int i = 0; i < pistonQuantity; ++i) {
+            pistons[i]->setActive(showPistons);
         }
     }
     if (key == 'x') {
-        for (int i = 0; i < pistonPins.size(); ++i) {
-            pistonPins[i]->setActive(!pistonPins[i]->getActive());
+        showPistonPins = !showPistonPins;
+        for (int i = 0; i < pistonQuantity; ++i) {
+            pistonPins[i]->setActive(showPistonPins);
         }
     }
     if (key == 'c') {
-        for (int i = 0; i < pistonPins.size(); ++i) {
-            shirts[i]->setActive(!shirts[i]->getActive());
+        showShirts = !showShirts;
+        for (int i = 0; i < pistonQuantity; ++i) {
+            shirts[i]->setActive(showShirts);
         }
     }
     if (key == 'v') {
-        crank->setActive(!crank->getActive());
+        showCrank = !showCrank;
+        crank->setActive(showCrank);
 
+    }
+
+    if (key == 'n') {
+        showVertexNormals = !showVertexNormals;
+        for (int i = 0; i < pistons.size(); ++i) {
+            pistons[i]->showVertexNormals = showVertexNormals;
+            shirts[i]->showVertexNormals = showVertexNormals;
+            pistonPins[i]->showVertexNormals = showVertexNormals;
+        }
+        crank->showVertexNormals = showVertexNormals;
+    }
+    if (key == 'f') {
+        showFaceNormals = !showFaceNormals;
+        for (int i = 0; i < pistons.size(); ++i) {
+            pistons[i]->showFaceNormals = showFaceNormals;
+            shirts[i]->showFaceNormals = showFaceNormals;
+            pistonPins[i]->showFaceNormals = showFaceNormals;
+        }
+        crank->showFaceNormals = showFaceNormals;
     }
 }
 

@@ -176,11 +176,3 @@ void Object3D::render() {
     delete shader;
 }
 
-void Object3D::keyboard(int key) {
-    if (key == 'n') {
-        showFaceNormals = !showFaceNormals;
-    }
-    if (key == 'f') {
-        showVertexNormals = !showVertexNormals;
-    }
-}

@@ -21,14 +21,21 @@ public:
 
     void keyboard(int key) override;
 
+
 private:
+    bool showFaceNormals = false;
+    bool showVertexNormals = false;
+    bool showShirts = true;
+    bool showPistons = true;
+    bool showPistonPins = true;
+    bool showCrank = true;
+
     float angularVelocity;
 
     void render() override;
 
     int pistonQuantity = 1;
 
-private:
     float calculateAngularVelocity(float rpm);
 
     dvec3 calculatePistonPinPosition(Object3D *pin, Object3D *piston, float radius, float angle, float l);
