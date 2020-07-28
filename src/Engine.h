@@ -16,12 +16,19 @@ public:
     Object3D *crank;
     std::vector<Object3D *> pistonPins;
     std::vector<Object3D *> pistons;
+    std::vector<Object3D *> shirts;
     float rpm;
+
+    void keyboard(int key) override;
+
 private:
     float angularVelocity;
 
     void render() override;
 
+    int pistonQuantity = 1;
+
+private:
     float calculateAngularVelocity(float rpm);
 
     dvec3 calculatePistonPinPosition(Object3D *pin, Object3D *piston, float radius, float angle, float l);

@@ -67,17 +67,87 @@ Engine::Engine(Transform transform, Cylinder *crank) : Object3D(transform) {
 
     float radius = crank->transform.scale.z;
     float l = pistons[0]->transform.scale.y;
-    dvec3 pos = calculatePistonPinPosition(pistons[0],pistonPins[0],radius,0,l);
-    Object3D* c = new OpenEndedCylinder(Transform(pos+ dvec3(0, crank->transform.position.y, 0),
-                                                   dvec3(0, 0, 180), dvec3(0.32, 0.6, 0.32)), 30);
+    dvec3 pos = calculatePistonPinPosition(pistons[0], pistonPins[0], radius, 0, l);
+    shirts.push_back(new OpenEndedCylinder(Transform(pos + dvec3(0, crank->transform.position.y, 0),
+                                                     dvec3(0, 0, 180), dvec3(0.32, 0.6, 0.32)), 30));
 
-//    pistons.push_back(new Cylinder(Transform(crank->transform.position + dvec3(0, crank->transform.scale.y + 1, crank->transform.position.z),
-//                                             dvec3(90, 0, 0), dvec3(0.1, 0.1, 2)), 30));
-//    pistonPins.push_back(new Cylinder(Transform(crank->transform.position + dvec3(0, crank->transform.scale.y + 1, crank->transform.position.z),
-//                                                dvec3(90, 0, 0), dvec3(0.3, 0.3, 0.5)), 30));
-//    pistons.push_back(new Cylinder(Transform(crank->transform.position + dvec3(0, crank->transform.scale.y + 1, crank->transform.position.z - crank->transform.scale.z / 2),
-//                                             dvec3(90, 0, 0), dvec3(0.1, 0.1, 2)), 30));
-//    pistonPins.push_back(new Cylinder(Transform(crank->transform.position + dvec3(0, crank->transform.scale.y + 1, crank->transform.position.z - crank->transform.scale.z / 2),
-//                                                dvec3(90, 0, 0), dvec3(0.3, 0.3, 0.5)), 30));
+    pistons.push_back(new Cylinder(Transform(crank->transform.position + dvec3(0, crank->transform.scale.z + 1, crank->transform.position.z),
+                                             dvec3(0, 0, 0), dvec3(0.1, 2, 0.1)), 30));
+    pistonPins.push_back(new Cylinder(Transform(crank->transform.position + dvec3(0, crank->transform.scale.z + 1, crank->transform.position.z),
+                                                dvec3(0, 0, 0), dvec3(0.3, 0.5, 0.3)), 30));
+    pos = calculatePistonPinPosition(pistons[1], pistonPins[1], radius, 0, l);
+    shirts.push_back(new OpenEndedCylinder(Transform(pos + dvec3(0, crank->transform.position.y, 0),
+                                                     dvec3(0, 0, 180), dvec3(0.32, 0.6, 0.32)), 30));
+
+    pistons.push_back(new Cylinder(Transform(crank->transform.position + dvec3(0, crank->transform.scale.z + 1, crank->transform.position.z - crank->transform.scale.y / 2),
+                                             dvec3(0, 0, 0), dvec3(0.1, 2, 0.1)), 30));
+    pistonPins.push_back(new Cylinder(Transform(crank->transform.position + dvec3(0, crank->transform.scale.z + 1, crank->transform.position.z - crank->transform.scale.y / 2),
+                                                dvec3(0, 0, 0), dvec3(0.3, 0.5, 0.3)), 30));
+    pos = calculatePistonPinPosition(pistons[2], pistonPins[2], radius, 0, l);
+    shirts.push_back(new OpenEndedCylinder(Transform(pos + dvec3(0, crank->transform.position.y, 0),
+                                                     dvec3(0, 0, 180), dvec3(0.32, 0.6, 0.32)), 30));
+
+}
+
+void Engine::keyboard(int key) {
+    if (key == '1') {
+        pistonQuantity = 1;
+        for (int i = 0; i < 1; ++i) {
+            pistons[i]->setActive(true);
+            pistonPins[i]->setActive(true);
+            shirts[i]->setActive(true);
+        }
+        for (int i = 1; i < pistons.size(); ++i) {
+            pistons[i]->setActive(false);
+            pistonPins[i]->setActive(false);
+            shirts[i]->setActive(false);
+        }
+    }
+    if (key == '2') {
+        pistonQuantity = 2;
+        for (int i = 0; i < 2; ++i) {
+            pistons[i]->setActive(true);
+            pistonPins[i]->setActive(true);
+            shirts[i]->setActive(true);
+        }
+        for (int i = 2; i < pistons.size(); ++i) {
+            pistons[i]->setActive(false);
+            pistonPins[i]->setActive(false);
+            shirts[i]->setActive(false);
+        }
+    }
+    if (key == '3') {
+        pistonQuantity = 3;
+        for (int i = 0; i < 3; ++i) {
+            pistons[i]->setActive(true);
+            pistonPins[i]->setActive(true);
+            shirts[i]->setActive(true);
+        }
+        for (int i = 3; i < pistons.size(); ++i) {
+            pistons[i]->setActive(false);
+            pistonPins[i]->setActive(false);
+            shirts[i]->setActive(false);
+        }
+    }
+
+    if (key == 'z') {
+        for (int i = 0; i < pistons.size(); ++i) {
+            pistons[i]->setActive(!pistons[i]->getActive());
+        }
+    }
+    if (key == 'x') {
+        for (int i = 0; i < pistonPins.size(); ++i) {
+            pistonPins[i]->setActive(!pistonPins[i]->getActive());
+        }
+    }
+    if (key == 'c') {
+        for (int i = 0; i < pistonPins.size(); ++i) {
+            shirts[i]->setActive(!shirts[i]->getActive());
+        }
+    }
+    if (key == 'v') {
+        crank->setActive(!crank->getActive());
+
+    }
 }
 
