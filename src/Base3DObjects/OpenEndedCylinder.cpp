@@ -12,7 +12,7 @@
 OpenEndedCylinder::OpenEndedCylinder(Transform transform, int sides) : Object3D(transform) {
     ObjectInfo info = ModelLoader::loadObj("../open_cylinder.obj");
     vertices = info.vertices;
-    triangles = info.triangles;
+    faces = info.faces;
     normals = info.normals;
     uvs = info.uv;
     albedo = Renderer::getInstance()->metal_albedo;

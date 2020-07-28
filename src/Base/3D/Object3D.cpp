@@ -74,27 +74,27 @@ void Object3D::createRenderingShader(ShaderType shaderType) {
 void Object3D::setRenderingShaderInfo(ShaderType shaderType, int i) {
     if (shaderType == ShaderType::Flat) {
         FlatShader *flatShader = (FlatShader *) shader;
-        dvec3 v0 = vertices[triangles[i]];
-        dvec3 v1 = vertices[triangles[i + 1]];
-        dvec3 v2 = vertices[triangles[i + 2]];
+        dvec3 v0 = vertices[faces[i].vertices[0]];
+        dvec3 v1 = vertices[faces[i].vertices[1]];
+        dvec3 v2 = vertices[faces[i].vertices[2]];
         dvec3 normal = (v1 - v0).cross(v2 - v0);
         flatShader->IN_Normal = normal;
-        flatShader->IN_UV[0] = uvs[triangles[i]];
-        flatShader->IN_UV[1] = uvs[triangles[i + 1]];
-        flatShader->IN_UV[2] = uvs[triangles[i + 2]];
+        flatShader->IN_UV[0] = uvs[faces[i].uv[0]];
+        flatShader->IN_UV[1] = uvs[faces[i].uv[1]];
+        flatShader->IN_UV[2] = uvs[faces[i].uv[2]];
         flatShader->IN_Albedo = albedo;
     }
     if (shaderType == ShaderType::Goraud) {
         GoraudShader *goraudShader = (GoraudShader *) shader;
-        goraudShader->IN_Normal[0] = normals[triangles[i]];
-        goraudShader->IN_Normal[1] = normals[triangles[i + 1]];
-        goraudShader->IN_Normal[2] = normals[triangles[i + 2]];
+        goraudShader->IN_Normal[0] = normals[faces[i].normals[0]];
+        goraudShader->IN_Normal[1] = normals[faces[i].normals[1]];
+        goraudShader->IN_Normal[2] = normals[faces[i].normals[2]];
         goraudShader->IN_Color[0] = dvec3(0.8, 0.8, 0.8);
         goraudShader->IN_Color[1] = dvec3(0.8, 0.8, 0.8);
         goraudShader->IN_Color[2] = dvec3(0.8, 0.8, 0.8);
-        goraudShader->IN_UV[0] = uvs[triangles[i]];
-        goraudShader->IN_UV[1] = uvs[triangles[i + 1]];
-        goraudShader->IN_UV[2] = uvs[triangles[i + 2]];
+        goraudShader->IN_UV[0] = uvs[faces[i].uv[0]];
+        goraudShader->IN_UV[1] = uvs[faces[i].uv[1]];
+        goraudShader->IN_UV[2] = uvs[faces[i].uv[2]];
         goraudShader->IN_CameraPosition = Camera::getInstance()->center;
         goraudShader->IN_Albedo = albedo;
         goraudShader->IN_Specular = specular;
@@ -102,18 +102,18 @@ void Object3D::setRenderingShaderInfo(ShaderType shaderType, int i) {
     }
     if (shaderType == ShaderType::Phong) {
         PhongShader *phongShader = (PhongShader *) shader;
-        phongShader->IN_Normal[0] = normals[triangles[i]];
-        phongShader->IN_Normal[1] = normals[triangles[i + 1]];
-        phongShader->IN_Normal[2] = normals[triangles[i + 2]];
-        phongShader->IN_Vertices[0] = vertices[triangles[i]];
-        phongShader->IN_Vertices[1] = vertices[triangles[i + 1]];
-        phongShader->IN_Vertices[2] = vertices[triangles[i + 2]];
+        phongShader->IN_Normal[0] = normals[faces[i].normals[0]];
+        phongShader->IN_Normal[1] = normals[faces[i].normals[1]];
+        phongShader->IN_Normal[2] = normals[faces[i].normals[2]];
+        phongShader->IN_Vertices[0] = vertices[faces[i].vertices[0]];
+        phongShader->IN_Vertices[1] = vertices[faces[i].vertices[1]];
+        phongShader->IN_Vertices[2] = vertices[faces[i].vertices[2]];
         phongShader->IN_Color[0] = dvec3(0.8, 0.8, 0.8);
         phongShader->IN_Color[1] = dvec3(0.8, 0.8, 0.8);
         phongShader->IN_Color[2] = dvec3(0.8, 0.8, 0.8);
-        phongShader->IN_UV[0] = uvs[triangles[i]];
-        phongShader->IN_UV[1] = uvs[triangles[i + 1]];
-        phongShader->IN_UV[2] = uvs[triangles[i + 2]];
+        phongShader->IN_UV[0] = uvs[faces[i].uv[0]];
+        phongShader->IN_UV[1] = uvs[faces[i].uv[1]];
+        phongShader->IN_UV[2] = uvs[faces[i].uv[2]];
         phongShader->IN_CameraPosition = Camera::getInstance()->center;
         phongShader->IN_Albedo = albedo;
         phongShader->IN_Specular = specular;
@@ -124,7 +124,7 @@ void Object3D::setRenderingShaderInfo(ShaderType shaderType, int i) {
 }
 
 void Object3D::render() {
-    if (triangles.size() == 0) return;
+    if (faces.size() == 0) return;
     if (std::abs(transform.rotation.x) >= 360) transform.rotation.x = (int) transform.rotation.x % 360;
     if (std::abs(transform.rotation.y) >= 360) transform.rotation.y = (int) transform.rotation.y % 360;
     if (std::abs(transform.rotation.z) >= 360) transform.rotation.z = (int) transform.rotation.z % 360;
@@ -140,12 +140,12 @@ void Object3D::render() {
     CV::color(1, 1, 1, 1);
     createRenderingShader(Renderer::getInstance()->shaderType);
     int cont = 0;
-    for (int i = 0; i < triangles.size() - 2; i += 3) {
+    for (int i = 0; i < faces.size(); i++) {
         cont++;
-        dvec3 v0 = vertices[triangles[i]];
-        dvec3 v1 = vertices[triangles[i + 1]];
-        dvec3 v2 = vertices[triangles[i + 2]];
-        dvec3 normal = (v1 - v0).cross(v2 - v0);
+        dvec3 v0 = vertices[faces[i].vertices[0]];
+        dvec3 v1 = vertices[faces[i].vertices[1]];
+        dvec3 v2 = vertices[faces[i].vertices[2]];
+        dvec3 normal = (v1 - v0).cross(v2 - v0).unit();
         dvec3 modelCenter = (v0 + v1 + v2) / 3.0;
         if (Renderer::getInstance()->isActive) {
             if (normal.dot((cameraPos - v0).unit()) < 0) continue;
@@ -156,8 +156,16 @@ void Object3D::render() {
             Renderer::getInstance()->triangle(vs0, vs1, vs2, shader);
         } else {
 
-            CV::color(1, 0, 0, 1);
-            Camera::getInstance()->line((Model * modelCenter).toVector3(), (Model * (modelCenter + normal )).toVector3());
+            if (showFaceNormals) {
+                CV::color(1, 0, 0, 1);
+                Camera::getInstance()->line((Model * modelCenter).toVector3(), (Model * (modelCenter + normal)).toVector3());
+            }
+            if (showVertexNormals) {
+                CV::color(0, 1, 0, 1);
+                Camera::getInstance()->line((Model * v0).toVector3(), (Model * (v0 + normals[faces[i].normals[0]])).toVector3());
+                Camera::getInstance()->line((Model * v1).toVector3(), (Model * (v1 + normals[faces[i].normals[1]])).toVector3());
+                Camera::getInstance()->line((Model * v2).toVector3(), (Model * (v2 + normals[faces[i].normals[2]])).toVector3());
+            }
             CV::color(0, 0, 0, 1);
             Camera::getInstance()->line((Model * v0.toVector4(1)).toVector3(), (Model * v1.toVector4(1)).toVector3());
             Camera::getInstance()->line((Model * v1.toVector4(1)).toVector3(), (Model * v2.toVector4(1)).toVector3());
@@ -166,4 +174,13 @@ void Object3D::render() {
 
     }
     delete shader;
+}
+
+void Object3D::keyboard(int key) {
+    if (key == 'n') {
+        showFaceNormals = !showFaceNormals;
+    }
+    if (key == 'f') {
+        showVertexNormals = !showVertexNormals;
+    }
 }

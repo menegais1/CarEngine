@@ -10,21 +10,25 @@
 #include "Transform.h"
 #include "../../Rendering/IShader.h"
 #include "../../Bitmap/Bitmap.h"
+#include "../../Base3DObjects/ModelLoader.h"
 
 class Object3D : public CanvasObject {
+private:
+    bool showFaceNormals = false;
+    bool showVertexNormals = false;
+
 protected:
     Object3D(Transform transform);
 
     dMatrix Model;
     dMatrix InvModel;
     std::vector<dvec3> vertices;
-    std::vector<int> triangles;
+    std::vector<ObjectFace> faces;
     std::vector<dvec3> normals;
     std::vector<dvec3> uvs;
-    std::vector<dvec3> faceNormals;
     IShader *shader;
-    Bitmap* albedo = nullptr;
-    Bitmap* specular = nullptr;
+    Bitmap *albedo = nullptr;
+    Bitmap *specular = nullptr;
 
     void computeCenter();
 
@@ -32,8 +36,10 @@ protected:
 
     void render() override;
 
+
 public:
     Transform transform;
+    void keyboard(int key) override;
 
 
     dvec3 calculateNormal(int i0, int i1, int i2);

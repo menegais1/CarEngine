@@ -188,6 +188,6 @@ Renderer::Renderer(int width, int height) : width(width), height(height) {
     setObjectOrder(1000);
     isActive = false;
     shaderType = ShaderType::Flat;
-    metal_albedo = new Bitmap("../Metal_Painted/Albedo.bmp");
-    metal_specular = new Bitmap("../Metal_Painted/Specular.bmp");
+    metal_albedo = new Bitmap("../Metal_Rusty/Albedo.bmp");
+    metal_specular = new Bitmap("../Metal_Rusty/Specular.bmp");
 }

@@ -14,7 +14,8 @@ Vertex GoraudShader::vertexShader(dvec3 vertex, int vertexIndex) {
         IN_Color[vertexIndex] = IN_Albedo->sampleBitmao(IN_UV[vertexIndex].x, IN_UV[vertexIndex].y) / 255.0;
     }
     float specular = 0;
-    dvec3 l = lightPosition - vertex;
+    dvec3 l = (lightPosition - vertex).unit();
+    IN_Normal[vertexIndex] = IN_Normal[vertexIndex].unit();
     dvec3 r = (IN_Normal[vertexIndex] * (IN_Normal[vertexIndex].dot(l) * 2.f) - l).unit();
     float specularModifier = std::abs((r).unit().dot((cameraPosition - vertex).unit()));
     if (IN_Specular != nullptr) {

@@ -65,8 +65,8 @@ Engine::Engine(Transform transform, Cylinder *crank) : Object3D(transform) {
     pistonPins.push_back(new Cylinder(Transform(crank->transform.position + dvec3(0, crank->transform.scale.z + 1, crank->transform.position.z + crank->transform.scale.y / 2),
                                                 dvec3(0, 0, 0), dvec3(0.3, 0.5, 0.3)), 30));
 
-    float radius = crank->transform.scale.y;
-    float l = pistons[0]->transform.scale.z;
+    float radius = crank->transform.scale.z;
+    float l = pistons[0]->transform.scale.y;
     dvec3 pos = calculatePistonPinPosition(pistons[0],pistonPins[0],radius,0,l);
     Object3D* c = new OpenEndedCylinder(Transform(pos+ dvec3(0, crank->transform.position.y, 0),
                                                    dvec3(0, 0, 180), dvec3(0.32, 0.6, 0.32)), 30);

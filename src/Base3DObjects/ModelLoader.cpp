@@ -17,28 +17,17 @@ ObjectInfo ModelLoader::loadObj(std::string filename) {
     while (!file.eof()) {
         fileString.append(1, file.get());
     }
-    FileString File = {fileString, 0, (int) fileString.length() -1};
+    FileString File = {fileString, 0, (int) fileString.length() - 1};
 
     ObjectInfo info;
     std::vector<dvec3> normals;
     std::vector<dvec3> uv;
 
     info.vertices = readVertices(File);
-    uv = readTextureCoordinates(File);
-    normals = readVerticesNormals(File);
-    std::vector<ObjectFace> faces = readFaces(File);
+    info.uv = readTextureCoordinates(File);
+    info.normals = readVerticesNormals(File);
 
-    for (int i = 0; i < faces.size(); ++i) {
-        info.triangles.push_back(faces[i].vertices[0]);
-        info.triangles.push_back(faces[i].vertices[1]);
-        info.triangles.push_back(faces[i].vertices[2]);
-        info.normals.push_back(normals[faces[i].normals[0]]);
-        info.normals.push_back(normals[faces[i].normals[1]]);
-        info.normals.push_back(normals[faces[i].normals[2]]);
-        info.uv.push_back(uv[faces[i].uv[0]]);
-        info.uv.push_back(uv[faces[i].uv[1]]);
-        info.uv.push_back(uv[faces[i].uv[2]]);
-    }
+    info.faces = readFaces(File);
     return info;
 }
 
